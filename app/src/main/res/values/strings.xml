@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">Tiny Pic</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Parse Connection  IDs-->
+    <string name="parse_app_id">H0VIeXh5ViyvuKopfITPLRaBjQuncgZKCatNfqT0</string>
+    <string name="parse_client_id">cLoP9oS2i3XlVVpjaLcSJANyU4y515oFxA61nuk5</string>
+
+    <!--Session Page-->
+    <string name="signUp">Sign Up</string>
+    <string name="login">Login</string>
+
+    <!-- Log Out-->
+    <string name="logout">Logout</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!-- Strings related to login -->
+    <string name="prompt_username">Username</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_password_again">Password Again</string>
+    <string name="action_sign_in_register"><b>Sign in</b> or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="action_forgot_password">Recover lost password</string>
+    <string name="login_progress_signing_in">Signing in&#8230;</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="error_intro">"Please "</string>
+    <string name="error_blank_username">enter a username</string>
+    <string name="error_blank_password">enter a password</string>
+    <string name="error_mismatched_passwords">enter the same password twice</string>
+    <string name="error_join">", and "</string>
+    <string name="error_end">.</string>
+
+    <!--Strings related to sign up-->
+    <string name="username_input_hint">Username</string>
+    <string name="password_input_hint">Password</string>
+    <string name="confirm_password_input_hint">Re-enter Password</string>
+    <string name="email_input_hint">Email</string>
+    <string name="name_input_hint">Name</string>
+    <string name="account_button_label">Create Account</string>
+    <string name="error_password_length">"Password is too short. Please enter at least 6 characters"</string>
+    <string name="error_blank_confirm_password">enter confirm password</string>
+    <string name="error_password_donot_match">"enter password again. Password and Confirm Password don't match"</string>
+    <string name="title_activity_discover">DiscoverActivity</string>
+</resources>
