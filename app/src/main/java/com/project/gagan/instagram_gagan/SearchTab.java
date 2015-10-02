@@ -16,6 +16,7 @@ public class SearchTab extends Fragment {
     private static ImageView imgView1;
     private static ImageView imgView2;
     private static ImageView imgView3;
+    //change
 
     private static SearchView searchViewDiscover;
 
