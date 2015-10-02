@@ -10,7 +10,12 @@
         android:src="@mipmap/ic_enample"
         android:layout_below="@+id/searchView"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center"
+        android:minHeight="136dp"
+        android:minWidth="136dp"
+        android:nestedScrollingEnabled="false" />
 
     <ImageView
         android:id="@+id/imageViewSearch3"
@@ -19,7 +24,10 @@
         android:src="@mipmap/ic_enample"
         android:layout_alignBottom="@+id/imageViewSearch1"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:minWidth="136dp"
+        android:minHeight="136dp"
+        android:scaleType="centerCrop" />
 
     <ImageView
         android:id="@+id/imageViewSearch2"
@@ -27,7 +35,10 @@
         android:layout_height="wrap_content"
         android:src="@mipmap/ic_enample"
         android:layout_below="@+id/searchView"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:minHeight="136dp"
+        android:minWidth="136dp"
+        android:scaleType="centerCrop" />
 
     <SearchView
         android:layout_width="fill_parent"
