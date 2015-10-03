@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DiscoverActivity extends Activity {
 
@@ -16,7 +17,7 @@ public class DiscoverActivity extends Activity {
     private static ImageView imgView2;
     private static ImageView imgView3;
 
-    private static SearchView searchViewDiscover;
+    private static SearchView discoversearchView;
 
     private static TextView textViewSearchBox;
 
@@ -25,34 +26,20 @@ public class DiscoverActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        onSearch();
         setContentView(R.layout.activity_discover);
     }
 
     // TODO need to handle the query later
-    public void onSearchButtonClick() {
+    public void onSearch() {
         imgView1 = (ImageView) findViewById(R.id.imageView1);
         imgView2 = (ImageView) findViewById(R.id.imageView2);
         imgView3 = (ImageView) findViewById(R.id.imageView3);
         //  buttonSearch = (Button) findViewById(R.id.)
+        //       Toast.makeText(DiscoverActivity.this, "1321", Toast.LENGTH_LONG).show();
 
-        searchViewDiscover = (SearchView) findViewById(R.id.searchViewDiscover);
-        searchViewDiscover.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
-            // calls when the user submit a query
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-
-                String s = query;
-
-                return false;
-
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
+        discoversearchView = (SearchView) findViewById(R.id.searchViewDiscover);
+  //      discoversearchView.setOnQueryTextListener(this);
 
     }
 
