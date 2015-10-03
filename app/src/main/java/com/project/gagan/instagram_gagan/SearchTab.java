@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -33,82 +35,98 @@ public class SearchTab extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.search_tab, container, false);
-
+        GridView gridView = (GridView) view.findViewById(R.id.gridViewSearch);
+        gridView.setAdapter(new ImageAdapter(view.getContext()));
         onQuery(view);
 
-        onClickPic(view);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    int position, long id) {
+                Toast.makeText(getActivity(), "Image " + position,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //  onClickPic(view);
 
         return view;
     }
 
-    public void onClickPic(View v) {
-        imgView1 = (ImageView) v.findViewById(R.id.imageViewSearch1);
-        imgView2 = (ImageView) v.findViewById(R.id.imageViewSearch2);
-        imgView3 = (ImageView) v.findViewById(R.id.imageViewSearch3);
-        imgView4 = (ImageView) v.findViewById(R.id.imageViewSearch4);
-        imgView5 = (ImageView) v.findViewById(R.id.imageViewSearch5);
-        imgView6 = (ImageView) v.findViewById(R.id.imageViewSearch6);
-        imgView7 = (ImageView) v.findViewById(R.id.imageViewSearch7);
-        imgView8 = (ImageView) v.findViewById(R.id.imageViewSearch8);
-        imgView9 = (ImageView) v.findViewById(R.id.imageViewSearch9);
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        GridView gridview = (GridView) this.getActivity().findViewById(R.id.photogridview);
+//        gridview.setAdapter(new PhotoImageAdapter(this.getActivity()));
+//    }
 
-        imgView1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(), "Selected: Image 1", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        imgView2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(), "Selected: Image 2", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        imgView3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(), "Selected: Image 3", Toast.LENGTH_SHORT).show();
-            }
-        });
-        imgView4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(), "Selected: Image 4", Toast.LENGTH_SHORT).show();
-            }
-        });
-        imgView5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(), "Selected: Image 5", Toast.LENGTH_SHORT).show();
-            }
-        });
-        imgView6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(), "Selected: Image 6", Toast.LENGTH_SHORT).show();
-            }
-        });
-        imgView7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(), "Selected: Image 7", Toast.LENGTH_SHORT).show();
-            }
-        });
-        imgView8.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(), "Selected: Image 8", Toast.LENGTH_SHORT).show();
-            }
-        });
-        imgView9.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(), "Selected: Image 9", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+//    public void onClickPic(View v) {
+//        imgView1 = (ImageView) v.findViewById(R.id.imageViewSearch1);
+//        imgView2 = (ImageView) v.findViewById(R.id.imageViewSearch2);
+//        imgView3 = (ImageView) v.findViewById(R.id.imageViewSearch3);
+//        imgView4 = (ImageView) v.findViewById(R.id.imageViewSearch4);
+//        imgView5 = (ImageView) v.findViewById(R.id.imageViewSearch5);
+//        imgView6 = (ImageView) v.findViewById(R.id.imageViewSearch6);
+//        imgView7 = (ImageView) v.findViewById(R.id.imageViewSearch7);
+//        imgView8 = (ImageView) v.findViewById(R.id.imageViewSearch8);
+//        imgView9 = (ImageView) v.findViewById(R.id.imageViewSearch9);
+//
+//        imgView1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(getActivity(), "Selected: Image 1", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        imgView2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(getActivity(), "Selected: Image 2", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        imgView3.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(getActivity(), "Selected: Image 3", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        imgView4.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(getActivity(), "Selected: Image 4", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        imgView5.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(getActivity(), "Selected: Image 5", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        imgView6.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(getActivity(), "Selected: Image 6", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        imgView7.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(getActivity(), "Selected: Image 7", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        imgView8.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(getActivity(), "Selected: Image 8", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        imgView9.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(getActivity(), "Selected: Image 9", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 
     public void onQuery(View v) {
         searchViewDiscover = (SearchView) v.findViewById(R.id.searchViewDIscover);
