@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 /**
  * Created by Flin on 3/10/15.
+ * This class provides pictures for the gridView in SearchTab
  */
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;

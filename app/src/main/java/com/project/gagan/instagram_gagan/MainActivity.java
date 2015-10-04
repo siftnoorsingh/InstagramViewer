@@ -31,11 +31,11 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.home));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.search));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.camera));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.notification));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.profile));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_action_dashboard));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_action_search));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_camera));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_action_follow));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_action_profile));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
