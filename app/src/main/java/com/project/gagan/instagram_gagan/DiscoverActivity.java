@@ -4,13 +4,16 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+/**
+ * THIS Activity is NOT used in this project, please do not edit this one.
+ * The real Discover function is the SearchTab.
+ * - Fenglin
+ */
 public class DiscoverActivity extends Activity {
 
     private static ImageView imgView1;
@@ -32,7 +35,7 @@ public class DiscoverActivity extends Activity {
 
     // TODO need to handle the query later
     public void onSearch() {
-        imgView1 = (ImageView) findViewById(R.id.imageView1);
+        imgView1 = (ImageView) findViewById(R.id.imageViewFeed);
         imgView2 = (ImageView) findViewById(R.id.imageView2);
         imgView3 = (ImageView) findViewById(R.id.imageView3);
         //  buttonSearch = (Button) findViewById(R.id.)
