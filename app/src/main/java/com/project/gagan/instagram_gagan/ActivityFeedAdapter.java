@@ -37,8 +37,7 @@ public class ActivityFeedAdapter extends BaseAdapter {
         return position;
     }
 
-    public class Holder
-    {
+    public class Holder {
         TextView textView;
         ImageView imageView;
     }
@@ -47,53 +46,45 @@ public class ActivityFeedAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View activityFeedView;
         LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
-   //     ImageView imageView;
-      //  TextView textView;
+        //     ImageView imageView;
+        //  TextView textView;
         activityFeedView = inflater.inflate(R.layout.activity_feed_layout, null);
-        Holder holder=new Holder();
-        holder.textView=(TextView) activityFeedView.findViewById(R.id.textViewFeed);
-        holder.imageView=(ImageView) activityFeedView.findViewById(R.id.imageViewFeed);
+        Holder holder = new Holder();
+        holder.textView = (TextView) activityFeedView.findViewById(R.id.textViewFeed);
+        holder.imageView = (ImageView) activityFeedView.findViewById(R.id.imageViewFeed);
 
-
-
-//convertView == null
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
             // --------------
 
-         //   activityFeedView = inflater.inflate(R.layout.activity_feed_layout, null);
-       //     TextView txt = (TextView) activityFeedView.findViewById(R.id.gridView_ActivityFeed);
+            //   activityFeedView = inflater.inflate(R.layout.activity_feed_layout, null);
+            //     TextView txt = (TextView) activityFeedView.findViewById(R.id.gridView_ActivityFeed);
             // --------------
             holder.imageView = new ImageView(mContext);
             holder.imageView.setLayoutParams(new GridView.LayoutParams(460, 460));
             holder.textView.setText("User ");
 
             holder.imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-         //   holder.imageView.setPadding(8, 8, 8, 8);
+            //   holder.imageView.setPadding(8, 8, 8, 8);
 
 
-
-   //         // create testview
-//            textView = new TextView(mContext);
-//            textView.setLayoutParams(new GridView.LayoutParams(460, 460));
-//
-//            textView.setPadding(8,8,8,8);
-
-        } else {
-        //    holder.imageView = (ImageView) convertView;
-       //     holder.textView = (TextView) convertView;
+            //  } else {
+            //    holder.imageView = (ImageView) convertView;
+            //     holder.textView = (TextView) convertView;
         }
 
         List<String> users = new ArrayList<>();
 
-        users.add(0,"Fenglin");
-        users.add(1,"Gagan");
-        users.add(2,"Sift");
-        users.add(3,"Prasanna");
+        users.add(0, "Fenglin");
+        users.add(1, "Gagan");
+        users.add(2, "Sift");
+        users.add(3, "Prasanna");
 
 
         holder.imageView.setImageResource(mThumbIds[position]);
-        holder.textView.setText("\n \n"+users.get(0)+" has uploaded a new photo");
+
+        // TODO when the database is connected, each imageView entry and textView entry need to be matched
+        holder.textView.setText("\n \n" + users.get(0) + " has uploaded a new photo");
         return activityFeedView;
     }
 
