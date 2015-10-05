@@ -15,16 +15,15 @@ import android.widget.Toast;
 
 public class SearchTab extends Fragment {
 
-
-    private static ImageView imgView1;
-    private static ImageView imgView2;
-    private static ImageView imgView3;
-    private static ImageView imgView4;
-    private static ImageView imgView5;
-    private static ImageView imgView6;
-    private static ImageView imgView7;
-    private static ImageView imgView8;
-    private static ImageView imgView9;
+//    private static ImageView imgView1;
+//    private static ImageView imgView2;
+//    private static ImageView imgView3;
+//    private static ImageView imgView4;
+//    private static ImageView imgView5;
+//    private static ImageView imgView6;
+//    private static ImageView imgView7;
+//    private static ImageView imgView8;
+//    private static ImageView imgView9;
     //change
 
     private View view;
