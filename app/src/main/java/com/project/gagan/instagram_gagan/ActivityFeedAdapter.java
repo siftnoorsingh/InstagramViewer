@@ -62,7 +62,7 @@ public class ActivityFeedAdapter extends BaseAdapter {
             // --------------
             holder.imageView = new ImageView(mContext);
             holder.imageView.setLayoutParams(new GridView.LayoutParams(460, 460));
-            holder.textView.setText("User ");
+           // holder.textView.setText("User ");
 
             holder.imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             //   holder.imageView.setPadding(8, 8, 8, 8);
@@ -84,12 +84,12 @@ public class ActivityFeedAdapter extends BaseAdapter {
         holder.imageView.setImageResource(mThumbIds[position]);
 
         // TODO when the database is connected, each imageView entry and textView entry need to be matched
-        holder.textView.setText("\n \n" + users.get(0) + " has uploaded a new photo");
+        holder.textView.setText("\n \n" + users.get(position % 4) + " has uploaded a new photo");
         return activityFeedView;
     }
 
     private Integer[] mThumbIds = {
-            R.mipmap.ic_exampleselfie, R.mipmap.ic_exampleselfie,
+            R.mipmap.ic_exampleselfie, R.mipmap.ic_enample,
             R.mipmap.ic_exampleselfie, R.mipmap.ic_exampleselfie,
             R.mipmap.ic_exampleselfie, R.mipmap.ic_exampleselfie,
             R.mipmap.ic_exampleselfie, R.mipmap.ic_exampleselfie,
