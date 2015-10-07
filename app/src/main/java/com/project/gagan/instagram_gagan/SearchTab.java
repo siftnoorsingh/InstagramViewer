@@ -1,7 +1,10 @@
 package com.project.gagan.instagram_gagan;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,35 +16,43 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
+import com.parse.GetDataCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+import java.lang.reflect.Array;
+import java.util.List;
+
 public class SearchTab extends Fragment {
 
-//    private static ImageView imgView1;
-//    private static ImageView imgView2;
-//    private static ImageView imgView3;
-//    private static ImageView imgView4;
-//    private static ImageView imgView5;
-//    private static ImageView imgView6;
-//    private static ImageView imgView7;
-//    private static ImageView imgView8;
-//    private static ImageView imgView9;
-    //change
-
     private View view;
+
+    private int numberOfUsers;
 
     private static SearchView searchViewDiscover;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+// search_tab
         view = inflater.inflate(R.layout.search_tab, container, false);
         GridView gridView = (GridView) view.findViewById(R.id.gridViewSearch);
+
         gridView.setAdapter(new ImageAdapter(view.getContext()));
         onQuery(view);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                Toast.makeText(getActivity(), "Image " + position,
+
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                String CurrentUserName = currentUser.getUsername();
+
+                Toast.makeText(getActivity(), "Image " + position + " " + CurrentUserName,
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -51,89 +62,54 @@ public class SearchTab extends Fragment {
         return view;
     }
 
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        GridView gridview = (GridView) this.getActivity().findViewById(R.id.photogridview);
-//        gridview.setAdapter(new PhotoImageAdapter(this.getActivity()));
-//    }
-
-//    public void onClickPic(View v) {
-//        imgView1 = (ImageView) v.findViewById(R.id.imageViewSearch1);
-//        imgView2 = (ImageView) v.findViewById(R.id.imageViewSearch2);
-//        imgView3 = (ImageView) v.findViewById(R.id.imageViewSearch3);
-//        imgView4 = (ImageView) v.findViewById(R.id.imageViewSearch4);
-//        imgView5 = (ImageView) v.findViewById(R.id.imageViewSearch5);
-//        imgView6 = (ImageView) v.findViewById(R.id.imageViewSearch6);
-//        imgView7 = (ImageView) v.findViewById(R.id.imageViewSearch7);
-//        imgView8 = (ImageView) v.findViewById(R.id.imageViewSearch8);
-//        imgView9 = (ImageView) v.findViewById(R.id.imageViewSearch9);
-//
-//        imgView1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getActivity(), "Selected: Image 1", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        imgView2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getActivity(), "Selected: Image 2", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        imgView3.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getActivity(), "Selected: Image 3", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        imgView4.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getActivity(), "Selected: Image 4", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        imgView5.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getActivity(), "Selected: Image 5", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        imgView6.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getActivity(), "Selected: Image 6", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        imgView7.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getActivity(), "Selected: Image 7", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        imgView8.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getActivity(), "Selected: Image 8", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        imgView9.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getActivity(), "Selected: Image 9", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
 
     public void onQuery(View v) {
+
+//        //ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
+//        ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
+//
+//        query.findInBackground(new FindCallback<ParseObject>() {
+//            @Override
+//            public void done(List<ParseObject> list, ParseException e) {
+//               // ParseObject user1 = (ParseObject)list.
+//                Log.d(list.get(0).toString(), " Users listed");
+//
+//                int numberOfUsers = list.size();
+//
+//                for(int i = 0;i<numberOfUsers;i++) {
+//                    ParseFile parseFile = user.getParseFile("thumbnail");
+//                }
+//
+//
+//
+//
+////                int numberOfUsers = list.size();
+////
+////                ParseUser [] userList = new ParseUser[numberOfUsers];
+////
+////                for (int i = 0; i < numberOfUsers;i++ ){
+////                    userList[i] = list.get(i).getParseUser("username");
+////
+////
+////                }
+////
+////                for(int i = 0;i<numberOfUsers;i++){
+////                    if(userList[i]!=null) {
+////                        Log.d(userList[i].getUsername(), " Users listed");
+////                    }
+////
+////                }
+//            }
+//        });
+
         searchViewDiscover = (SearchView) v.findViewById(R.id.searchViewDIscover);
         searchViewDiscover.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 String queryString = query;
                 Toast.makeText(getActivity(), "Searching: " + queryString, Toast.LENGTH_SHORT).show();
+
+
                 return false;
             }
 

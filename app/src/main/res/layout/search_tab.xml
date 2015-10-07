@@ -14,7 +14,7 @@
 
     <GridView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:id="@+id/gridViewSearch"
         android:layout_below="@+id/searchViewDIscover"
         android:layout_alignParentLeft="true"

@@ -10,6 +10,8 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.parse.ParseUser;
+
 /**
  * Created by Sift on 1/10/2015.
  */
@@ -29,7 +31,12 @@ public class FollowTab extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                Toast.makeText(getActivity(), "Activity Feed " + position + " uploaded by "+"USERNAME at ###" ,
+
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                String CurrentUserName = currentUser.getUsername();
+
+
+                Toast.makeText(getActivity(), "Activity Feed " + position + " uploaded by "+CurrentUserName ,
                         Toast.LENGTH_SHORT).show();
             }
         });
