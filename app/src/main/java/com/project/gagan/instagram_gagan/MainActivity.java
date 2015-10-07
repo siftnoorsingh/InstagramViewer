@@ -1,25 +1,28 @@
 package com.project.gagan.instagram_gagan;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.design.widget.TabLayout;
-import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.Button;
-;import com.parse.ParseUser;
+import android.widget.TextView;
+
+import com.parse.ParseUser;
+
+
 
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
+    private TextView givenName;
     ViewPager pager;
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
-    CharSequence Titles[] = {"Sign Up", "Login"};
-    int numOfTabs = 2;
+    CharSequence Titles[] = {"Tiny Pic","Sign Up", "Login"};
+    int numOfTabs = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,11 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
         setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
+
+        // Set up the username
+        ParseUser user = ParseUser.getCurrentUser();
+        givenName= (TextView)toolbar.findViewById(R.id.name);
+        givenName.setText((String) user.get("name"));
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_action_dashboard));

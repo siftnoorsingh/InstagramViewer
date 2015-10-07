@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="profile_thumbnail">profile_thumbnail</string>
+    <string name="appLogo">AppLogo</string>
+    <string name="app_logo">AppLogo</string>
 </resources>

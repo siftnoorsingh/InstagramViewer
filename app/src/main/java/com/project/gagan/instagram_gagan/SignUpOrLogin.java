@@ -4,11 +4,10 @@ package com.project.gagan.instagram_gagan;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -31,8 +30,8 @@ public class SignUpOrLogin extends AppCompatActivity {
     ViewPager pager;
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
-    CharSequence Titles[]={"Sign Up","Login"};
-    int numOfTabs =2;
+    CharSequence Titles[]={"Sign Up","Tiny Pic","Login"};
+    int numOfTabs =3;
 
     /*
     The following two variables for Login Fragment
@@ -67,13 +66,15 @@ public class SignUpOrLogin extends AppCompatActivity {
         pager.setAdapter(adapter);
 
 
+        // set a centre tab (Tiny Pic) on load
+        pager.setCurrentItem(1);
 
 
 
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
 
-            int i = pager.getCurrentItem();
+
 
 
 
@@ -87,7 +88,7 @@ public class SignUpOrLogin extends AppCompatActivity {
 
 
 
-                if (i == 0) {
+                if (position==pager.getAdapter().getCount()-3) {
                     // Set up the sign up form
                     signUpPage();
 
