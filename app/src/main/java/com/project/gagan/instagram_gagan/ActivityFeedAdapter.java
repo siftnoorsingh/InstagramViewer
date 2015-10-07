@@ -10,6 +10,10 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.parse.ParseUser;
+import com.parse.Parse;
+import com.parse.ParseImageView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,8 +51,7 @@ public class ActivityFeedAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View activityFeedView;
         LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
-        //     ImageView imageView;
-        //  TextView textView;
+
         activityFeedView = inflater.inflate(R.layout.activity_feed_layout, null);
         Holder holder = new Holder();
         holder.textView = (TextView) activityFeedView.findViewById(R.id.textViewFeed);
@@ -57,7 +60,7 @@ public class ActivityFeedAdapter extends BaseAdapter {
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
             holder.imageView = new ImageView(mContext);
-            holder.imageView.setLayoutParams(new GridView.LayoutParams(460, 460));
+            holder.imageView.setLayoutParams(new GridView.LayoutParams(400, 400));
             // holder.textView.setText("User ");
 
             holder.imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
@@ -69,18 +72,12 @@ public class ActivityFeedAdapter extends BaseAdapter {
             //     holder.textView = (TextView) convertView;
         }
 
-        List<String> users = new ArrayList<>();
-
-        users.add(0, "Fenglin");
-        users.add(1, "Gagan");
-        users.add(2, "Sift");
-        users.add(3, "Prasanna");
-
+        String Name = ParseUser.getCurrentUser().getUsername();
 
         holder.imageView.setImageResource(mThumbIds[position]);
 
         // TODO when the database is connected, each imageView entry and textView entry need to be matched
-        holder.textView.setText("\n \n" + users.get(position % 4) + " has uploaded a new photo");
+        holder.textView.setText("\n \n" + Name + " has uploaded a new photo");
         return activityFeedView;
     }
 
