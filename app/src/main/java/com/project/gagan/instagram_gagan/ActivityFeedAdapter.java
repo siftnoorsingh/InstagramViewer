@@ -37,12 +37,13 @@ public class ActivityFeedAdapter extends BaseAdapter {
         return position;
     }
 
+    // Holder class for the TextView and ImageView
     public class Holder {
         TextView textView;
         ImageView imageView;
     }
 
-    // create a new ImageView for each item referenced by the Adapter
+    // create a new activityFeedView for each item referenced by the Adapter
     public View getView(int position, View convertView, ViewGroup parent) {
         View activityFeedView;
         LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
@@ -55,14 +56,9 @@ public class ActivityFeedAdapter extends BaseAdapter {
 
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
-            // --------------
-
-            //   activityFeedView = inflater.inflate(R.layout.activity_feed_layout, null);
-            //     TextView txt = (TextView) activityFeedView.findViewById(R.id.gridView_ActivityFeed);
-            // --------------
             holder.imageView = new ImageView(mContext);
             holder.imageView.setLayoutParams(new GridView.LayoutParams(460, 460));
-           // holder.textView.setText("User ");
+            // holder.textView.setText("User ");
 
             holder.imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             //   holder.imageView.setPadding(8, 8, 8, 8);
@@ -89,15 +85,24 @@ public class ActivityFeedAdapter extends BaseAdapter {
     }
 
     private Integer[] mThumbIds = {
-            R.mipmap.ic_exampleselfie, R.mipmap.ic_enample,
-            R.mipmap.ic_exampleselfie, R.mipmap.ic_exampleselfie,
-            R.mipmap.ic_exampleselfie, R.mipmap.ic_exampleselfie,
-            R.mipmap.ic_exampleselfie, R.mipmap.ic_exampleselfie,
-            R.mipmap.ic_exampleselfie, R.mipmap.ic_exampleselfie,
-            R.mipmap.ic_exampleselfie, R.mipmap.ic_exampleselfie,
-            R.mipmap.ic_exampleselfie, R.mipmap.ic_exampleselfie,
-            R.mipmap.ic_exampleselfie, R.mipmap.ic_exampleselfie,
-            R.mipmap.ic_exampleselfie, R.mipmap.ic_exampleselfie,
+            R.mipmap.ic_exampleselfie,
+            R.mipmap.ic_enample,
+            R.mipmap.ic_exampleselfie,
+            R.mipmap.ic_exampleselfie,
+            R.mipmap.ic_exampleselfie,
+            R.mipmap.ic_exampleselfie,
+            R.mipmap.ic_exampleselfie,
+            R.mipmap.ic_exampleselfie,
+            R.mipmap.ic_exampleselfie,
+            R.mipmap.ic_exampleselfie,
+            R.mipmap.ic_exampleselfie,
+            R.mipmap.ic_exampleselfie,
+            R.mipmap.ic_exampleselfie,
+            R.mipmap.ic_exampleselfie,
+            R.mipmap.ic_exampleselfie,
+            R.mipmap.ic_exampleselfie,
+            R.mipmap.ic_exampleselfie,
+            R.mipmap.ic_exampleselfie,
 
     };
 
