@@ -49,4 +49,8 @@
     <string name="error_blank_confirm_password">enter confirm password</string>
     <string name="error_password_donot_match">"enter password again. Password and Confirm Password don't match"</string>
     <string name="title_activity_discover">DiscoverActivity</string>
+    <string name="profile_thumbnail">profile_picture</string>
+    <string name="name">Name</string>
+    <string name="appLogo">AppLogo</string>
+    <string name="app_logo">AppLogo</string>
 </resources>
