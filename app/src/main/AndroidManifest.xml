@@ -38,9 +38,18 @@
         </activity>
         <activity
             android:name=".DiscoverActivity"
-            android:label="@string/title_activity_discover">
+            android:label="@string/title_activity_discover" >
             <intent-filter>
                 <action android:name="com.project.gagan.instagram_gagan.DiscoverActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SearchResultActivity"
+            android:label="@string/title_activity_search_result" >
+            <intent-filter>
+                <action android:name="com.project.gagan.instagram_gagan.SearchResultActivity" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
