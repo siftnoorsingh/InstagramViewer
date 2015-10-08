@@ -1,5 +1,6 @@
 package com.project.gagan.instagram_gagan;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.app.Fragment;
@@ -32,7 +33,7 @@ public class SearchTab extends Fragment {
 
     private View view;
 
-    private int numberOfUsers;
+  //  public String queryString;
 
     private static SearchView searchViewDiscover;
 
@@ -61,6 +62,7 @@ public class SearchTab extends Fragment {
 
         return view;
     }
+
 
 
     public void onQuery(View v) {
@@ -107,15 +109,20 @@ public class SearchTab extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 String queryString = query;
-                Toast.makeText(getActivity(), "Searching: " + queryString, Toast.LENGTH_SHORT).show();
 
+                //Toast.makeText(getActivity(), "Searching: " + queryString, Toast.LENGTH_SHORT).show();
+
+
+                Intent intent = new Intent(getActivity(),SearchResultActivity.class);
+                intent.putExtra("Query", query);
+                startActivity(intent);
 
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                //Toast.makeText(getActivity(), newText, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getActivity(), newText, Toast.LENGTH_SHORT).show();
                 return false;
             }
         });

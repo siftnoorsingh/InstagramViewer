@@ -53,4 +53,5 @@
     <string name="name">Name</string>
     <string name="appLogo">AppLogo</string>
     <string name="app_logo">AppLogo</string>
+    <string name="title_activity_search_result">SearchResultActivity</string>
 </resources>

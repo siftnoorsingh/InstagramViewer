@@ -18,6 +18,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ public class ImageAdapter extends BaseAdapter {
 
     private Context mContext;
 
-    private int numberOfUsers=10;
+    private int numberOfUsers = 10;
 
 //    private ParseUser user = ParseUser.getCurrentUser();
 //    private ParseFile parseFile = user.getParseFile("thumbnail");
@@ -55,7 +56,7 @@ public class ImageAdapter extends BaseAdapter {
         imageView = new ImageView(mContext);
 
 
-
+        final ArrayList<Photo> photos = new ArrayList<>();
 
 
 //-----------
@@ -66,37 +67,38 @@ public class ImageAdapter extends BaseAdapter {
             public void done(List<ParseObject> list, ParseException e) {
                 // ParseObject user1 = (ParseObject)list.
 
-     //           if (!list.isEmpty()) {
-                    numberOfUsers = list.size();
+                //           if (!list.isEmpty()) {
+                numberOfUsers = list.size();
 
-                    for (int i = 0; i < numberOfUsers; i++) {
+                for (int i = 0; i < numberOfUsers; i++) {
+                    ParseObject po = list.get(i);
+                    ParseFile parseFile = po.getParseFile("thumbnail");
+                    //  photo.setImage(parseFile);
+                    parseFile.getDataInBackground(new GetDataCallback() {
+                        @Override
+                        public void done(byte[] bytes, ParseException e) {
+                            if (e == null) {
+                                int size = 500;
+                                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 
-                        ParseObject po = list.get(i);
-                        ParseFile parseFile = po.getParseFile("thumbnail");
-                        parseFile.getDataInBackground(new GetDataCallback() {
-                            @Override
-                            public void done(byte[] bytes, ParseException e) {
-                                if (e == null) {
-                                    int size = 300;
-                                    Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                                    bmp.s
-                                    if (bmp != null) {
-                                        imageView.setImageBitmap(Bitmap.createScaledBitmap(bmp, size, size, true));
+                                if (bmp != null) {
+                                    float scale = (bmp.getWidth() < bmp.getHeight()) ? (float) bmp.getWidth() / (float) size : (float) bmp.getHeight() / (float) size;
+                                    int width = (int) (bmp.getWidth() / scale);
+                                    int height = (int) (bmp.getHeight() / scale);
+                                    imageView.setImageBitmap(Bitmap.createScaledBitmap(bmp, width, height, true));
 
 
-                                    }
                                 }
                             }
-                        });
-
-                    }
+                        }
+                    });
 
                 }
-      //      }
+
+            }
+            //      }
         });
         //-----------
-
-
 
 
 //
@@ -139,37 +141,10 @@ public class ImageAdapter extends BaseAdapter {
     }
 
 
-    // references to our images
-    private Integer[] mThumbIds = {
-            R.mipmap.ic_enample, R.mipmap.ic_enample,
-            R.mipmap.ic_enample, R.mipmap.ic_enample,
-            R.mipmap.ic_enample, R.mipmap.ic_enample,
-            R.mipmap.ic_enample, R.mipmap.ic_enample,
-            R.mipmap.ic_enample, R.mipmap.ic_enample,
-            R.mipmap.ic_enample, R.mipmap.ic_enample,
-            R.mipmap.ic_enample, R.mipmap.ic_enample,
-            R.mipmap.ic_enample, R.mipmap.ic_enample,
-            R.mipmap.ic_enample, R.mipmap.ic_enample,
-            R.mipmap.ic_enample, R.mipmap.ic_enample,
-            R.mipmap.ic_enample, R.mipmap.ic_enample,
-            R.mipmap.ic_enample, R.mipmap.ic_enample,
-            R.mipmap.ic_enample, R.mipmap.ic_enample,
-            R.mipmap.ic_enample, R.mipmap.ic_enample,
-            R.mipmap.ic_enample, R.mipmap.ic_enample,
-            R.mipmap.ic_enample, R.mipmap.ic_enample,
-            R.mipmap.ic_enample, R.mipmap.ic_enample,
-            R.mipmap.ic_enample, R.mipmap.ic_enample,
-            R.mipmap.ic_enample, R.mipmap.ic_enample,
-            R.mipmap.ic_enample, R.mipmap.ic_enample,
-            R.mipmap.ic_enample, R.mipmap.ic_enample,
-            R.mipmap.ic_enample, R.mipmap.ic_enample,
-            R.mipmap.ic_enample, R.mipmap.ic_enample,
-            R.mipmap.ic_enample, R.mipmap.ic_enample,
-            R.mipmap.ic_enample, R.mipmap.ic_enample,
-            R.mipmap.ic_enample, R.mipmap.ic_enample,
-            R.mipmap.ic_enample, R.mipmap.ic_enample,
-            R.mipmap.ic_enample, R.mipmap.ic_enample,
-            R.mipmap.ic_enample, R.mipmap.ic_enample,
-            R.mipmap.ic_enample, R.mipmap.ic_enample,
-    };
+//    // references to our images
+//    private Integer[] mThumbIds = {
+//            R.mipmap.ic_enample, R.mipmap.ic_enample,
+//            R.mipmap.ic_enample, R.mipmap.ic_enample,
+//
+//    };
 }
