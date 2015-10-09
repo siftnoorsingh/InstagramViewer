@@ -29,6 +29,10 @@ import com.parse.ParseUser;
 import java.lang.reflect.Array;
 import java.util.List;
 
+/**
+ * Created by Fenglin on 3/10/15.
+ */
+
 public class SearchTab extends Fragment {
 
     private View view;
