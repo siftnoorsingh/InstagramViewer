@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Flin on 7/10/2015.
+ * Created by Fenglin on 7/10/2015.
  */
 public class SearchResultImageAdapter extends BaseAdapter {
 
@@ -106,8 +106,8 @@ public class SearchResultImageAdapter extends BaseAdapter {
 
 
                 }
-                if(counter == 0){
-                    Toast.makeText(mContext, "User "+ queryString +" does not exist", Toast.LENGTH_SHORT).show();
+                if (counter == 0) {
+                    Toast.makeText(mContext, "User " + queryString + " does not exist", Toast.LENGTH_SHORT).show();
 
                 }
 

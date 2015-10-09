@@ -9,142 +9,66 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseImageView;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Flin on 3/10/15.
+ * Created by Fenglin on 3/10/15.
  * This class provides pictures for the gridView in SearchTab
  */
-public class ImageAdapter extends BaseAdapter {
+public class ImageAdapter extends ParseQueryAdapter<ParseObject> {
 
-    private Context mContext;
-
-    private int numberOfUsers = 10;
-
-//    private ParseUser user = ParseUser.getCurrentUser();
-//    private ParseFile parseFile = user.getParseFile("thumbnail");
-
-    public ImageAdapter(Context c) {
-        mContext = c;
-    }
-
-    public int getCount() {
-        return numberOfUsers;
-    }
-
-    public Object getItem(int position) {
-        return null;
-    }
-
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    // create a new ImageView for each item referenced by the Adapter
-    public View getView(int position, View convertView, ViewGroup parent) {
-        final ImageView imageView;
-        imageView = new ImageView(mContext);
+    public ImageAdapter(Context context) {
 
 
-        final ArrayList<Photo> photos = new ArrayList<>();
+        super(context, new ParseQueryAdapter.QueryFactory<ParseObject>() {
+            public ParseQuery<ParseObject> create() {
 
+                // Get the current user's photos
+                ParseQuery photosFromCurrentUserQuery = new ParseQuery("_User");
+                //photosFromCurrentUserQuery.whereEqualTo("user", ParseUser.getCurrentUser());
+                photosFromCurrentUserQuery.whereExists("thumbnail");
 
-//-----------
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
+//                photosFromCurrentUserQuery.include("user");
+//                photosFromCurrentUserQuery.orderByDescending("createdAt");
 
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> list, ParseException e) {
-                // ParseObject user1 = (ParseObject)list.
-
-                //           if (!list.isEmpty()) {
-                numberOfUsers = list.size();
-
-                for (int i = 0; i < numberOfUsers; i++) {
-                    ParseObject po = list.get(i);
-                    ParseFile parseFile = po.getParseFile("thumbnail");
-                    //  photo.setImage(parseFile);
-                    parseFile.getDataInBackground(new GetDataCallback() {
-                        @Override
-                        public void done(byte[] bytes, ParseException e) {
-                            if (e == null) {
-                                int size = 500;
-                                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-
-                                if (bmp != null) {
-                                    float scale = (bmp.getWidth() < bmp.getHeight()) ? (float) bmp.getWidth() / (float) size : (float) bmp.getHeight() / (float) size;
-                                    int width = (int) (bmp.getWidth() / scale);
-                                    int height = (int) (bmp.getHeight() / scale);
-                                    imageView.setImageBitmap(Bitmap.createScaledBitmap(bmp, width, height, true));
-
-
-                                }
-                            }
-                        }
-                    });
-
-                }
-
+                return photosFromCurrentUserQuery;
             }
-            //      }
         });
-        //-----------
-
-
-//
-//        ParseUser user = ParseUser.getCurrentUser();
-//        ParseFile parseFile = user.getParseFile("thumbnail");
-//
-//        if (parseFile != null) {
-//            parseFile.getDataInBackground(new GetDataCallback() {
-//                @Override
-//                public void done(byte[] bytes, ParseException e) {
-//                    if (e == null) {
-//                        int size = 250;
-//                        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-//
-//                        if (bmp != null) {
-//                            imageView.setImageBitmap(Bitmap.createScaledBitmap(bmp, size, size, true));
-//
-//                        }
-//                    }
-//                }
-//            });
-//
-//        }
-
-
-//        if (convertView == null) {
-//            // if it's not recycled, initialize some attributes
-//        //    imageView = new ImageView(mContext);
-//            imageView = new ImageView(mContext);
-//            imageView.setLayoutParams(new GridView.LayoutParams(400, 400));
-//
-//            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-//            imageView.setPadding(8, 8, 8, 8);
-//        } else {
-//            imageView = (ImageView) convertView;
-//        }
-
-        //    imageView.setImageResource(mThumbIds[position]);
-        return imageView;
     }
 
 
-//    // references to our images
-//    private Integer[] mThumbIds = {
-//            R.mipmap.ic_enample, R.mipmap.ic_enample,
-//            R.mipmap.ic_enample, R.mipmap.ic_enample,
-//
-//    };
+    @Override
+    public View getItemView(ParseObject photo, View v, ViewGroup parent) {
+
+        if (v == null) {
+            v = View.inflate(getContext(), R.layout.search_tab_layout, null);
+        }
+
+        super.getItemView(photo, v, parent);
+
+        ParseImageView DiscoverPhotoView = (ParseImageView) v.findViewById(R.id.ParseSearchImgView);
+        final ParseFile image = photo.getParseFile("thumbnail");
+        if (image != null) {
+
+            DiscoverPhotoView.setParseFile(image);
+
+            DiscoverPhotoView.loadInBackground();
+        }
+
+        return v;
+    }
+
 }
