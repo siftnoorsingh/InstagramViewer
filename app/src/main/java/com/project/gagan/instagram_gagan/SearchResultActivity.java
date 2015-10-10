@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -51,6 +52,13 @@ public class SearchResultActivity extends AppCompatActivity {
 //        }
         gridView.setAdapter(new SearchResultImageAdapter(getApplicationContext(),query));
 
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout_search_result);
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_action_dashboard));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_action_search));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_camera));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_action_follow));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_action_profile));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         //       ParseUser user = ParseUser.getCurrentUser();
         ParseFile parseFile = parseUser.getParseFile("thumbnail");
