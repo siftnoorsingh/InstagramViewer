@@ -8,7 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.ParseUser;
 
@@ -21,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     ViewPager pager;
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
+    Button cameraBtn;
     CharSequence Titles[] = {"Tiny Pic","Sign Up", "Login"};
     int numOfTabs = 3;
 
@@ -45,6 +49,16 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_action_follow));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_action_profile));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        cameraBtn = (Button)findViewById(R.id.camera_btn);
+        cameraBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Button clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
+                startActivity(intent);
+            }
+        });
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         final PagerAdapter adapter = new PagerAdapter
