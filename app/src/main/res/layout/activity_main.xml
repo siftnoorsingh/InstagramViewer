@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:id="@+id/main_layout">
 
 
     <include
@@ -28,8 +29,13 @@
         android:layout_below="@+id/tool_bar"
         android:layout_above="@+id/tab_layout" />
 
-
-
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/camera_btn"
+        android:layout_below="@+id/pager"
+        android:layout_centerHorizontal="true"
+        android:background="#00ffffff" />
 
 
 </RelativeLayout>

@@ -1,15 +1,11 @@
 package com.project.gagan.instagram_gagan;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import com.parse.ParseUser;
 
 /**
  * Created by Sift on 7/10/2015.
@@ -28,40 +24,40 @@ public class CameraActivity extends AppCompatActivity{
         setContentView(R.layout.activity_camera);
 
 
-        toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
-        setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
+//        toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
+//        setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
 
         //Set icons for tabs and add tabs to tab layout
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("Gallery"));
-        tabLayout.addTab(tabLayout.newTab().setText("Photo"));
-        tabLayout.addTab(tabLayout.newTab().setText("Video"));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+//        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+//        tabLayout.addTab(tabLayout.newTab().setText("Gallery"));
+//        tabLayout.addTab(tabLayout.newTab().setText("Photo"));
+//        tabLayout.addTab(tabLayout.newTab().setText("Video"));
+//        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         //Create the viewpageradapter to switch between tabs
-        final ViewPager viewPagerCam = (ViewPager) findViewById(R.id.pager);
-        final PagerAdapter adapterCam = new PagerAdapter
-                (getSupportFragmentManager(), tabLayout.getTabCount());
-        viewPagerCam.setAdapter(adapterCam);
-
-        //create the tab listener
-        viewPagerCam.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPagerCam.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
+//        final ViewPager viewPagerCam = (ViewPager) findViewById(R.id.pager);
+//        final PagerAdapter adapterCam = new PagerAdapter
+//                (getSupportFragmentManager(), tabLayout.getTabCount());
+//        viewPagerCam.setAdapter(adapterCam);
+//
+//        //create the tab listener
+//        viewPagerCam.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+//        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+//            @Override
+//            public void onTabSelected(TabLayout.Tab tab) {
+//                viewPagerCam.setCurrentItem(tab.getPosition());
+//            }
+//
+//            @Override
+//            public void onTabUnselected(TabLayout.Tab tab) {
+//
+//            }
+//
+//            @Override
+//            public void onTabReselected(TabLayout.Tab tab) {
+//
+//            }
+//        });
 
 
     }
