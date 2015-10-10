@@ -54,7 +54,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".CameraActivity"
+            android:label="@string/camera_activity" >
+        Add a comment to this line
+        <intent-filter>
+        <action android:name="com.project.gagan.instagram_gagan.CameraActivity" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+        </activity>
 
 
         <activity
