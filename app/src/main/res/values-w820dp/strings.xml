@@ -3,4 +3,5 @@
     <string name="profile_thumbnail">profile_thumbnail</string>
     <string name="appLogo">AppLogo</string>
     <string name="app_logo">AppLogo</string>
+    <string name="upload_profile_pic" >Upload Profile Pic</string>
 </resources>
