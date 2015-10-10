@@ -55,5 +55,5 @@
     <string name="app_logo">AppLogo</string>
     <string name="title_activity_search_result">SearchResultActivity</string>
     <string name="camera_activity">Select Image</string>
- 
+    <string name="title_activity_tran">TranActivity</string>
 </resources>
