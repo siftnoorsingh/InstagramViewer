@@ -12,6 +12,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
+import android.util.Log;
 
 /**
  * Created by Fenglin on 10/10/2015.
@@ -21,16 +22,16 @@ public class SearchUserAdapter extends ParseQueryAdapter<ParseObject> {
     int i = 0;
     private String queryString;
 
-    public SearchUserAdapter(final Context context, final String username) {
+    public SearchUserAdapter(final Context context, final String userObjectId) {
 
 
         super(context, new ParseQueryAdapter.QueryFactory<ParseObject>() {
             public ParseQuery<ParseObject> create() {
 
-                Toast.makeText(context, username, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, userObjectId, Toast.LENGTH_SHORT).show();
                 // Get the current user's photos
                 ParseQuery photosFromCurrentUserQuery = new ParseQuery("Photo");
-                photosFromCurrentUserQuery.whereEqualTo("user", "qQwXlllOBV");
+                photosFromCurrentUserQuery.whereEqualTo("user", userObjectId);
 //                photosFromCurrentUserQuery.whereContains("username", query);
                 photosFromCurrentUserQuery.whereExists("image");
 
@@ -44,6 +45,11 @@ public class SearchUserAdapter extends ParseQueryAdapter<ParseObject> {
 
                 photosFromCurrentUserQuery.include("user");
                 photosFromCurrentUserQuery.orderByDescending("createdAt");
+
+
+                Log.d("tag1", "Here1");
+
+
 
                 return photosFromCurrentUserQuery;
             }
@@ -64,11 +70,10 @@ public class SearchUserAdapter extends ParseQueryAdapter<ParseObject> {
 
     @Override
     public View getItemView(ParseObject photo, View v, ViewGroup parent) {
-
+        Log.d("tag2", "Here2");
         if (v == null) {
             v = View.inflate(getContext(), R.layout.userprofilephotos, null);
         }
-
         super.getItemView(photo, v, parent);
 
 

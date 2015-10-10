@@ -86,15 +86,16 @@ public class ImageAdapter extends ParseQueryAdapter<ParseObject> {
             public void onClick(View v) {
 
 
-                    v = View.inflate(getContext(), R.layout.profile_tab, null);
+              //  Toast.makeText(getContext(),photo.getObjectId() , Toast.LENGTH_SHORT).show();
+                v = View.inflate(getContext(), R.layout.profile_tab, null);
                     ListView gridView3 = (ListView) v.findViewById(R.id.list);
-                    SearchUserAdapter searchUserAdapter = new SearchUserAdapter(v.getContext(), photo.getString("username"));
-                    //  Toast.makeText(getContext(),photo.getString("username") , Toast.LENGTH_SHORT).show();
-                    gridView3.setAdapter(searchUserAdapter);
-                    searchUserAdapter.loadObjects();
+         //           SearchUserAdapter searchUserAdapter = new SearchUserAdapter(v.getContext(), photo.getObjectId());
+          //          //
+          //          gridView3.setAdapter(searchUserAdapter);
+          //          searchUserAdapter.loadObjects();
 
                 Intent intent = new Intent(v.getContext(),TranActivity.class);
-                intent.putExtra("username",photo.getString("username"));
+                intent.putExtra("userObjectId",photo.getObjectId());
                 getContext().startActivity(intent);
 
                     //  Toast.makeText(getContext(),"   1" , Toast.LENGTH_SHORT).show();

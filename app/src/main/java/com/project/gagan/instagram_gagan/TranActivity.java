@@ -25,7 +25,7 @@ public class TranActivity extends Activity {
         setContentView(R.layout.profile_tab);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            value = extras.getString("username");
+            value = extras.getString("userObjectId");
             //Toast.makeText(getBaseContext(), value, Toast.LENGTH_SHORT).show();
         }
 
