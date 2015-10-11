@@ -25,6 +25,7 @@
 
         android:verticalSpacing="10dp"
         android:horizontalSpacing="10dp"
-        android:stretchMode="columnWidth"/>
+        android:stretchMode="columnWidth"
+        android:clickable="true" />
 
 </RelativeLayout>

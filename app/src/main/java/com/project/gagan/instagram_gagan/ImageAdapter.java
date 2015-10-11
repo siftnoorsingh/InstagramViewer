@@ -1,15 +1,19 @@
 package com.project.gagan.instagram_gagan;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.GetDataCallback;
@@ -29,11 +33,14 @@ import java.util.List;
  * This class provides pictures for the gridView in SearchTab
  */
 public class ImageAdapter extends ParseQueryAdapter<ParseObject> {
+    SearchIDs searchIDs;
+    ParseImageView DiscoverPhotoView;
 
-    public ImageAdapter(Context context) {
+    public ImageAdapter(Context context, SearchIDs searchID) {
 
 
         super(context, new ParseQueryAdapter.QueryFactory<ParseObject>() {
+
             public ParseQuery<ParseObject> create() {
 
                 // Get the current user's photos
@@ -41,17 +48,21 @@ public class ImageAdapter extends ParseQueryAdapter<ParseObject> {
                 //photosFromCurrentUserQuery.whereEqualTo("user", ParseUser.getCurrentUser());
                 photosFromCurrentUserQuery.whereExists("thumbnail");
 
-//                photosFromCurrentUserQuery.include("user");
+                photosFromCurrentUserQuery.include("user");
 //                photosFromCurrentUserQuery.orderByDescending("createdAt");
 
                 return photosFromCurrentUserQuery;
             }
         });
+
+
     }
 
 
+
+
     @Override
-    public View getItemView(ParseObject photo, View v, ViewGroup parent) {
+    public View getItemView(final ParseObject photo, View v, final ViewGroup parent) {
 
         if (v == null) {
             v = View.inflate(getContext(), R.layout.search_tab_layout, null);
@@ -59,16 +70,44 @@ public class ImageAdapter extends ParseQueryAdapter<ParseObject> {
 
         super.getItemView(photo, v, parent);
 
-        ParseImageView DiscoverPhotoView = (ParseImageView) v.findViewById(R.id.ParseSearchImgView);
+         DiscoverPhotoView = (ParseImageView) v.findViewById(R.id.ParseSearchImgView);
+
         final ParseFile image = photo.getParseFile("thumbnail");
         if (image != null) {
 
+          //  searchIDs.setId(photo.getObjectId());
             DiscoverPhotoView.setParseFile(image);
+            //  Toast.makeText(getContext(),photo.getObjectId() , Toast.LENGTH_SHORT).show();
 
             DiscoverPhotoView.loadInBackground();
         }
+        DiscoverPhotoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+              //  Toast.makeText(getContext(),photo.getObjectId() , Toast.LENGTH_SHORT).show();
+                v = View.inflate(getContext(), R.layout.profile_tab, null);
+                    ListView gridView3 = (ListView) v.findViewById(R.id.list);
+         //           SearchUserAdapter searchUserAdapter = new SearchUserAdapter(v.getContext(), photo.getObjectId());
+          //          //
+          //          gridView3.setAdapter(searchUserAdapter);
+          //          searchUserAdapter.loadObjects();
+
+                Intent intent = new Intent(v.getContext(),TranActivity.class);
+                intent.putExtra("userObjectId",photo.getObjectId());
+                getContext().startActivity(intent);
+
+                    //  Toast.makeText(getContext(),"   1" , Toast.LENGTH_SHORT).show();
+                }
+
+
+        });
+
+
 
         return v;
     }
+
 
 }
