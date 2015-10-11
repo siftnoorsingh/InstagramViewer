@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -17,25 +18,31 @@ public class TranActivity extends Activity {
     private SearchUserAdapter searchUserAdapter;
 
     private ListView listView;
-
+    private View view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
      //   setContentView(R.layout.profile_tab);
-        setContentView(R.layout.profile_tab);
+        setContentView(R.layout.activity_tran);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             value = extras.getString("userObjectId");
             //Toast.makeText(getBaseContext(), value, Toast.LENGTH_SHORT).show();
         }
-
+        view = findViewById(android.R.id.content);
         // Initialize the subclass of ParseQueryAdapter
-        searchUserAdapter = new SearchUserAdapter(TranActivity.this, value);
+        searchUserAdapter = new SearchUserAdapter(view.getContext(), value);
 
         // Initialize ListView and set initial view to mainAdapter
-        listView = (ListView) TranActivity.this.findViewById(R.id.list);
+        listView = (ListView) view.findViewById(R.id.listTran);
         listView.setAdapter(searchUserAdapter);
         searchUserAdapter.loadObjects();
+
+//        ImageAdapter img = new ImageAdapter(view.getContext(),new SearchIDs());
+//        // Initialize ListView and set initial view to mainAdapter
+//        listView = (ListView) view.findViewById(R.id.listTran);
+//        listView.setAdapter(img);
+//        img.loadObjects();
 
 
         //   SearchUserFragment searchUserFragment = new SearchUserFragment();

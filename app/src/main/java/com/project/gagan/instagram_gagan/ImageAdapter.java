@@ -63,7 +63,6 @@ public class ImageAdapter extends ParseQueryAdapter<ParseObject> {
 
     @Override
     public View getItemView(final ParseObject photo, View v, final ViewGroup parent) {
-
         if (v == null) {
             v = View.inflate(getContext(), R.layout.search_tab_layout, null);
         }
