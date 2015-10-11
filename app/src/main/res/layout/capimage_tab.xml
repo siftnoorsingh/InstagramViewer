@@ -15,10 +15,10 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="53dp" />
 
-    <SurfaceView
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/surfaceView2"
+        android:id="@+id/camera_frame"
         android:minHeight="300dp"
         android:minWidth="400dp"
         android:nestedScrollingEnabled="false"
