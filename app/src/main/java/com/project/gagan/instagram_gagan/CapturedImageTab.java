@@ -1,14 +1,13 @@
 package com.project.gagan.instagram_gagan;
 
-import android.content.Intent;
+import android.hardware.Camera;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.FrameLayout;
+import android.widget.Toast;
 
 
 /**
@@ -16,17 +15,26 @@ import android.widget.ImageView;
  */
 public class CapturedImageTab extends Fragment{
 
-    private Preview mPreview;
     Camera mCamera;
-    int mNumberOfCameras;
-    int mCurrentCamera;  // Camera ID currently chosen
-    int mCameraCurrentlyLocked;  // Camera ID that's actually acquired
+    CameraPreview cameraPreview;
+    FrameLayout cameraFrame;
     //static final int REQUEST_IMAGE_CAPTURE = 1;
     //ImageView imageView;
     //Button imageButton;
 
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.capimage_tab, container, false);
+        try{
+            mCamera = Camera.open();
+            mCamera.setDisplayOrientation(90);
+            cameraFrame = (FrameLayout) rootView.findViewById(R.id.camera_frame);
+            cameraPreview = new CameraPreview(rootView.getContext(), mCamera);
+            cameraFrame.addView(cameraPreview);
+        }catch (Exception e){
+            Toast.makeText(rootView.getContext(), "This device doesn't have a camera", Toast.LENGTH_SHORT).show();
+        }
+
         /*
         //add these two things in the xml file
         imageView = (ImageView) rootView.findViewById(R.id.imageView);
