@@ -1,6 +1,7 @@
 package com.project.gagan.instagram_gagan;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -41,7 +42,7 @@ import java.util.List;
  */
 
 public class SearchResultFragmentAdapter extends ParseQueryAdapter<ParseObject> {
-
+    private ParseImageView SearchResult;
     public SearchResultFragmentAdapter(Context context, final String query) {
 
 
@@ -61,7 +62,7 @@ public class SearchResultFragmentAdapter extends ParseQueryAdapter<ParseObject> 
 
 
     @Override
-    public View getItemView(ParseObject photo, View v, ViewGroup parent) {
+    public View getItemView(final ParseObject photo, View v, ViewGroup parent) {
 
         if (v == null) {
             v = View.inflate(getContext(), R.layout.search_tab_layout, null);
@@ -69,7 +70,7 @@ public class SearchResultFragmentAdapter extends ParseQueryAdapter<ParseObject> 
 
         super.getItemView(photo, v, parent);
 
-        ParseImageView SearchResult = (ParseImageView) v.findViewById(R.id.ParseSearchImgView);
+        SearchResult = (ParseImageView) v.findViewById(R.id.ParseSearchImgView);
         final ParseFile image = photo.getParseFile("thumbnail");
         if (image != null) {
 
@@ -77,6 +78,15 @@ public class SearchResultFragmentAdapter extends ParseQueryAdapter<ParseObject> 
 
             SearchResult.loadInBackground();
         }
+        SearchResult.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(),TranActivity.class);
+                intent.putExtra("userObjectId",photo.getObjectId());
+                getContext().startActivity(intent);
+
+            }
+        });
 
         return v;
     }

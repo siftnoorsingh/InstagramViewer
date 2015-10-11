@@ -21,6 +21,7 @@ public class SearchUserAdapter extends ParseQueryAdapter<ParseObject> {
 
     int i = 0;
     private String queryString;
+    private ParseImageView thumbPhotoView;
 
     public SearchUserAdapter(final Context context, final String userObjectId) {
 
@@ -72,13 +73,13 @@ public class SearchUserAdapter extends ParseQueryAdapter<ParseObject> {
     public View getItemView(ParseObject photo, View v, ViewGroup parent) {
         Log.d("tag2", "Here2");
         if (v == null) {
-            v = View.inflate(getContext(), R.layout.userprofilephotos, null);
+            v = View.inflate(getContext(), R.layout.user_profile, null);
         }
         super.getItemView(photo, v, parent);
 
 
         // Set up the current user's all uploaded photos
-        ParseImageView thumbPhotoView = (ParseImageView) v.findViewById(R.id.icon);
+         thumbPhotoView = (ParseImageView) v.findViewById(R.id.icon);
         final ParseFile image = photo.getParseFile("image");
         if (image != null) {
             thumbPhotoView.setParseFile(image);
