@@ -95,6 +95,8 @@ public class ImageAdapter extends ParseQueryAdapter<ParseObject> {
 
                 Intent intent = new Intent(v.getContext(),TranActivity.class);
                 intent.putExtra("userObjectId",photo.getObjectId());
+                intent.putExtra("username",photo.getString("username"));
+
                 getContext().startActivity(intent);
 
                     //  Toast.makeText(getContext(),"   1" , Toast.LENGTH_SHORT).show();

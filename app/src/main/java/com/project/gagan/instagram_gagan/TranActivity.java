@@ -10,15 +10,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.ParseImageView;
+
 public class TranActivity extends Activity {
-    private String value;
+    private String userObjectId;
+    private String userName;
 
     private SearchUserAdapter searchUserAdapter;
 
     private ListView listView;
     private View view;
+    private TextView textView;
+    private ParseImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,17 +33,24 @@ public class TranActivity extends Activity {
         setContentView(R.layout.activity_tran);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            value = extras.getString("userObjectId");
+            userObjectId = extras.getString("userObjectId");
+            userName = extras.getString("username");
+
             //Toast.makeText(getBaseContext(), value, Toast.LENGTH_SHORT).show();
         }
         view = findViewById(android.R.id.content);
         // Initialize the subclass of ParseQueryAdapter
-        searchUserAdapter = new SearchUserAdapter(view.getContext(), value);
+        searchUserAdapter = new SearchUserAdapter(view.getContext(), userObjectId);
 
         // Initialize ListView and set initial view to mainAdapter
         listView = (ListView) view.findViewById(R.id.listTran);
         listView.setAdapter(searchUserAdapter);
         searchUserAdapter.loadObjects();
+
+        textView = (TextView)findViewById(R.id.user_name);
+        textView.setText(userName);
+        imageView = (ParseImageView)findViewById(R.id.icon_thumb);
+
 
 //        ImageAdapter img = new ImageAdapter(view.getContext(),new SearchIDs());
 //        // Initialize ListView and set initial view to mainAdapter
