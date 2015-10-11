@@ -1,5 +1,7 @@
 package com.project.gagan.instagram_gagan;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 
@@ -18,21 +21,43 @@ public class CapturedImageTab extends Fragment{
     Camera mCamera;
     CameraPreview cameraPreview;
     FrameLayout cameraFrame;
+    ImageButton captureBtn;
+    View rootView;
+
+    Camera.ShutterCallback shutterCallback = new Camera.ShutterCallback() {
+        @Override
+        public void onShutter() {
+            //Add the shutter audio here
+        }
+    };
+
+    Camera.PictureCallback rawCallback = new Camera.PictureCallback() {
+        @Override
+        public void onPictureTaken(byte[] data, Camera camera) {
+            //Get and process the raw image here
+        }
+    };
+
+    Camera.PictureCallback jpegCallback = new Camera.PictureCallback() {
+        @Override
+        public void onPictureTaken(byte[] data, Camera camera) {
+            Bitmap bitmapPicture = BitmapFactory.decodeByteArray(data, 0, data.length);
+            Bitmap correctBmp = Bitmap.createBitmap(bitmapPicture, 0, 0, bitmapPicture.getWidth(), bitmapPicture.getHeight(), null, true);
+            imageCaptured(correctBmp);
+        }
+    };
     //static final int REQUEST_IMAGE_CAPTURE = 1;
     //ImageView imageView;
     //Button imageButton;
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.capimage_tab, container, false);
+        rootView = inflater.inflate(R.layout.capimage_tab, container, false);
         try{
             mCamera = Camera.open();
-            mCamera.setDisplayOrientation(90);
-            cameraFrame = (FrameLayout) rootView.findViewById(R.id.camera_frame);
-            cameraPreview = new CameraPreview(rootView.getContext(), mCamera);
-            cameraFrame.addView(cameraPreview);
+            setupCamera(mCamera);
         }catch (Exception e){
-            Toast.makeText(rootView.getContext(), "This device doesn't have a camera", Toast.LENGTH_SHORT).show();
+            Toast.makeText(rootView.getContext(), "Unable to connect to camera", Toast.LENGTH_SHORT).show();
         }
 
         /*
@@ -41,6 +66,25 @@ public class CapturedImageTab extends Fragment{
         imageButton= (Button) rootView.findViewById(R.id.imageButton);
         */
         return rootView;
+    }
+
+    private void setupCamera(final Camera camera){
+        camera.setDisplayOrientation(90);
+        cameraFrame = (FrameLayout) rootView.findViewById(R.id.camera_frame);
+        cameraPreview = new CameraPreview(rootView.getContext(), mCamera);
+        cameraFrame.addView(cameraPreview);
+
+        captureBtn = (ImageButton) rootView.findViewById(R.id.imageButton2);
+        captureBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                camera.takePicture(shutterCallback, rawCallback, jpegCallback);
+            }
+        });
+    }
+
+    private void imageCaptured(Bitmap image){
+        Toast.makeText(rootView.getContext(), "Image Captured", Toast.LENGTH_SHORT).show();
     }
 
     /*//Add this method to the onCLick function in the xml file for imageButton
