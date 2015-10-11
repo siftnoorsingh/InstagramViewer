@@ -19,10 +19,11 @@ public class TranActivity extends Activity {
 
     private ListView listView;
     private View view;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-     //   setContentView(R.layout.profile_tab);
+        //   setContentView(R.layout.profile_tab);
         setContentView(R.layout.activity_tran);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -83,8 +84,6 @@ public class TranActivity extends Activity {
 
 
     }
-
-
 
 
     @Override

@@ -28,11 +28,16 @@ public class SearchUserAdapter extends ParseQueryAdapter<ParseObject> {
 
         super(context, new ParseQueryAdapter.QueryFactory<ParseObject>() {
             public ParseQuery<ParseObject> create() {
-
+                Log.d("userObjectId: ",userObjectId);
                 Toast.makeText(context, userObjectId, Toast.LENGTH_SHORT).show();
                 // Get the current user's photos
+
                 ParseQuery photosFromCurrentUserQuery = new ParseQuery("Photo");
-                photosFromCurrentUserQuery.whereEqualTo("user", userObjectId);
+
+
+                photosFromCurrentUserQuery.whereEqualTo("userObjId", userObjectId);
+
+
 //                photosFromCurrentUserQuery.whereContains("username", query);
                 photosFromCurrentUserQuery.whereExists("image");
 
@@ -73,7 +78,7 @@ public class SearchUserAdapter extends ParseQueryAdapter<ParseObject> {
     public View getItemView(ParseObject photo, View v, ViewGroup parent) {
         Log.d("tag2", "Here2");
         if (v == null) {
-            v = View.inflate(getContext(), R.layout.user_profile, null);
+            v = View.inflate(getContext(), R.layout.userprofilephotos, null);
         }
         super.getItemView(photo, v, parent);
 
