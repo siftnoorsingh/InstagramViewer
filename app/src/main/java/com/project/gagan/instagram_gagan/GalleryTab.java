@@ -11,6 +11,8 @@ import android.view.ViewGroup;
  */
 public class GalleryTab extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.gallery_tab, container, false);
+        final View rootView = inflater.inflate(R.layout.gallery_tab, container, false);
+        return rootView;
     }
+
 }
