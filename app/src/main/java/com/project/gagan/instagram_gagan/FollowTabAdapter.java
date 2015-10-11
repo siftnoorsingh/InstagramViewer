@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseImageView;
 import com.parse.ParseObject;
@@ -16,10 +18,12 @@ import com.parse.ParseUser;
 
 import org.xml.sax.helpers.ParserAdapter;
 
+import java.util.List;
+
 /**
- * Created by Flin on 11/10/2015.
+ * Created by Fenglin on 11/10/2015.
  */
-public class FollowTabAdapter extends ParseQueryAdapter<ParseObject>{
+public class FollowTabAdapter extends ParseQueryAdapter<ParseObject> {
 
 
     int i = 0;
@@ -37,23 +41,39 @@ public class FollowTabAdapter extends ParseQueryAdapter<ParseObject>{
                 users.whereEqualTo("objectId", ParseUser.getCurrentUser().getObjectId());
 
                 ParseQuery ActivityQuery = new ParseQuery("Activity");
-                ActivityQuery.whereMatchesQuery("fromUser",users);
+                ActivityQuery.whereMatchesQuery("fromUser", users);
 
 
                 ParseQuery users3 = new ParseQuery("_User");
-              //  users3.whereMatchesQuery("objectId",)
-
-                ActivityQuery.whereMatchesQuery("toUser",users3);
+                //  users3.whereMatchesQuery("objectId",)
 
 
+                ActivityQuery.whereMatchesQuery("toUser", users3);
 
 
-                ParseQuery users2 = new ParseQuery("_User");
+                final ParseQuery users2 = new ParseQuery("_User");
                 users2.whereMatchesQuery("ObjectId", ActivityQuery);
 
-                ParseQuery photoQuery = new ParseQuery("Photo");
-                photoQuery.whereMatchesQuery("user",users3);
+                final ParseQuery photoQuery = new ParseQuery("Photo");
+                photoQuery.whereMatchesQuery("user", users3);
 //
+
+//
+//                ParseQuery<ParseObject> query = ParseQuery.getQuery("Activity");
+//
+//                query.findInBackground(new FindCallback<ParseObject>() {
+//                    @Override
+//                    public void done(List<ParseObject> list, ParseException e) {
+//                        for (ParseObject parseObject : list) {
+//                           String s = parseObject.getString("to");
+//                            users2.whereEqualTo("objectId", s);
+//
+//                        }
+//                    }
+//
+//                });
+//                photoQuery.whereMatchesQuery("user", users2);
+
 //
 //
 //                ParseQuery toUser = new ParseQuery("Activity");
@@ -63,14 +83,11 @@ public class FollowTabAdapter extends ParseQueryAdapter<ParseObject>{
                 photoQuery.whereExists("image");
 
 
-
-
                 photoQuery.include("user");
                 photoQuery.orderByDescending("createdAt");
 
 
                 Log.d("tag1", "Here1");
-
 
 
                 return photoQuery;
