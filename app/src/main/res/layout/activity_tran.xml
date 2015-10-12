@@ -57,7 +57,19 @@
         android:layout_height="fill_parent"
         android:layout_below="@id/user_name"
         android:paddingTop="5dp"
-        />
+        android:text="New Button" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButtonFollow"
+        android:layout_alignTop="@+id/frame"
+        android:layout_toRightOf="@+id/frame"
+        android:layout_marginLeft="199dp"
+        android:layout_marginStart="199dp"
+        android:layout_above="@+id/user_name"
+        android:layout_alignRight="@+id/user_name"
+        android:layout_alignEnd="@+id/user_name" />
 
 </RelativeLayout>
 
