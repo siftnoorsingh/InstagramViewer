@@ -65,10 +65,10 @@ public class CapturedImageTab extends Fragment{
         try{
             mCamera = Camera.open();
             //Code for flash option
-            //Camera.Parameters params = new Camera.getParameters();
-            //params.setFlashMode(Camera.Parameters.FLASH_MODE_ON);
+            Camera.Parameters params = mCamera.getParameters();
+            params.setFlashMode(Camera.Parameters.FLASH_MODE_ON);
             // ... set other parameters
-            //mCamera.setParameters(params);
+            mCamera.setParameters(params);
             setupCamera(mCamera);
         }catch (Exception e){
             Toast.makeText(rootView.getContext(), "Unable to connect to camera", Toast.LENGTH_SHORT).show();
@@ -96,6 +96,16 @@ public class CapturedImageTab extends Fragment{
                 camera.takePicture(shutterCallback, rawCallback, jpegCallback);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // Use mCurrentCamera to select the camera desired to safely restore
+        // the fragment after the camera has been changed
+//        mCamera = Camera.open();
+        //cameraPreview.setCamera(mCamera);
     }
 
     @Override
