@@ -1,5 +1,6 @@
 package com.project.gagan.instagram_gagan;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -8,8 +9,14 @@ import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.Toast;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * Created by Sift on 13/10/2015.
@@ -17,8 +24,9 @@ import android.widget.SeekBar;
 public class BrightenContrastImage extends AppCompatActivity {
 
     Bitmap new_bm;
-    Bitmap bitmap;
+    Bitmap bmp;
     ImageView imageView;
+    Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +38,7 @@ public class BrightenContrastImage extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         byte[] byteArray = extras.getByteArray("picture");
 
-        Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+        bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
         imageView.setImageBitmap(bmp);
         SeekBar_contrast.setMax(10);
         SeekBar_brightness.setMax(510);
@@ -39,8 +47,9 @@ public class BrightenContrastImage extends AppCompatActivity {
         SeekBar_contrast.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                new_bm = changeBitmapContrastBrightness(bitmap, (float) (progress - 1), (float) (SeekBar_brightness.getProgress() - 255));
+                new_bm = changeBitmapContrastBrightness(bmp, (float) (progress - 1), (float) (SeekBar_brightness.getProgress() - 255));
                 imageView.setImageBitmap(new_bm);
+                bmp=new_bm;
             }
 
             @Override
@@ -54,8 +63,9 @@ public class BrightenContrastImage extends AppCompatActivity {
         SeekBar_brightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                new_bm = changeBitmapContrastBrightness(bitmap, (float) (SeekBar_contrast.getProgress() - 1), (float) (progress - 255));
+                new_bm = changeBitmapContrastBrightness(bmp, (float) (SeekBar_contrast.getProgress() - 1), (float) (progress - 255));
                 imageView.setImageBitmap(new_bm);
+                bmp=new_bm;
             }
 
             @Override
@@ -65,6 +75,13 @@ public class BrightenContrastImage extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 
+            }
+        });
+        button = (Button) findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               imageEdited(bmp);
             }
         });
     }
@@ -88,6 +105,17 @@ public class BrightenContrastImage extends AppCompatActivity {
         canvas.drawBitmap(bmp, 0, 0, paint);
 
         return ret;
+    }
+
+    private void imageEdited(Bitmap image){
+        //Bitmap bmp = BitmapFactory.decode;
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        Intent intent = new Intent(this, ImageFilters.class);
+        intent.putExtra("picture", byteArray);
+        startActivity(intent);
+        Toast.makeText(this, "Let's apply filters!", Toast.LENGTH_SHORT).show();
     }
 
 }

@@ -94,6 +94,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ImageFilters"
+            android:label="@string/title_image_filters" >
+            <intent-filter>
+                <action android:name="com.project.gagan.instagram_gagan.ImageFilters" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
