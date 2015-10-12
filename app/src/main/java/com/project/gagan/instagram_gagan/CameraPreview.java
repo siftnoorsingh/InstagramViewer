@@ -5,7 +5,12 @@ package com.project.gagan.instagram_gagan;
  */
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.hardware.Camera;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -17,15 +22,39 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     private static final String TAG = "Error";
     private SurfaceHolder mHolder;
     private Camera mCamera;
+    Paint paint = new Paint();
 
     public CameraPreview(Context context, Camera mcamera) {
         super(context);
+        this.setWillNotDraw(false);
         mCamera = mcamera;
 
         // Install a SurfaceHolder.Callback so we get notified when the
         // underlying surface is created and destroyed.
         mHolder = getHolder();
         mHolder.addCallback(this);
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas)
+    {
+       // if(grid){
+            //  Find Screen size first
+            DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
+            int screenWidth = metrics.widthPixels;
+            int screenHeight = (int) (metrics.heightPixels*0.9);
+
+            //  Set paint options
+            paint.setAntiAlias(true);
+            paint.setStrokeWidth(3);
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setColor(Color.BLACK);
+
+            canvas.drawLine((screenWidth/3)*2,0,(screenWidth/3)*2,screenHeight,paint);
+            canvas.drawLine((screenWidth/3),0,(screenWidth/3),screenHeight,paint);
+            canvas.drawLine(0,(screenHeight/3)*2,screenWidth,(screenHeight/3)*2,paint);
+            canvas.drawLine(0,(screenHeight/3),screenWidth,(screenHeight/3),paint);
+        //}
     }
 
     public void surfaceCreated(SurfaceHolder holder) {

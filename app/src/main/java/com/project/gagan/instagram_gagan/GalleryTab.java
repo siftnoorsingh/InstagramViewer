@@ -25,7 +25,7 @@ public class GalleryTab extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.gallery_tab, container, false);
 
-        gridView = (GridView) rootView.findViewById(R.id.gridView);
+/*        gridView = (GridView) rootView.findViewById(R.id.gridView);
         galleryAdapter = new GalleryAdapter(rootView.getContext(), R.layout.grid_cell_layout, getData());
         gridView.setAdapter(galleryAdapter);
 
@@ -34,14 +34,14 @@ public class GalleryTab extends Fragment{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(rootView.getContext(), "Image at " + position + " clicked", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
         return rootView;
     }
 
-    private ArrayList<Bitmap> getData(){
+   /* private ArrayList<Bitmap> getData(){
         return null;
-    };
+    };*/
 
     //@Override
     /*protected void onActivityResult(int requestCode, int resultCode, Intent data,View rootView) {
