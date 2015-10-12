@@ -27,6 +27,9 @@ public class CapturedImageTab extends Fragment{
     FrameLayout cameraFrame;
     ImageButton captureBtn;
     View rootView;
+    //static final int REQUEST_IMAGE_CAPTURE = 1;
+    //ImageView imageView;
+    //Button imageButton;
 
     Camera.ShutterCallback shutterCallback = new Camera.ShutterCallback() {
         @Override
@@ -55,9 +58,6 @@ public class CapturedImageTab extends Fragment{
             imageCaptured(correctBmp);
         }
     };
-    //static final int REQUEST_IMAGE_CAPTURE = 1;
-    //ImageView imageView;
-    //Button imageButton;
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -78,6 +78,7 @@ public class CapturedImageTab extends Fragment{
         //add these two things in the xml file
         imageView = (ImageView) rootView.findViewById(R.id.imageView);
         imageButton= (Button) rootView.findViewById(R.id.imageButton);
+        launchCamera();
         */
         return rootView;
     }
@@ -135,7 +136,7 @@ public class CapturedImageTab extends Fragment{
             // This is another way where you can get the data about the image as well to make other changes to it.
               Bundle extras = data.getExtras();
               Bitmap photo = (Bitmap) extras.get("data");
-              imageView.setImageBitmap();
+              imageView.setImageBitmap(photo);
         } else if (resultCode == RESULT_CANCELED) {
             // User cancelled the image capture
         }
