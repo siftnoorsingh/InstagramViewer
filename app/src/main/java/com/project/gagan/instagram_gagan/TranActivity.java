@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,7 +14,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseImageView;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+import java.util.List;
 
 public class TranActivity extends Activity {
     private String userObjectId;
@@ -25,6 +34,7 @@ public class TranActivity extends Activity {
     private View view;
     private TextView textView;
     private ParseImageView imageView;
+    private ParseFile thumbnail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +48,33 @@ public class TranActivity extends Activity {
 
             //Toast.makeText(getBaseContext(), value, Toast.LENGTH_SHORT).show();
         }
+
+        ParseQuery<ParseUser> users = ParseUser.getQuery();
+        users.whereEqualTo("objectId", userObjectId);
+
+        users.findInBackground(new FindCallback<ParseUser>() {
+            @Override
+            public void done(List<ParseUser> list, ParseException e) {
+                if(e== null){
+                for(ParseObject p:list) {
+
+                    thumbnail = p.getParseFile("thumbnail");
+                    imageView.setParseFile(thumbnail);
+                    imageView.loadInBackground();
+                    Log.d("111!!!!", thumbnail.getName());
+                }
+                }else {
+                    Log.d("2222!!!!", "here");
+                }
+            }
+
+//            @Override
+//            public void done(Object o, Throwable throwable) {
+//
+//            }
+        });
+
+
         view = findViewById(android.R.id.content);
         // Initialize the subclass of ParseQueryAdapter
         searchUserAdapter = new SearchUserAdapter(view.getContext(), userObjectId);
@@ -49,8 +86,9 @@ public class TranActivity extends Activity {
 
         textView = (TextView)findViewById(R.id.user_name);
         textView.setText(userName);
-        imageView = (ParseImageView)findViewById(R.id.icon_thumb);
-
+        imageView = (ParseImageView)findViewById(R.id.user_thumbnail);
+//        imageView.setParseFile(thumbnail);
+//        imageView.loadInBackground();
 
 //        ImageAdapter img = new ImageAdapter(view.getContext(),new SearchIDs());
 //        // Initialize ListView and set initial view to mainAdapter
