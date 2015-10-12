@@ -27,6 +27,7 @@ public class BrightenContrastImage extends AppCompatActivity {
     Bitmap bmp;
     ImageView imageView;
     Button button;
+    boolean changed=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,8 @@ public class BrightenContrastImage extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 new_bm = changeBitmapContrastBrightness(bmp, (float) (progress - 1), (float) (SeekBar_brightness.getProgress() - 255));
                 imageView.setImageBitmap(new_bm);
-                bmp=new_bm;
+                //bmp=new_bm;
+                changed=true;
             }
 
             @Override
@@ -65,7 +67,8 @@ public class BrightenContrastImage extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 new_bm = changeBitmapContrastBrightness(bmp, (float) (SeekBar_contrast.getProgress() - 1), (float) (progress - 255));
                 imageView.setImageBitmap(new_bm);
-                bmp=new_bm;
+                //bmp=new_bm;
+                changed=true;
             }
 
             @Override
@@ -81,7 +84,12 @@ public class BrightenContrastImage extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               imageEdited(bmp);
+                if(changed) {
+                    imageEdited(new_bm);
+                }
+                else{
+                    imageEdited(bmp);
+                }
             }
         });
     }
