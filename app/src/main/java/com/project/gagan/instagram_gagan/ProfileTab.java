@@ -9,11 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
 
 /**
@@ -22,35 +25,66 @@ import com.parse.ParseUser;
 public class ProfileTab extends Fragment {
 
     private View view;
-
-
-    private UserViewAdapter mUserViewAdapter;
+    private UserProfileAdapter mUserViewAdapter;
+    private ParseQueryAdapter<ParseObject> mainAdapter;
+    private ListView listView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.profile_tab, container, false);
+
+
         // Set up the username
         ParseUser user = ParseUser.getCurrentUser();
+
         TextView usernameView = (TextView) view.findViewById(R.id.user_name);
         usernameView.setText((String) user.get("username"));
 
-        // Set up the user's profile picture
+        // Set up the current user's bio
+        TextView userBio = (TextView) view.findViewById(R.id.bio);
+        userBio.setText((String) user.get("biography"));
+
+        // Set up the current user's posts count
+        TextView userPosts = (TextView) view.findViewById(R.id.num_posts);
+        userPosts.setText((String) user.get("postCount") + " Posts");
 
 
-        /*ParseImageView mealImage = (ParseImageView) view.findViewById(R.id.user_thumbnail);
-        ParseFile photoFile = user.getParseFile("thumbnail");
-        if (photoFile != null) {
-            mealImage.setParseFile(photoFile);
-            mealImage.loadInBackground(new GetDataCallback() {
-                @Override
-                public void done(byte[] data, ParseException e) {
-                    // nothing to do
-                    photoView.setImageBitmap(decodeSampledBitmapFromResource(getResources(), bmp., 100, 100));
+
+        /*// Initialize main ParseQueryAdapter
+        mainAdapter = new ParseQueryAdapter<ParseObject>(getActivity(), "Photo");
+        mainAdapter.setImageKey("image");
+        mainAdapter.setTextKey("description");*/
+
+
+
+        // Initialize the subclass of ParseQueryAdapter
+        mUserViewAdapter = new UserProfileAdapter(getActivity());
+
+        // Initialize ListView and set initial view to mainAdapter
+        listView = (ListView) view.findViewById(R.id.list);
+        listView.setAdapter(mUserViewAdapter);
+        mUserViewAdapter.loadObjects();
+
+        /*// Initialize toggle button
+        Button toggleButton = (Button) view.findViewById(R.id.toggleButton);
+        toggleButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (listView.getAdapter() == mainAdapter) {
+                    listView.setAdapter(mUserViewAdapter);
+                    mUserViewAdapter.loadObjects();
+                } else {
+                    listView.setAdapter(mainAdapter);
+                    mainAdapter.loadObjects();
                 }
-            });
-        }*/
+            }
 
+        });*/
+
+
+        // Set up the user's profile picture
         final ImageView photoView = (ImageView) view.findViewById(R.id.user_thumbnail);
         photoView.setBackgroundResource(R.drawable.frame);
         final ParseFile thumbnailFile = user.getParseFile("thumbnail");
@@ -67,8 +101,8 @@ public class ProfileTab extends Fragment {
                             float scale = (bmp.getWidth() < bmp.getHeight()) ? (float)bmp.getWidth() / (float)size : (float)bmp.getHeight() / (float)size;
                             int width = (int)(bmp.getWidth() / scale);
                             int height = (int)(bmp.getHeight() / scale);
-                             photoView.setImageBitmap(Bitmap.createScaledBitmap(bmp,
-                                      width, height, true));
+                            photoView.setImageBitmap(Bitmap.createScaledBitmap(bmp,
+                                    width, height, true));
 
 
 
@@ -81,8 +115,23 @@ public class ProfileTab extends Fragment {
                 }
             });
         } else { // Clear ParseImageView if an object doesn't have a photo
-            photoView.setImageResource(android.R.color.transparent);
+            photoView.setImageResource(R.drawable.placeholder_user);
         }
+
+
+        /*ParseImageView mealImage = (ParseImageView) view.findViewById(R.id.user_thumbnail);
+        ParseFile photoFile = user.getParseFile("thumbnail");
+        if (photoFile != null) {
+            mealImage.setParseFile(photoFile);
+            mealImage.loadInBackground(new GetDataCallback() {
+                @Override
+                public void done(byte[] data, ParseException e) {
+                    // nothing to do
+                    photoView.setImageBitmap(decodeSampledBitmapFromResource(getResources(), bmp., 100, 100));
+                }
+            });
+        }*/
+
 
 
 

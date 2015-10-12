@@ -57,4 +57,5 @@
     <string name="camera_activity">Select Image</string>
     <string name="title_activity_tran">TranActivity</string>
     <string name="title_image_edit">Edit Image</string>
+    <string name="upload_profile_pic">Upload Profile Pic</string>
 </resources>
