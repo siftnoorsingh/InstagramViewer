@@ -11,12 +11,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 
 /**
  * Created by Sift on 13/10/2015.
@@ -24,7 +24,7 @@ import java.io.ByteArrayOutputStream;
 public class BrightenContrastImage extends AppCompatActivity {
 
     Bitmap new_bm;
-    Bitmap bmp;
+    Bitmap bmp = null;
     ImageView imageView;
     Button button;
     boolean changed=false;
@@ -36,15 +36,20 @@ public class BrightenContrastImage extends AppCompatActivity {
         final SeekBar SeekBar_contrast = (SeekBar) findViewById(R.id.SeekBar_contrast);
         final SeekBar SeekBar_brightness = (SeekBar) findViewById(R.id.SeekBar_brightness);
         imageView = (ImageView) findViewById(R.id.imageView5);
-        Bundle extras = getIntent().getExtras();
-        byte[] byteArray = extras.getByteArray("picture");
 
-        bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+        String filename = getIntent().getStringExtra("image");
+        try {
+            FileInputStream is = this.openFileInput(filename);
+            bmp = BitmapFactory.decodeStream(is);
+            is.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         imageView.setImageBitmap(bmp);
         SeekBar_contrast.setMax(10);
         SeekBar_brightness.setMax(510);
-        SeekBar_contrast.setProgress((1));
-        SeekBar_brightness.setProgress((255));
+        SeekBar_contrast.setProgress(5);
+        SeekBar_brightness.setProgress(255);
         SeekBar_contrast.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

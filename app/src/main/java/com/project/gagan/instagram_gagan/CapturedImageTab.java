@@ -1,9 +1,9 @@
 package com.project.gagan.instagram_gagan;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,7 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 
 
 /**
@@ -50,11 +50,11 @@ public class CapturedImageTab extends Fragment{
         public void onPictureTaken(byte[] data, Camera camera) {
             Bitmap bitmapPicture = BitmapFactory.decodeByteArray(data, 0, data.length);
             Bitmap correctBmp = Bitmap.createBitmap(bitmapPicture, 0, 0, bitmapPicture.getWidth(), bitmapPicture.getHeight(), null, true);
-            if (correctBmp.getWidth() > correctBmp.getHeight()) {
-                Matrix matrix = new Matrix();
-                matrix.postRotate(90);
-                correctBmp = Bitmap.createBitmap(correctBmp , 0, 0, correctBmp.getWidth(), correctBmp.getHeight(), matrix, true);
-            }
+//            if (correctBmp.getWidth() > correctBmp.getHeight()) {
+//                Matrix matrix = new Matrix();
+//                matrix.postRotate(90);
+//                correctBmp = Bitmap.createBitmap(correctBmp , 0, 0, correctBmp.getWidth(), correctBmp.getHeight(), matrix, true);
+//            }
             imageCaptured(correctBmp);
         }
     };
@@ -122,14 +122,22 @@ public class CapturedImageTab extends Fragment{
     }
 
     private void imageCaptured(Bitmap image){
-        //Bitmap bmp = BitmapFactory.decode;
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-        Intent intent = new Intent(rootView.getContext(), BrightenContrastImage.class);
-        intent.putExtra("picture", byteArray);
-        startActivity(intent);
-        Toast.makeText(rootView.getContext(), "Image Captured", Toast.LENGTH_SHORT).show();
+
+        try {
+            String filename = "bitmap.png";
+            FileOutputStream stream = rootView.getContext().openFileOutput(filename, Context.MODE_PRIVATE);
+            image.compress(Bitmap.CompressFormat.PNG, 100, stream);
+
+            stream.close();
+            image.recycle();
+
+            Intent intent = new Intent(rootView.getContext(), BrightenContrastImage.class);
+            intent.putExtra("image", filename);
+            startActivity(intent);
+
+        } catch (Exception e) {
+            Toast.makeText(rootView.getContext(), "Unable to open the image", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /*//Add this method to the onCLick function in the xml file for imageButton
