@@ -32,17 +32,19 @@ public class EditImage extends AppCompatActivity{
 
         Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
         ImageView image = (ImageView) findViewById(R.id.imageView4);
+        cropButton= (Button) findViewById(R.id.cropButton);
         Intent intent=getIntent();
         picUri = intent.getData();
 
         image.setImageBitmap(bmp);
-/*        cropButton.setOnClickListener(new View.OnClickListener() {
+        cropButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 performCrop();
             }
-        });*/
+        });
+
     }
 
     public void performCrop(){
@@ -67,6 +69,7 @@ public class EditImage extends AppCompatActivity{
             cropIntent.putExtra("return-data", true);
             //start the activity - we handle returning in onActivityResult
             startActivityForResult(cropIntent, PIC_CROP);
+            Toast.makeText(this, "Button Clicked", Toast.LENGTH_SHORT).show();
         }
         catch(ActivityNotFoundException anfe){
             //display an error message

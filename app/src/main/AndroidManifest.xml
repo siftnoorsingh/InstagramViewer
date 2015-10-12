@@ -85,6 +85,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".BrightenContrastImage"
+            android:label="@string/title_image_effects" >
+            <intent-filter>
+                <action android:name="com.project.gagan.instagram_gagan.BrightenContrastImage" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

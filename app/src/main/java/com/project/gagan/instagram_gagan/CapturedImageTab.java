@@ -126,7 +126,7 @@ public class CapturedImageTab extends Fragment{
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] byteArray = stream.toByteArray();
-        Intent intent = new Intent(rootView.getContext(), EditImage.class);
+        Intent intent = new Intent(rootView.getContext(), BrightenContrastImage.class);
         intent.putExtra("picture", byteArray);
         startActivity(intent);
         Toast.makeText(rootView.getContext(), "Image Captured", Toast.LENGTH_SHORT).show();
