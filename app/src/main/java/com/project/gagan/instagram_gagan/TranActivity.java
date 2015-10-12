@@ -64,11 +64,7 @@ public class TranActivity extends Activity {
                     for (ParseUser p : list) {
 
                         thumbnail = p.getParseFile("thumbnail");
-                        //toUser = p.getParseObject("objectId");
-
                         toUser = p;
-
-                        //   Log.d("$",toUser.getUsername());
 
                         imageView.setParseFile(thumbnail);
                         imageView.loadInBackground();
@@ -102,6 +98,8 @@ public class TranActivity extends Activity {
     }
 
     public void followOnClick(View view) {
+
+        // this flag is to control the follow button so that it does not create multiple entries when click more than once
         flag = false;
         imageButton = (ImageButton) findViewById(R.id.imageButtonFollow);
         imageButton.setImageResource(R.drawable.ic_action_name2);
@@ -122,6 +120,7 @@ public class TranActivity extends Activity {
                     newFollowQuery.put("type", "follow");
                     newFollowQuery.saveInBackground();
                     flag = true;
+
                 }
             }
         });
