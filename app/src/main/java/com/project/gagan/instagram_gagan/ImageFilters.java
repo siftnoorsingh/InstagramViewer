@@ -62,10 +62,7 @@ public class ImageFilters extends AppCompatActivity {
                 int g = Color.green(p);
                 int b = Color.blue(p);
 
-                r = (int) red * r;
-                g = (int) green * g;
-                b = (int) blue * b;
-                r = g = b = r + g + b;
+                r = g = b = (int)(red * r + green * g +  blue * b);
                 operation.setPixel(i, j, Color.argb(Color.alpha(p), r, g, b));
             }
         }
