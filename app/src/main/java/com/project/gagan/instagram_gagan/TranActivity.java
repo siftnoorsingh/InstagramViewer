@@ -46,14 +46,12 @@ public class TranActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //   setContentView(R.layout.profile_tab);
+
         setContentView(R.layout.activity_tran);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             userObjectId = extras.getString("userObjectId");
             userName = extras.getString("username");
-
-            //Toast.makeText(getBaseContext(), value, Toast.LENGTH_SHORT).show();
         }
 
         users = ParseUser.getQuery();

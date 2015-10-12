@@ -13,6 +13,11 @@ import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
 
+
+
+
+import java.util.Arrays;
+
 /**
  * Created by Fenglin on 11/10/2015.
  */
@@ -28,65 +33,60 @@ public class FollowTabAdapter extends ParseQueryAdapter<ParseObject> {
 
         super(context, new ParseQueryAdapter.QueryFactory<ParseObject>() {
             public ParseQuery<ParseObject> create() {
-                Log.d("userObjectId: ", ParseUser.getCurrentUser().getObjectId());
+                // ParseQuery query = new ParseQuery("_User");
+                ParseQuery followingActivitiesQuery = new ParseQuery("Activity");
+                followingActivitiesQuery.whereMatches("type", "follow");
+                followingActivitiesQuery.whereEqualTo("fromUser", ParseUser.getCurrentUser());
 
-                ParseQuery currentUserQuery = new ParseQuery("_User");
-                currentUserQuery.whereEqualTo("objectId", ParseUser.getCurrentUser().getObjectId());
+                // Get the photos from the Users returned in the previous query
+                ParseQuery<Photo> photosFromFollowedUsersQuery = new ParseQuery<Photo>("Photo");
+                photosFromFollowedUsersQuery.whereMatchesKeyInQuery("user", "toUser", followingActivitiesQuery);
+                photosFromFollowedUsersQuery.whereExists("image");
 
-                ParseQuery ActivityQuery = new ParseQuery("Activity");
-                ActivityQuery.whereMatchesQuery("fromUser", currentUserQuery);
+                ParseQuery query = ParseQuery.or(Arrays.asList(photosFromFollowedUsersQuery));
+                query.include("user");
 
-
-                ParseQuery toUserQuery = new ParseQuery("_User");
-                ActivityQuery.whereMatchesQuery("toUser",toUserQuery);
-
-
-                //  users3.whereMatchesQuery("objectId",)
-
-
-                ActivityQuery.whereMatchesQuery("toUser", toUserQuery);
+                query.orderByDescending("createdAt");
 
 
-            //    final ParseQuery users2 = new ParseQuery("_User");
-            //    users2.whereMatchesQuery("ObjectId", ActivityQuery);
+                return query;
 
-                ParseQuery photoQuery = new ParseQuery("Photo");
-                photoQuery.whereMatchesQuery("user", toUserQuery);
+//                Log.d("userObjectId: ", ParseUser.getCurrentUser().getObjectId());
 //
-
+//                ParseQuery currentUserQuery = new ParseQuery("_User");
+//                currentUserQuery.whereEqualTo("objectId", ParseUser.getCurrentUser().getObjectId());
 //
-//                ParseQuery<ParseObject> query = ParseQuery.getQuery("Activity");
-//
-//                query.findInBackground(new FindCallback<ParseObject>() {
-//                    @Override
-//                    public void done(List<ParseObject> list, ParseException e) {
-//                        for (ParseObject parseObject : list) {
-//                           String s = parseObject.getString("to");
-//                            users2.whereEqualTo("objectId", s);
-//
-//                        }
-//                    }
-//
-//                });
-//                photoQuery.whereMatchesQuery("user", users2);
-
+//                ParseQuery ActivityQuery = new ParseQuery("Activity");
+//                ActivityQuery.whereMatchesQuery("fromUser", currentUserQuery);
 //
 //
-//                ParseQuery toUser = new ParseQuery("Activity");
-//                toUser.whereMatchesQuery("toUser",users2);
-
-
-                photoQuery.whereExists("image");
-
-
-                photoQuery.include("user");
-                photoQuery.orderByDescending("createdAt");
-
-
-                Log.d("tag1", "Here1");
-
-
-                return photoQuery;
+//                ParseQuery toUserQuery = new ParseQuery("_User");
+//                ActivityQuery.whereMatchesQuery("toUser",toUserQuery);
+//
+//
+//                //  users3.whereMatchesQuery("objectId",)
+//
+//
+//                ActivityQuery.whereMatchesQuery("toUser", toUserQuery);
+//
+//
+//            //    final ParseQuery users2 = new ParseQuery("_User");
+//            //    users2.whereMatchesQuery("ObjectId", ActivityQuery);
+//
+//                ParseQuery photoQuery = new ParseQuery("Photo");
+//                photoQuery.whereMatchesQuery("user", toUserQuery);
+//
+//                photoQuery.whereExists("image");
+//
+//
+//                photoQuery.include("user");
+//                photoQuery.orderByDescending("createdAt");
+//
+//
+//                Log.d("tag1", "Here1");
+//
+//
+//                return photoQuery;
             }
         });
 
