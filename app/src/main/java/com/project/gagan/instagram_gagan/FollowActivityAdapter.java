@@ -25,11 +25,6 @@ import java.util.List;
  */
 public class FollowActivityAdapter extends ParseQueryAdapter<ParseObject> {
 
-    private ParseUser toUser;
-    int i = 0;
-    private String queryString;
-    private ParseImageView thumbPhotoView;
-
     public FollowActivityAdapter(final Context context) {
 
         super(context, new ParseQueryAdapter.QueryFactory<ParseObject>() {
@@ -61,25 +56,23 @@ public class FollowActivityAdapter extends ParseQueryAdapter<ParseObject> {
         String date = activity.getCreatedAt().toString();
         String dateString = " ";
         String[] tokens = date.split(dateString);
-        int timecount = tokens.length;
-        String k = "";
-        for(int i =0;i<timecount;i++)
-        {
-            if(i==1)
-            {
 
-                k = k+tokens[i];
-            }
-            else if(i==2||i==(timecount-1))
-            {
-                k = k+","+tokens[i];
-            }
+        // Convert the time into a another format
+        int timetoken = tokens.length;
+        String time = "";
+        for (int i = 0; i < timetoken; i++) {
+            if (i == 1) {
 
+                time = time + tokens[i];
+            } else if (i == 2 || i == (timetoken - 1)) {
+                time = time + "," + tokens[i];
+            }
         }
 
-        uploadedAt.setText(k);
+        // set time
+        uploadedAt.setText(time);
 
-        // Set up the description
+        // set description
         TextView descriptionImage = (TextView) v.findViewById(R.id.imageDescription_bottom);
 
         // get username from the pointer in Activity table
@@ -87,7 +80,7 @@ public class FollowActivityAdapter extends ParseQueryAdapter<ParseObject> {
         parseObject = activity.getParseObject("fromUser");
         String u = parseObject.getString("username");
 
-
+        // check for each type of activity, show different text
         if (type.equals("follow")) {
             descriptionImage.setText(u + " has started to follow you");
 
@@ -97,7 +90,6 @@ public class FollowActivityAdapter extends ParseQueryAdapter<ParseObject> {
         } else if (type.equals("like")) {
             descriptionImage.setText(u + " has liked your photo");
         }
-
 
         return v;
     }

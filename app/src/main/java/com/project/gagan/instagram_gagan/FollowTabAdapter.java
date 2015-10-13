@@ -64,10 +64,7 @@ public class FollowTabAdapter extends ParseQueryAdapter<ParseObject> {
 
     /**
      * This class is overridden to provide a custom view for each item in the
-     * User's List View. It sets the user's profile picture, the user name,
-     * and then displays the actual photo.
-     * <p/>
-     * See profile_tab.xml for the layout file
+     * User's List View. It uses userprofilephotos.xml as layout
      *
      * @see com.parse.ParseQueryAdapter#getItemView(com.parse.ParseObject, android.view.View, android.view.ViewGroup)
      */

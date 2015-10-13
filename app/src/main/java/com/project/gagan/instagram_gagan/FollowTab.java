@@ -14,34 +14,22 @@ import com.parse.ParseUser;
 
 /**
  * Created by Sift on 1/10/2015.
+ * Implemented by Fenglin
+ * This class contains two One-Column-GridView. The top one is handled by FollowTabAdapter, showing following's recent activities;
+ * The bottom GridView is handled by FollowActivityAdapter, it shows a list of activities related to the current user.
  */
 public class FollowTab extends Fragment {
 
     private View view;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
 
         view = inflater.inflate(R.layout.follow_tab, container, false);
         GridView gridView = (GridView) view.findViewById(R.id.gridView_ActivityFeed);
         GridView gridView2 = (GridView) view.findViewById(R.id.gridView_ActivityFeed2);
         gridView.setAdapter(new FollowTabAdapter(view.getContext()));
         gridView2.setAdapter(new FollowActivityAdapter(view.getContext()));
-
-//        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            public void onItemClick(AdapterView<?> parent, View v,
-//                                    int position, long id) {
-//
-//                ParseUser currentUser = ParseUser.getCurrentUser();
-//                String CurrentUserName = currentUser.getUsername();
-//
-//
-//                Toast.makeText(getActivity(), "Activity Feed " + position + " uploaded by "+CurrentUserName ,
-//                        Toast.LENGTH_SHORT).show();
-//            }
-//        });
 
         return view;
 
