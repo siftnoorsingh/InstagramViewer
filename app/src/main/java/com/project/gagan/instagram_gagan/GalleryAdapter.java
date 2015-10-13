@@ -48,6 +48,10 @@ public class GalleryAdapter extends ArrayAdapter {
         return row;
     }
 
+    public ArrayList<String> getData() {
+        return data;
+    }
+
     static class ViewHolder{
         ImageView image;
     }

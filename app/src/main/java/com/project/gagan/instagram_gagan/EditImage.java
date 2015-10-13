@@ -4,7 +4,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.io.FileInputStream;
 
 /**
  * Created by Sift on 12/10/2015.
@@ -27,10 +28,17 @@ public class EditImage extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.image_edit);
-        Bundle extras = getIntent().getExtras();
-        byte[] byteArray = extras.getByteArray("picture");
 
-        Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+
+        String filename = getIntent().getStringExtra("image");
+        Bitmap bmp = null;
+        try {
+            FileInputStream is = this.openFileInput(filename);
+            bmp = BitmapFactory.decodeStream(is);
+            is.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         ImageView image = (ImageView) findViewById(R.id.imageView4);
         cropButton= (Button) findViewById(R.id.cropButton);
         Intent intent=getIntent();
