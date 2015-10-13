@@ -21,6 +21,7 @@ import java.util.List;
 
 /**
  * Created by Fenglin on 11/10/2015.
+ * This adapter handles the display of the following's activities in follow_tab
  */
 public class FollowTabAdapter extends ParseQueryAdapter<ParseObject> {
 
@@ -45,12 +46,16 @@ public class FollowTabAdapter extends ParseQueryAdapter<ParseObject> {
 
 
                 ParseQuery followingActivitiesQuery2 = new ParseQuery("Activity");
-                followingActivitiesQuery2.whereMatches("type", "comment");
-                followingActivitiesQuery2.whereEqualTo("fromUser", ParseUser.getCurrentUser());
+           //     followingActivitiesQuery2.whereMatches("type", "comment");
+                followingActivitiesQuery2.whereEqualTo("toUser", ParseUser.getCurrentUser());
                 // Get the photos from the Users returned in the previous query
-                ParseQuery<Photo> photosFromFollowedUsersQuery2 = new ParseQuery<Photo>("Photo");
-                photosFromFollowedUsersQuery2.whereMatchesKeyInQuery("user", "toUser", followingActivitiesQuery2);
-                photosFromFollowedUsersQuery2.whereExists("image");
+                //ParseQuery<Photo> photosFromFollowedUsersQuery2 = new ParseQuery<Photo>("Photo");
+              //  photosFromFollowedUsersQuery2.whereMatchesKeyInQuery("user", "toUser", followingActivitiesQuery2);
+              //  photosFromFollowedUsersQuery2.whereExists("image");
+
+
+
+
 
 
                 ParseQuery query = ParseQuery.or(Arrays.asList(photosFromFollowedUsersQuery));
@@ -98,11 +103,11 @@ public class FollowTabAdapter extends ParseQueryAdapter<ParseObject> {
 
         // Set up the description
         TextView descriptionImage = (TextView) v.findViewById(R.id.imageDescription);
-        descriptionImage.setText(photo.getString("description"));
+        descriptionImage.setText(photo.getString("description")+"  Id: "+photo.getObjectId());
 
         // Set up the number of pictures/posts of current users
-        final TextView username = (TextView) v.findViewById(R.id.imageDescription);
-
+//        final TextView username = (TextView) v.findViewById(R.id.imageDescription);
+//        username.setText(photo.getObjectId());
 
 //        ParseQuery users = ParseUser.getQuery();
 //        ParseQuery userQuery = new ParseQuery("_User");
