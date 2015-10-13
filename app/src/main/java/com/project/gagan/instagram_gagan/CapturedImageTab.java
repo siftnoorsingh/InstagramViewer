@@ -28,6 +28,7 @@ public class CapturedImageTab extends Fragment{
     CameraPreview cameraPreview;
     FrameLayout cameraFrame;
     ImageButton captureBtn;
+    ImageButton flashButton;
     static final int PHOTO_WIDTH = 400;
     static final int PHOTO_HEIGHT = 400;
     View rootView;
@@ -75,8 +76,24 @@ public class CapturedImageTab extends Fragment{
             //Start the camera
             mCamera = Camera.open();
             //Code for flash option
-            Camera.Parameters params = mCamera.getParameters();
+            final Camera.Parameters params = mCamera.getParameters();
             params.setFlashMode(Camera.Parameters.FLASH_MODE_AUTO);
+            // On button click, go back to camera activity
+            flashButton = (ImageButton) rootView.findViewById(R.id.flashButton);
+            flashButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (params.getFlashMode() != Camera.Parameters.FLASH_MODE_ON){
+                        params.setFlashMode(Camera.Parameters.FLASH_MODE_ON);
+                        Toast.makeText(v.getContext(), "Flash On", Toast.LENGTH_SHORT).show();
+                    }
+                    else if (params.getFlashMode() != Camera.Parameters.FLASH_MODE_OFF) {
+                        params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+                        Toast.makeText(v.getContext(), "Flash Off", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            });
             // ... set other parameters
             mCamera.setParameters(params);
             setupCamera(mCamera);
