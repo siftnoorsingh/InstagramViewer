@@ -87,9 +87,9 @@ public class ImageUpload extends AppCompatActivity {
             Log.d(Double.toString(longitude), Double.toString(latitude));
 
         }else{
-            Toast.makeText(ImageUpload.this,"Turn On GPS",Toast.LENGTH_SHORT).show();
-        }
 
+        Toast.makeText(ImageUpload.this,"Turn On GPS",Toast.LENGTH_SHORT).show();
+    }
 
         // saving the location on Parse
         ParseGeoPoint geoPoint = new ParseGeoPoint(latitude , longitude );

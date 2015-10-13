@@ -43,12 +43,12 @@ public class ImageFilters extends AppCompatActivity {
         bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
         imageView.setImageBitmap(bmp);
         //On button click,pass image to upload activity
-        /*uploadButton.setOnClickListener(new View.OnClickListener() {
+        uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 imageUpload(bmp);
             }
-        });*/
+        });
 
         // On button click, go back to camera activity
         buttonBack = (ImageButton) findViewById(R.id.imageButton_filter_back );

@@ -109,7 +109,7 @@ public class ProfileTab extends Fragment {
         photoView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
+                final CharSequence[] items = {"Take Photo", "Cancel"};
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle("Add Photo!");
                 builder.setItems(items, new DialogInterface.OnClickListener() {
