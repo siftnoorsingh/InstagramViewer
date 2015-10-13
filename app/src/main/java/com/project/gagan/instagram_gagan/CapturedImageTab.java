@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.net.Uri;
@@ -29,11 +30,10 @@ public class CapturedImageTab extends Fragment{
     CameraPreview cameraPreview;
     FrameLayout cameraFrame;
     ImageButton captureBtn;
+    static final int PHOTO_WIDTH = 400;
+    static final int PHOTO_HEIGHT = 400;
     View rootView;
     private Uri uri;
-    //static final int REQUEST_IMAGE_CAPTURE = 1;
-    //ImageView imageView;
-    //Button imageButton;
 
     Camera.ShutterCallback shutterCallback = new Camera.ShutterCallback() {
         @Override
@@ -53,12 +53,18 @@ public class CapturedImageTab extends Fragment{
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
             Bitmap bitmapPicture = BitmapFactory.decodeByteArray(data, 0, data.length);
-            Bitmap correctBmp = Bitmap.createBitmap(bitmapPicture, 0, 0, bitmapPicture.getWidth(), bitmapPicture.getHeight(), null, true);
-            if (correctBmp.getWidth() > correctBmp.getHeight()) {
-                Matrix matrix = new Matrix();
-                matrix.postRotate(90);
-                correctBmp = Bitmap.createBitmap(correctBmp , 0, 0, correctBmp.getWidth(), correctBmp.getHeight(), matrix, true);
-            }
+            //Bitmap correctBmp = Bitmap.createBitmap(bitmapPicture, 0, 0, bitmapPicture.getWidth(), bitmapPicture.getHeight(), null, true);
+            int wid = bitmapPicture.getWidth();
+            int hgt = bitmapPicture.getHeight();
+
+            Bitmap correctBmp = Bitmap.createBitmap(wid, hgt, Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(correctBmp);
+
+            canvas.drawBitmap(bitmapPicture, 0f, 0f, null);
+            Matrix matrix = new Matrix();
+            matrix.postRotate(90);
+            Bitmap scaledBmp = Bitmap.createScaledBitmap(correctBmp, PHOTO_WIDTH, PHOTO_HEIGHT, true);
+            correctBmp = Bitmap.createBitmap(scaledBmp , 0, 0, scaledBmp.getWidth(), scaledBmp.getHeight(), matrix, true);
             imageCaptured(correctBmp);
         }
     };
@@ -78,12 +84,6 @@ public class CapturedImageTab extends Fragment{
             Toast.makeText(rootView.getContext(), "Unable to connect to camera", Toast.LENGTH_SHORT).show();
         }
 
-        /*
-        //add these two things in the xml file
-        imageView = (ImageView) rootView.findViewById(R.id.imageView);
-        imageButton= (Button) rootView.findViewById(R.id.imageButton);
-        launchCamera();
-        */
         return rootView;
     }
 
@@ -105,11 +105,6 @@ public class CapturedImageTab extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-
-        // Use mCurrentCamera to select the camera desired to safely restore
-        // the fragment after the camera has been changed
-        //mCamera = Camera.open();
-        // setupCamera(mCamera);
     }
 
     @Override
@@ -119,7 +114,6 @@ public class CapturedImageTab extends Fragment{
         // Because the Camera object is a shared resource, it's very
         // important to release it when the activity is paused.
         if (mCamera != null) {
-            //cameraPreview.setCamera(null);
             mCamera.release();
             mCamera = null;
         }
@@ -152,23 +146,5 @@ public class CapturedImageTab extends Fragment{
         }
     }
 
-    /*//Add this method to the onCLick function in the xml file for imageButton
-    public void launchCamera(View view){
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent,REQUEST_IMAGE_CAPTURE);
-    }
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            // Image captured and saved to fileUri specified in the Intent
-            //Toast.makeText(this, "Image saved to:\n" +
-            //         data.getData(), Toast.LENGTH_LONG).show();
-            // This is another way where you can get the data about the image as well to make other changes to it.
-              Bundle extras = data.getExtras();
-              Bitmap photo = (Bitmap) extras.get("data");
-              imageView.setImageBitmap(photo);
-        } else if (resultCode == RESULT_CANCELED) {
-            // User cancelled the image capture
-        }
-    }*/
+
 }

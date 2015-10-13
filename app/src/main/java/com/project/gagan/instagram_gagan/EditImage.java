@@ -14,13 +14,16 @@ import android.widget.Toast;
 
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 /**
  * Created by Sift on 12/10/2015.
  */
 public class EditImage extends AppCompatActivity{
 
+    private static final double IMAGE_MAX_SIZE = 400;
     //keep track of cropping intent
     final int PIC_CROP = 2;
     Button cropButton;
@@ -31,12 +34,12 @@ public class EditImage extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.image_edit);
-        Bundle extras = getIntent().getExtras();
+        //Bundle extras = getIntent().getExtras();
         //byte[] byteArray = extras.getByteArray("picture");
         //bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
         String filename = getIntent().getStringExtra("picture");
 
-        Bitmap bmp = null;
+        //Bitmap bmp = decodeFile(filename);
         try {
             FileInputStream is = this.openFileInput(filename);
             bmp = BitmapFactory.decodeStream(is);
@@ -57,12 +60,8 @@ public class EditImage extends AppCompatActivity{
             public void onClick(View v) {
                 imageCropped(finalBmp);
                 performCrop();
-                //imageCropped(finalBmp);
             }
         });
-
-
-
     }
 
     public void performCrop(){
@@ -81,8 +80,8 @@ public class EditImage extends AppCompatActivity{
             cropIntent.putExtra("aspectX", 1);
             cropIntent.putExtra("aspectY", 1);
             //indicate output X and Y
-            cropIntent.putExtra("outputX", 256);
-            cropIntent.putExtra("outputY", 256);
+            cropIntent.putExtra("outputX", 200);
+            cropIntent.putExtra("outputY", 200);
             //retrieve data on return
             cropIntent.putExtra("return-data", true);
             //start the activity - we handle returning in onActivityResult
@@ -105,5 +104,42 @@ public class EditImage extends AppCompatActivity{
         intent2.putExtra("picture", byteArray2);
         startActivity(intent2);
     }
+
+    /*private Bitmap decodeFile(String f){
+        Bitmap b = null;
+
+        //Decode image size
+        BitmapFactory.Options o = new BitmapFactory.Options();
+        o.inJustDecodeBounds = true;
+
+        FileInputStream fis = null;
+        try {
+            fis = this.openFileInput(f);
+            BitmapFactory.decodeStream(fis, null, o);
+            fis.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        int scale = 1;
+        if (o.outHeight > IMAGE_MAX_SIZE || o.outWidth > IMAGE_MAX_SIZE) {
+            scale = (int)Math.pow(2, (int) Math.ceil(Math.log(IMAGE_MAX_SIZE /
+                    (double) Math.max(o.outHeight, o.outWidth)) / Math.log(0.5)));
+        }
+
+        //Decode with inSampleSize
+        BitmapFactory.Options o2 = new BitmapFactory.Options();
+        o2.inSampleSize = scale;
+        try {
+            fis = new FileInputStream(f);
+            b = BitmapFactory.decodeStream(fis, null, o2);
+            fis.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        return b;
+    }*/
 
 }
