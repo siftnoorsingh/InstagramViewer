@@ -1,5 +1,6 @@
 package com.project.gagan.instagram_gagan;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +14,7 @@ import com.parse.ParseUser;
 /**
  * Created by Sift on 13/10/2015.
  */
-public class ImageUpload extends AppCompatActivity{
+public class ImageUpload extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,6 @@ public class ImageUpload extends AppCompatActivity{
 
         // Create a New Class called "Photo" in Parse
         ParseObject imgupload = new ParseObject("Photo");
-
 
 
         // Create a column named "image" and set the string
@@ -44,7 +44,11 @@ public class ImageUpload extends AppCompatActivity{
 
         // Show a simple toast message
         Toast.makeText(this, "Image Uploaded", Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
