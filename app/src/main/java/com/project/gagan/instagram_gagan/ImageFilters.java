@@ -177,7 +177,7 @@ public class ImageFilters extends AppCompatActivity {
     private void imageUpload(Bitmap image){
         //Bitmap bmp = BitmapFactory.decode;
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        image.compress(Bitmap.CompressFormat.PNG, 50, stream);
         byte[] byteArray = stream.toByteArray();
         Intent intent = new Intent(this, ImageUpload.class);
         intent.putExtra("picture", byteArray);

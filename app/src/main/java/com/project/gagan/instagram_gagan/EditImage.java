@@ -31,8 +31,8 @@ public class EditImage extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.image_edit);
-        //Bundle extras = getIntent().getExtras();
-        //byte[] byteArray = extras.getByteArray("image");
+        Bundle extras = getIntent().getExtras();
+        //byte[] byteArray = extras.getByteArray("picture");
         //bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
         String filename = getIntent().getStringExtra("picture");
 
@@ -47,15 +47,17 @@ public class EditImage extends AppCompatActivity{
 
         ImageView image = (ImageView) findViewById(R.id.imageView4);
         cropButton= (Button) findViewById(R.id.cropButton);
-        Intent intent=getIntent();
-        picUri = intent.getData();
+        picUri = getIntent().getData();
 
         image.setImageBitmap(bmp);
+        final Bitmap finalBmp = bmp;
         cropButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
+                imageCropped(finalBmp);
                 performCrop();
+                //imageCropped(finalBmp);
             }
         });
 
@@ -70,7 +72,7 @@ public class EditImage extends AppCompatActivity{
             //call the standard crop action intent (the user device may not support it)
             Intent cropIntent = new Intent("com.android.camera.action.CROP");
             //indicate image type
-            cropIntent.setDataAndType(picUri,"image/*");
+            cropIntent.setDataAndType(picUri, "image/*");
             //cropIntent.setType("image/*");
             //cropIntent.putExtra("Bitmap",bmp);
             //set crop properties
@@ -97,7 +99,7 @@ public class EditImage extends AppCompatActivity{
 
     private void imageCropped(Bitmap bmp){
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        bmp.compress(Bitmap.CompressFormat.PNG, 50, stream);
         byte[] byteArray2 = stream.toByteArray();
         Intent intent2 = new Intent(this, BrightenContrastImage.class);
         intent2.putExtra("picture", byteArray2);

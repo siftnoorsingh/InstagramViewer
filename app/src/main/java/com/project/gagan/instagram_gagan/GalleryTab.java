@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 
@@ -44,12 +45,16 @@ public class GalleryTab extends Fragment{
                     Bitmap image = MediaStore.Images.Media.getBitmap(rootView.getContext().getContentResolver(), uri);
                     String filename = "bitmap.png";
                     FileOutputStream stream = rootView.getContext().openFileOutput(filename, Context.MODE_PRIVATE);
+                    //ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     image.compress(Bitmap.CompressFormat.PNG, 50, stream);
+                    //byte[] byteArray2 = stream.toByteArray();
 
                     stream.close();
                     image.recycle();
 
-                    Intent intent = new Intent(rootView.getContext(), BrightenContrastImage.class);
+                    Intent intent = new Intent(rootView.getContext(), EditImage.class);
+                    //Intent intent = new Intent(rootView.getContext(), BrightenContrastImage.class);
+                    //intent.putExtra("picture", byteArray2);
                     intent.putExtra("picture", filename);
                     intent.putExtra("uri", uri);
                     startActivity(intent);
@@ -84,23 +89,5 @@ public class GalleryTab extends Fragment{
 
         return data;
     };
-
-    //@Override
-    /*protected void onActivityResult(int requestCode, int resultCode, Intent data,View rootView) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-
-            Uri uri = data.getData();
-
-            //Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-            // Log.d(TAG, String.valueOf(bitmap));
-            Bundle extras = data.getExtras();
-            Bitmap bitmap = (Bitmap) extras.get("data");
-            ImageView imageView = (ImageView) rootView.findViewById(R.id.imageView);
-            imageView.setImageBitmap(bitmap);
-
-        }
-    }*/
 
 }

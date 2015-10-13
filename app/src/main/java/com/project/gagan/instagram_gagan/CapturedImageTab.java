@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.hardware.Camera;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 
 
@@ -28,6 +30,7 @@ public class CapturedImageTab extends Fragment{
     FrameLayout cameraFrame;
     ImageButton captureBtn;
     View rootView;
+    private Uri uri;
     //static final int REQUEST_IMAGE_CAPTURE = 1;
     //ImageView imageView;
     //Button imageButton;
@@ -105,8 +108,8 @@ public class CapturedImageTab extends Fragment{
 
         // Use mCurrentCamera to select the camera desired to safely restore
         // the fragment after the camera has been changed
-//        mCamera = Camera.open();
-        //cameraPreview.setCamera(mCamera);
+        //mCamera = Camera.open();
+        // setupCamera(mCamera);
     }
 
     @Override
@@ -127,13 +130,20 @@ public class CapturedImageTab extends Fragment{
         try {
             String filename = "bitmap.png";
             FileOutputStream stream = rootView.getContext().openFileOutput(filename, Context.MODE_PRIVATE);
-            image.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            //ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            image.compress(Bitmap.CompressFormat.PNG, 50, stream);
+            //Intent intent = new Intent(rootView.getContext(), BrightenContrastImage.class);
+            //byte[] byteArray2 = stream.toByteArray();
 
             stream.close();
             image.recycle();
-            Intent intent = new Intent(rootView.getContext(), BrightenContrastImage.class);
-            //Intent intent = new Intent(rootView.getContext(), EditImage.class);
+
+            //intent.putExtra("picture", byteArray2);
+
+            Intent intent = new Intent(rootView.getContext(), EditImage.class);
             intent.putExtra("picture", filename);
+            intent.putExtra("uri", uri);
+
 
             startActivity(intent);
 
