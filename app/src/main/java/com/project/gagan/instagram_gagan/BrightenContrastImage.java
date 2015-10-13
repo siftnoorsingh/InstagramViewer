@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Toast;
@@ -23,11 +24,12 @@ import java.io.FileInputStream;
  */
 public class BrightenContrastImage extends AppCompatActivity {
 
-    Bitmap new_bm;
-    Bitmap bmp;
-    ImageView imageView;
-    Button button;
+    private Bitmap new_bm;
+    private Bitmap bmp;
+    private ImageView imageView;
+    private Button button;
     boolean changed=false;
+    private ImageButton buttonBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +62,7 @@ public class BrightenContrastImage extends AppCompatActivity {
                 new_bm = changeBitmapContrastBrightness(bmp, (float) (progress - 1), (float) (SeekBar_brightness.getProgress() - 255));
                 imageView.setImageBitmap(new_bm);
                 //bmp=new_bm;
-                changed=true;
+                changed = true;
             }
 
             @Override
@@ -99,6 +101,19 @@ public class BrightenContrastImage extends AppCompatActivity {
                 else{
                     imageEdited(bmp);
                 }
+            }
+        });
+
+
+
+        buttonBack = (ImageButton) findViewById(R.id.imageButton_back);
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            Toast.makeText(v.getContext(),"clicked",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(BrightenContrastImage.this, CameraActivity.class);
+                startActivity(intent);
+
             }
         });
     }

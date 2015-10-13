@@ -81,4 +81,17 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton_filter_back"
+        android:minHeight="40dp"
+        android:maxWidth="40dp"
+        android:minWidth="40dp"
+        android:maxHeight="40dp"
+        android:src="@drawable/ic_action_dashboard"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/imageView"
+        android:layout_alignStart="@+id/imageView" />
+
 </RelativeLayout>
