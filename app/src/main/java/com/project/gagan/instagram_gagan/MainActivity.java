@@ -11,8 +11,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.parse.ParseUser;
+
+/*
+Created by Gaganjot, Sift
+
+This is the main activity. User lands on this page after
+valid username and password. It shows all the required tabs :
+User Feed, Discover, Camera, Activity and Profile.
+ */
 
 
 
@@ -20,12 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private TextView givenName;
-    ViewPager pager;
-    ViewPagerAdapter adapter;
-    SlidingTabLayout tabs;
     Button cameraBtn;
-    CharSequence Titles[] = {"Tiny Pic","Sign Up", "Login"};
-    int numOfTabs = 3;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
         givenName= (TextView)toolbar.findViewById(R.id.name);
         givenName.setText((String) user.get("name"));
 
+
+        // Set up the Tabs
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_action_dashboard));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_action_search));
@@ -49,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_action_profile));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
+
+        // Set the camera tab and handle the on click event
         cameraBtn = (Button)findViewById(R.id.camera_btn);
         cameraBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        // Set up the view pager for the slide features between different tabs
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         final PagerAdapter adapter = new PagerAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());
@@ -99,11 +108,11 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
 
-            case R.id.action_settings:// Setting option to set for push notifications
+            case R.id.action_settings:// Setting option to set for log out button
                 startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                 return true;
 
-            case R.id.logout:
+            case R.id.logout: // Set up for log out from the menu
                 // Call the Parse log out method
                 ParseUser.logOut();
                 // Start and intent for the dispatch activity

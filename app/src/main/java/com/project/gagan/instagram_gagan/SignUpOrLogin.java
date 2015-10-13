@@ -23,6 +23,10 @@ import java.util.List;
 
 /**
  * Created by Gagan on 30-Sep-15.
+ *
+ * This activity is the very first activity page when
+ * user downloads the applicaiton and runs for the first time
+ * or logged out from the application
  */
 public class SignUpOrLogin extends AppCompatActivity {
 
@@ -69,15 +73,7 @@ public class SignUpOrLogin extends AppCompatActivity {
         // set a centre tab (Tiny Pic) on load
         pager.setCurrentItem(1);
 
-
-
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
-
-
-
-
-
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 

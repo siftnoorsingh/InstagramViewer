@@ -12,13 +12,7 @@
 
 
 
-    <!--<TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Profile"
-        android:textAppearance="?android:attr/textAppearanceLarge"/>-->
+
 
     <FrameLayout
         android:id="@+id/frame"
@@ -54,23 +48,7 @@
         android:layout_alignRight="@+id/user_name"
         android:paddingLeft="20dp"/>
 
-    <TextView
-        android:id="@+id/num_followers"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:gravity="right"
-        android:layout_below="@id/frame"
-        android:textStyle="bold"
-        android:layout_alignRight="@+id/user_name"
-        android:paddingLeft="20dp"/>
 
-    <!--<Button
-        android:id="@+id/toggleButton"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Expand View"
-        android:layout_below="@+id/user_name"/>-->
 
 
 
@@ -82,12 +60,7 @@
         android:paddingTop="5dp"
         android:textStyle="italic" />
 
-    <!--<Button
-        android:id="@+id/toggleButton"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Expand View"
-        android:layout_below="@+id/user_name"/>-->
+
 
 
     <ListView
@@ -100,32 +73,7 @@
 
 
 
-    <!--<com.parse.ParseImageView
-        android:id="@+id/photo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/user_thumbnail"
-        android:paddingLeft="3dip"
-        android:paddingRight="3dip"
-        android:layout_margin="5dip"
-        android:adjustViewBounds="true" />-->
 
-    <!-- <SurfaceView
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:id="@+id/surfaceView"
-         android:layout_alignParentLeft="true"
-         android:layout_alignParentStart="true"
-         android:layout_marginTop="260dp" />-->
-
-    <!--<ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageButton"
-        android:layout_below="@+id/surfaceView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="51dp" />-->
 
 
 </RelativeLayout>

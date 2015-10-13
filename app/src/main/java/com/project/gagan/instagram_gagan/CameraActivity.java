@@ -1,5 +1,6 @@
 package com.project.gagan.instagram_gagan;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -7,6 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.parse.ParseUser;
 
 /**
  * Created by Sift on 7/10/2015.
@@ -18,6 +22,7 @@ public class CameraActivity extends AppCompatActivity{
     ViewPagerAdapter adapterCam;
     SlidingTabLayout tabs;
     int numOfTabs = 2;
+    private TextView givenName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +32,11 @@ public class CameraActivity extends AppCompatActivity{
 
         toolbar2 = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
         setSupportActionBar(toolbar2);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
+
+        // Set up the username
+        ParseUser user = ParseUser.getCurrentUser();
+        givenName= (TextView)toolbar2.findViewById(R.id.name);
+        givenName.setText((String) user.get("name"));
 
         //Set icons for tabs and add tabs to tab layout
         TabLayout tabLayout2 = (TabLayout) findViewById(R.id.tab_layout2);
@@ -72,7 +82,29 @@ public class CameraActivity extends AppCompatActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return true;
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+
+        switch (item.getItemId()) {
+
+            case R.id.action_settings:// Setting option to set for push notifications
+                startActivity(new Intent(CameraActivity.this, SettingsActivity.class));
+                return true;
+
+            case R.id.logout:
+                // Call the Parse log out method
+                ParseUser.logOut();
+                // Start and intent for the dispatch activity
+                Intent intent = new Intent(CameraActivity.this, SessionActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+
     }
 }
 

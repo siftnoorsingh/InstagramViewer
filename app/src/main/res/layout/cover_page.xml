@@ -17,23 +17,15 @@
 
 
     <ImageView
-        android:id="@+id/signUpArrow"
-        android:src="@drawable/double_arrow_icon"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:id="@+id/cover"
+        android:src="@drawable/cover_image"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_below="@id/appLogo"
         />
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#010009"
-        android:textAlignment="center"
-        android:text="Swipe Right for Sign Up"
-        android:layout_alignBottom="@+id/signUpArrow"
-        android:layout_toRightOf="@+id/signUpArrow"
-        android:layout_toEndOf="@+id/signUpArrow" />
+
 
 
     <!--<TextureView

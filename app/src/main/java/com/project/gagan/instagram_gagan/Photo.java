@@ -1,7 +1,7 @@
 package com.project.gagan.instagram_gagan;
 
 /**
- * Created by Gagan on 06-Oct-15.
+ * Created by Gagan on 05-Oct-15.
  */
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
@@ -44,5 +44,13 @@ public class Photo extends ParseObject {
     public void setThumbnail(ParseFile file) {
         put("thumbnail", file);
     }
-}
+    public int getLikeCount()
+    {
+        return getInt("likeCount");
+    }
+    public void setLikeCount(int i)
+    {
+        put("likeCount",i);
+    }
 
+}

@@ -8,6 +8,7 @@ import com.parse.ParseUser;
 
 /**
  * Created by Gagan on 30-Sep-15.
+ * This session checks if the user has logged in.
  */
 public class SessionActivity extends Activity{
 

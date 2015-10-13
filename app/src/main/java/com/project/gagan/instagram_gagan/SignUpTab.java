@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 
 /**
  * Created by Gagan on 29-Sep-15.
+ * This is the sign up tab asking for all the required
+ * particulars to sign up for the applicaiton
  */
 public class SignUpTab extends Fragment {
 
