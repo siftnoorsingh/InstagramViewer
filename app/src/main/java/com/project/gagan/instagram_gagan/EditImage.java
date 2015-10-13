@@ -13,6 +13,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+
 /**
  * Created by Sift on 12/10/2015.
  */
@@ -22,15 +25,24 @@ public class EditImage extends AppCompatActivity{
     final int PIC_CROP = 2;
     Button cropButton;
     private Uri picUri;
+    Bitmap bmp = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.image_edit);
-        Bundle extras = getIntent().getExtras();
-        byte[] byteArray = extras.getByteArray("picture");
+        //Bundle extras = getIntent().getExtras();
+        //byte[] byteArray = extras.getByteArray("image");
 
-        Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+        String filename = getIntent().getStringExtra("image");
+        try {
+            FileInputStream is = this.openFileInput(filename);
+            bmp = BitmapFactory.decodeStream(is);
+            is.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
         ImageView image = (ImageView) findViewById(R.id.imageView4);
         cropButton= (Button) findViewById(R.id.cropButton);
         Intent intent=getIntent();
@@ -44,6 +56,8 @@ public class EditImage extends AppCompatActivity{
                 performCrop();
             }
         });
+
+
 
     }
 
@@ -77,6 +91,15 @@ public class EditImage extends AppCompatActivity{
             Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT);
             toast.show();
         }
+    }
+
+    private void imageCropped(Bitmap bmp){
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray2 = stream.toByteArray();
+        Intent intent2 = new Intent(this, BrightenContrastImage.class);
+        intent2.putExtra("byteArray", byteArray2);
+        startActivity(intent2);
     }
 
 }
