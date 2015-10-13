@@ -31,37 +31,14 @@ public class FollowActivityAdapter extends ParseQueryAdapter<ParseObject> {
     private ParseImageView thumbPhotoView;
 
     public FollowActivityAdapter(final Context context) {
-
-
+        
         super(context, new ParseQueryAdapter.QueryFactory<ParseObject>() {
             public ParseQuery<ParseObject> create() {
-//
-//                ParseQuery followingActivitiesQuery = new ParseQuery("Activity");
-//                followingActivitiesQuery.whereMatches("type", "follow");
-//                followingActivitiesQuery.whereEqualTo("fromUser", ParseUser.getCurrentUser());
-//                // Get the photos from the Users returned in the previous query
-//                ParseQuery<Photo> photosFromFollowedUsersQuery = new ParseQuery<Photo>("Photo");
-//                photosFromFollowedUsersQuery.whereMatchesKeyInQuery("user", "toUser", followingActivitiesQuery);
-//                photosFromFollowedUsersQuery.whereExists("image");
-
 
                 ParseQuery followingActivitiesQuery2 = new ParseQuery("Activity");
-                //     followingActivitiesQuery2.whereMatches("type", "comment");
+
                 followingActivitiesQuery2.whereEqualTo("toUser", ParseUser.getCurrentUser());
-                // Get the photos from the Users returned in the previous query
-                //ParseQuery<Photo> photosFromFollowedUsersQuery2 = new ParseQuery<Photo>("Photo");
-                //  photosFromFollowedUsersQuery2.whereMatchesKeyInQuery("user", "toUser", followingActivitiesQuery2);
-                //  photosFromFollowedUsersQuery2.whereExists("image");
-//
-//
-//
-//
-//
-//
-//                ParseQuery query = ParseQuery.or(Arrays.asList(photosFromFollowedUsersQuery));
-//                query.include("user");
-//
-//                query.orderByDescending("createdAt");
+
 
                 return followingActivitiesQuery2;
 
@@ -81,7 +58,6 @@ public class FollowActivityAdapter extends ParseQueryAdapter<ParseObject> {
         // Set up the current user's all uploaded photos
         thumbPhotoView = (ParseImageView) v.findViewById(R.id.icon_thumb);
         final String type = activity.getString("type");
-        Log.d(type, type);
 
         TextView uploadedAt = (TextView) v.findViewById(R.id.timestamp);
         uploadedAt.setText(activity.getCreatedAt().toString());
@@ -96,13 +72,13 @@ public class FollowActivityAdapter extends ParseQueryAdapter<ParseObject> {
 
 
         if (type.equals("follow")) {
-            descriptionImage.setText(u+ " has started to follow you");
+            descriptionImage.setText(u + " has started to follow you");
 
         } else if (type.equals("comment")) {
-            descriptionImage.setText(u+ " has commented your photo");
+            descriptionImage.setText(u + " has commented your photo");
 
         } else if (type.equals("like")) {
-            descriptionImage.setText(u+ " has liked your photo");
+            descriptionImage.setText(u + " has liked your photo");
         }
 
 

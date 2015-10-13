@@ -82,6 +82,12 @@ public class SearchResultFragmentAdapter extends ParseQueryAdapter<ParseObject> 
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(),TranActivity.class);
                 intent.putExtra("userObjectId",photo.getObjectId());
+//
+//                ParseObject parseObject = ParseObject.create("Photo");
+//                parseObject = photo.getParseObject("user");
+//                String userName = parseObject.getString("username");
+
+         //       intent.putExtra("username",userName);
                 getContext().startActivity(intent);
 
             }

@@ -26,8 +26,6 @@ public class SearchUserAdapter extends ParseQueryAdapter<ParseObject> {
 
         super(context, new ParseQueryAdapter.QueryFactory<ParseObject>() {
             public ParseQuery<ParseObject> create() {
-                Log.d("userObjectId: ", userObjectId);
-                Toast.makeText(context, userObjectId, Toast.LENGTH_SHORT).show();
 
                 ParseQuery users = new ParseQuery("_User");
                 users.whereEqualTo("objectId", userObjectId);
@@ -41,7 +39,6 @@ public class SearchUserAdapter extends ParseQueryAdapter<ParseObject> {
             }
         });
 
-        //  queryString = query;
     }
 
     /**
