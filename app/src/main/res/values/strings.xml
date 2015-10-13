@@ -80,5 +80,6 @@
     <string name="button2">Dark</string>
     <string name="pairingbluetooth">pairingbluetooth</string>
     <string name="pair_devices">pair_devices</string>
-    <string name="bluetooth">bluetooth</string>
+    <string name="bluetooth">Bluetooth</string>
+
 </resources>

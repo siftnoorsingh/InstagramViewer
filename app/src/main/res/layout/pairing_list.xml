@@ -2,9 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/toolbar"
+        />
+
     <ListView
         android:id="@+id/pair_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true" />
+        android:layout_below="@+id/tool_bar" />
 </RelativeLayout>

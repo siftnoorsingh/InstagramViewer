@@ -20,7 +20,7 @@ public class PairingBluetooth extends android.app.Activity {
         setContentView(R.layout.pairing_list);
 
         TextView v = (TextView)findViewById(R.id.name);
-        v.setText("Paired Devices");
+         v.setText("Paired Devices");
         listView = (ListView)findViewById(R.id.pair_list);
         Bundle bundle = getIntent().getExtras();
         pairs = bundle.getStringArray("pairs");
