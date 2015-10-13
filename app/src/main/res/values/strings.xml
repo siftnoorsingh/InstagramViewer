@@ -63,4 +63,5 @@
     <string name="title_image_upload">Upload Image</string>
     <string name="brightness_label">Brightness</string>
     <string name="contrast_label">Contrast</string>
+    <string name="about_yourself">About you</string>
 </resources>

@@ -4,4 +4,5 @@
     <string name="appLogo">AppLogo</string>
     <string name="app_logo">AppLogo</string>
     <string name="upload_profile_pic" >Upload Profile Pic</string>
+    <string name="about_yourself" >About you</string>
 </resources>
