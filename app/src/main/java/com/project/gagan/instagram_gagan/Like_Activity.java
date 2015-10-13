@@ -103,14 +103,17 @@ public class Like_Activity extends android.app.Activity {
 
     }
     private void likePhoto(Photo object) {
+        ParseObject parseObject = ParseObject.create("Photo");
+        parseObject = object.getParseObject("user");
+
         ParseUser currentUser = ParseUser.getCurrentUser();
-        ParseObject product = ParseObject.createWithoutData("Photo", mPhoto.getObjectId());
+       // ParseObject product = ParseObject.createWithoutData("Photo", mPhoto.getObjectId());
 
         Activity like = new Activity();
-        like.setToUser(mPhoto.getUser());//TODO
+        like.setToUser((ParseUser) parseObject);//TODO
         like.setFromUser(currentUser);
         like.setType("like");
-        like.put("photo", product);
+        like.put("photo", object);
 
             ParseACL acl = new ParseACL(currentUser);
             acl.setPublicReadAccess(true);

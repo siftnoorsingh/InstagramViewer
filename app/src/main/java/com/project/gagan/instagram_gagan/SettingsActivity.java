@@ -1,16 +1,17 @@
 package com.project.gagan.instagram_gagan;
 
-import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.parse.ParseUser;
+import java.util.Set;
 
 /**
  * Created by Gagan on 30-Sep-15.
@@ -18,7 +19,12 @@ import com.parse.ParseUser;
 public class SettingsActivity extends AppCompatActivity {
 
 
+    private Button bluetoothButton;
     private Toolbar toolbar;
+    BluetoothAdapter badapter ;
+    int REQUEST_CODE =1;
+    Set<BluetoothDevice> paired_devices;
+    String blist[];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,42 +34,62 @@ public class SettingsActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
         setSupportActionBar(toolbar);
 
+        TextView v = (TextView)findViewById(R.id.name);
+        v.setText("Bluetooth");
+
 
         // Set up the log out button click event
-        Button logoutButton = (Button) findViewById(R.id.logout_button);
-        logoutButton.setOnClickListener(new View.OnClickListener() {
+        bluetoothButton = (Button) findViewById(R.id.list_button);
+        bluetoothButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Call the Parse log out method
-                ParseUser.logOut();
-                // Start and intent for the dispatch activity
-                Intent intent = new Intent(SettingsActivity.this, SessionActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            }
+                badapter = BluetoothAdapter.getDefaultAdapter();
+                if(badapter==null)
+                {
+                    Toast.makeText(getBaseContext(),"No Bluetooth Device Found",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    if(!badapter.isEnabled())
+                    {
+                        // Start and intent for the dispatch activity
+                        Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                        startActivityForResult(intent,REQUEST_CODE);
+
+                    }
+                }
+                }
         });
 
 
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+public void onActivityResult(int requestcode, int resultcode,Intent data)
+{
+    if(requestcode==REQUEST_CODE)
+    {
+        if(resultcode ==RESULT_OK)
+        {
+            Toast.makeText(getBaseContext(),"Bluetooth Successfully Turned On", Toast.LENGTH_LONG).show();
+            paired_devices = badapter.getBondedDevices();
 
-        switch (item.getItemId()) {
+            int bcount = paired_devices.size();
+            blist = new String[bcount];
+            int i =0;
 
-
-            default:
-                return super.onOptionsItemSelected(item);
+            for(BluetoothDevice device : paired_devices)
+            {
+                blist[i]=device.getName().toString();
+                i++;
+            }
+            Bundle bundle = new Bundle();
+            bundle.putStringArray("pairs",blist);
+            Intent in = new Intent("com.project.gagan.instagram_gagan.PairingBluetooth");
+            in.putExtras(bundle);
+            startActivity(in) ;
         }
     }
+}
+
 }
