@@ -26,4 +26,17 @@
         android:background="#5b5353"
         android:nestedScrollingEnabled="false" />
 
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton_edit_back"
+        android:minHeight="40dp"
+        android:maxWidth="40dp"
+        android:minWidth="40dp"
+        android:maxHeight="40dp"
+        android:src="@drawable/ic_action_dashboard"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
 </RelativeLayout>

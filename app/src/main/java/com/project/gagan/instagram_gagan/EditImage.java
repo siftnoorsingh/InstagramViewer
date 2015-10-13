@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ public class EditImage extends AppCompatActivity{
     Button cropButton;
     private Uri picUri;
     Bitmap bmp = null;
+    private ImageButton buttonBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -47,6 +49,17 @@ public class EditImage extends AppCompatActivity{
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        buttonBack = (ImageButton) findViewById(R.id.imageButton_edit_back);
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(),"clicked",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(EditImage.this, CameraActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
         ImageView image = (ImageView) findViewById(R.id.imageView4);
         cropButton= (Button) findViewById(R.id.cropButton);
