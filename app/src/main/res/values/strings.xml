@@ -66,4 +66,16 @@
     <string name="about_yourself">About you</string>
 	<string name="comment_activity">comment_activity</string>
     <string name="like_activity">like_activity</string>
+=======
+    <string name="cropButton">Crop Image</string>
+    <string name="contButton">Continue </string>
+    <string name="textView2">Brightness</string>
+    <string name="textView3">Contrast</string>
+    <string name="button">Apply Filters</string>
+    <string name="uploadButton">Upload</string>
+    <string name="button6">blue</string>
+    <string name="button5">Green</string>
+    <string name="button4">Red</string>
+    <string name="button3">Bright</string>
+    <string name="button2">Dark</string>
 </resources>

@@ -9,9 +9,10 @@ import android.view.ViewGroup;
  * Created by Sift on 1/10/2015.
  */
 public class CameraTab extends Fragment {
-
+    //Fragment tab for camera
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //Inflate the layout in the fragment
         return inflater.inflate(R.layout.camera_tab, container, false);
     }
 

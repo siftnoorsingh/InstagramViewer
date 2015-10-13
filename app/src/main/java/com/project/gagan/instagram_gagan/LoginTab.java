@@ -13,7 +13,7 @@ import android.view.ViewGroup;
  * This is the Login tab for user login
  */
 public class LoginTab extends Fragment {
-
+    //Fragment tab for login
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.login_tab,container,false);

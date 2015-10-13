@@ -33,8 +33,6 @@ public class GalleryTab extends Fragment{
     static final int PHOTO_WIDTH = 400;
     static final int PHOTO_HEIGHT = 400;
 
-    //private static final int RESULT_OK = 100;
-    //private int PICK_IMAGE_REQUEST = 1;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.gallery_tab, container, false);
 
@@ -45,14 +43,16 @@ public class GalleryTab extends Fragment{
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //
                 try {
                     Uri uri = Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, galleryAdapter.getData().get(position));
                     Bitmap image = MediaStore.Images.Media.getBitmap(rootView.getContext().getContentResolver(), uri);
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     image.compress(Bitmap.CompressFormat.PNG, 50, stream);
                     byte[] byteArray2 = stream.toByteArray();
+                    //Scale the file to improve performance and reduce memory consumption
                     Bitmap bitmapPicture = BitmapFactory.decodeByteArray(byteArray2, 0, byteArray2.length);
-                    //Bitmap correctBmp = Bitmap.createBitmap(bitmapPicture, 0, 0, bitmapPicture.getWidth(), bitmapPicture.getHeight(), null, true);
+
                     int wid = bitmapPicture.getWidth();
                     int hgt = bitmapPicture.getHeight();
 
@@ -61,21 +61,17 @@ public class GalleryTab extends Fragment{
 
                     canvas.drawBitmap(bitmapPicture, 0f, 0f, null);
                     Matrix matrix = new Matrix();
-                    matrix.postRotate(90);
+                    //Scale the Bitmap image to the size of imageview window
                     Bitmap scaledBmp = Bitmap.createScaledBitmap(correctBmp, PHOTO_WIDTH, PHOTO_HEIGHT, true);
                     correctBmp = Bitmap.createBitmap(scaledBmp , 0, 0, scaledBmp.getWidth(), scaledBmp.getHeight(), matrix, true);
                     String filename = "bitmap.png";
                     FileOutputStream stream2 = rootView.getContext().openFileOutput(filename, Context.MODE_PRIVATE);
-                    //ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     correctBmp.compress(Bitmap.CompressFormat.PNG, 50, stream2);
-                    //byte[] byteArray2 = stream.toByteArray();
 
                     stream.close();
                     image.recycle();
-
+                    //Get the captured image's filename and uri and pass it to cropping activity
                     Intent intent = new Intent(rootView.getContext(), EditImage.class);
-                    //Intent intent = new Intent(rootView.getContext(), BrightenContrastImage.class);
-                    //intent.putExtra("picture", byteArray2);
                     intent.putExtra("picture", filename);
                     intent.putExtra("uri", uri);
                     startActivity(intent);
@@ -87,7 +83,7 @@ public class GalleryTab extends Fragment{
 
         return rootView;
     }
-
+    //Get all the images from the gallery in an array list
     private ArrayList<String> getData(){
         ArrayList<String> data = new ArrayList<String>();
         String[] projection = {MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA};

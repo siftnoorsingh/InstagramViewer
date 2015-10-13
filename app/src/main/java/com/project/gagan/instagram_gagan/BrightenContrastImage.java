@@ -15,9 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Toast;
-
 import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
 
 /**
  * Created by Sift on 13/10/2015.
@@ -35,6 +33,8 @@ public class BrightenContrastImage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_effects);
+
+        //Initialise Seekbars and Imageview
         final SeekBar SeekBar_contrast = (SeekBar) findViewById(R.id.SeekBar_contrast);
         final SeekBar SeekBar_brightness = (SeekBar) findViewById(R.id.SeekBar_brightness);
         imageView = (ImageView) findViewById(R.id.imageView5);
@@ -42,20 +42,15 @@ public class BrightenContrastImage extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         byte[] byteArray = extras.getByteArray("picture");
         bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-
-        /*String filename = getIntent().getStringExtra("picture");
-        try {
-            FileInputStream is = this.openFileInput(filename);
-            bmp = BitmapFactory.decodeStream(is);
-            is.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
         imageView.setImageBitmap(bmp);
+
+        //Set seekbar values
         SeekBar_contrast.setMax(10);
         SeekBar_brightness.setMax(510);
         SeekBar_contrast.setProgress(5);
         SeekBar_brightness.setProgress(255);
+
+        //Seekbar contrast method
         SeekBar_contrast.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -73,13 +68,15 @@ public class BrightenContrastImage extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
+
+        //Seekbar brightness method
         SeekBar_brightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 new_bm = changeBitmapContrastBrightness(bmp, (float) (SeekBar_contrast.getProgress() - 1), (float) (progress - 255));
                 imageView.setImageBitmap(new_bm);
                 //bmp=new_bm;
-                changed=true;
+                changed = true;
             }
 
             @Override
@@ -91,33 +88,32 @@ public class BrightenContrastImage extends AppCompatActivity {
 
             }
         });
+
+        // On button click, pass image to filters activity
         button = (Button) findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(changed) {
+                if (changed) {
                     imageEdited(new_bm);
-                }
-                else{
+                } else {
                     imageEdited(bmp);
                 }
             }
         });
 
-
-
+        // On button click, go back to camera activity
         buttonBack = (ImageButton) findViewById(R.id.imageButton_back);
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            Toast.makeText(v.getContext(),"clicked",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(BrightenContrastImage.this, CameraActivity.class);
                 startActivity(intent);
 
             }
         });
     }
-
+    //Change the contrast and brightness based on values of seekbar
     public static Bitmap changeBitmapContrastBrightness(Bitmap bmp, float contrast, float brightness)
     {
         ColorMatrix cm = new ColorMatrix(new float[]
@@ -139,8 +135,8 @@ public class BrightenContrastImage extends AppCompatActivity {
         return ret;
     }
 
+    //Save image in a byteArray and pass on to next activity in an intent
     private void imageEdited(Bitmap image){
-        //Bitmap bmp = BitmapFactory.decode;
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.PNG, 50, stream);
         byte[] byteArray = stream.toByteArray();

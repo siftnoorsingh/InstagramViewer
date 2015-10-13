@@ -35,6 +35,7 @@ public class HomeTab extends Fragment {
 
     private  ParseGeoPoint myPoint;
 
+    //Fragment tab for home
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 

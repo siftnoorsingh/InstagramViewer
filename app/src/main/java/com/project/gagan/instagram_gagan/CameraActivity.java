@@ -39,18 +39,19 @@ public class CameraActivity extends AppCompatActivity{
         givenName.setText((String) user.get("name"));
 
         //Set icons for tabs and add tabs to tab layout
+        //Set text for tabs and add tabs to tab layout
         TabLayout tabLayout2 = (TabLayout) findViewById(R.id.tab_layout2);
         tabLayout2.addTab(tabLayout2.newTab().setText("Gallery"));
         tabLayout2.addTab(tabLayout2.newTab().setText("Photo"));
         tabLayout2.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        //Create the viewpageradapter to switch between tabs
+        //Create the camerapageradapter to switch between tabs
         final ViewPager viewPagerCam = (ViewPager) findViewById(R.id.pager2);
         final CameraPagerAdapter adapterCam = new CameraPagerAdapter
                 (getSupportFragmentManager(), tabLayout2.getTabCount());
         viewPagerCam.setAdapter(adapterCam);
 
-        //create the tab listener
+        //Create the tab listener
         viewPagerCam.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout2));
         tabLayout2.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
