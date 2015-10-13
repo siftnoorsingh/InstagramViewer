@@ -87,4 +87,5 @@ public class UserProfileAdapter extends ParseQueryAdapter<ParseObject> {
         return v;
     }
 
+
 }
