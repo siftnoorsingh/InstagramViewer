@@ -10,12 +10,13 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 public class CameraPagerAdapter extends FragmentStatePagerAdapter {
 
     int tabCount;
-
+    //Constructor for Camera Pager Adapter
     public CameraPagerAdapter(FragmentManager supportFragmentManager, int tabCount) {
         super(supportFragmentManager);
         this.tabCount = tabCount;
     }
 
+    //Switch between tabs
     @Override
     public Fragment getItem(int position) {
         switch (position) {
@@ -29,7 +30,7 @@ public class CameraPagerAdapter extends FragmentStatePagerAdapter {
                 return null;
         }
     }
-
+    //Get tab count
     @Override
     public int getCount() {
         return tabCount;

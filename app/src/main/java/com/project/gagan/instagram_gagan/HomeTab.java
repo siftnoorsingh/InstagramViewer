@@ -10,7 +10,7 @@ import android.view.ViewGroup;
  * Created by Sift on 1/10/2015.
  */
 public class HomeTab extends Fragment {
-
+    //Fragment tab for home
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.home_tab, container, false);

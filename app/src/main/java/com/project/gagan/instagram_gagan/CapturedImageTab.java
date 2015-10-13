@@ -16,8 +16,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
-import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 
 
@@ -48,12 +46,11 @@ public class CapturedImageTab extends Fragment{
             //Get and process the raw image here
         }
     };
-
+    //Get the image here
     Camera.PictureCallback jpegCallback = new Camera.PictureCallback() {
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
             Bitmap bitmapPicture = BitmapFactory.decodeByteArray(data, 0, data.length);
-            //Bitmap correctBmp = Bitmap.createBitmap(bitmapPicture, 0, 0, bitmapPicture.getWidth(), bitmapPicture.getHeight(), null, true);
             int wid = bitmapPicture.getWidth();
             int hgt = bitmapPicture.getHeight();
 
@@ -61,8 +58,10 @@ public class CapturedImageTab extends Fragment{
             Canvas canvas = new Canvas(correctBmp);
 
             canvas.drawBitmap(bitmapPicture, 0f, 0f, null);
+            //Rotate the image to portrait form
             Matrix matrix = new Matrix();
             matrix.postRotate(90);
+            //Scale the Bitmap image to the size of imageview window
             Bitmap scaledBmp = Bitmap.createScaledBitmap(correctBmp, PHOTO_WIDTH, PHOTO_HEIGHT, true);
             correctBmp = Bitmap.createBitmap(scaledBmp , 0, 0, scaledBmp.getWidth(), scaledBmp.getHeight(), matrix, true);
             imageCaptured(correctBmp);
@@ -73,10 +72,11 @@ public class CapturedImageTab extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.capimage_tab, container, false);
         try{
+            //Start the camera
             mCamera = Camera.open();
             //Code for flash option
             Camera.Parameters params = mCamera.getParameters();
-            params.setFlashMode(Camera.Parameters.FLASH_MODE_ON);
+            params.setFlashMode(Camera.Parameters.FLASH_MODE_AUTO);
             // ... set other parameters
             mCamera.setParameters(params);
             setupCamera(mCamera);
@@ -86,13 +86,13 @@ public class CapturedImageTab extends Fragment{
 
         return rootView;
     }
-
+    //Setup the camera preview within the framelayout
     private void setupCamera(final Camera camera){
         camera.setDisplayOrientation(90);
         cameraFrame = (FrameLayout) rootView.findViewById(R.id.camera_frame);
         cameraPreview = new CameraPreview(rootView.getContext(), mCamera);
         cameraFrame.addView(cameraPreview);
-
+        // Take picture on click of button
         captureBtn = (ImageButton) rootView.findViewById(R.id.imageButton2);
         captureBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,24 +120,18 @@ public class CapturedImageTab extends Fragment{
     }
 
     private void imageCaptured(Bitmap image){
-
+            //Get the captured image and pass it to cropping activity
         try {
             String filename = "bitmap.png";
             FileOutputStream stream = rootView.getContext().openFileOutput(filename, Context.MODE_PRIVATE);
-            //ByteArrayOutputStream stream = new ByteArrayOutputStream();
             image.compress(Bitmap.CompressFormat.PNG, 50, stream);
-            //Intent intent = new Intent(rootView.getContext(), BrightenContrastImage.class);
-            //byte[] byteArray2 = stream.toByteArray();
 
             stream.close();
             image.recycle();
 
-            //intent.putExtra("picture", byteArray2);
-
             Intent intent = new Intent(rootView.getContext(), EditImage.class);
             intent.putExtra("picture", filename);
             intent.putExtra("uri", uri);
-
 
             startActivity(intent);
 

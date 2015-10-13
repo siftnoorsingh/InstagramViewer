@@ -1,6 +1,5 @@
 package com.project.gagan.instagram_gagan;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,12 +11,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 /**
  * Created by Sift on 12/10/2015.
@@ -25,23 +20,19 @@ import java.io.FileNotFoundException;
 public class EditImage extends AppCompatActivity{
 
     private static final double IMAGE_MAX_SIZE = 400;
-    //keep track of cropping intent
+    //Keep track of cropping intent
     final int PIC_CROP = 2;
     Button cropButton;
-    private Uri picUri;
     Bitmap bmp = null;
     private ImageButton buttonBack;
+    private Uri picUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.image_edit);
-        //Bundle extras = getIntent().getExtras();
-        //byte[] byteArray = extras.getByteArray("picture");
-        //bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
         String filename = getIntent().getStringExtra("picture");
-
-        //Bitmap bmp = decodeFile(filename);
+        // Decode bitmap image using FileInputStream
         try {
             FileInputStream is = this.openFileInput(filename);
             bmp = BitmapFactory.decodeStream(is);
@@ -49,7 +40,7 @@ public class EditImage extends AppCompatActivity{
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        // On button click, go back to camera activity
         buttonBack = (ImageButton) findViewById(R.id.imageButton_edit_back);
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,17 +58,19 @@ public class EditImage extends AppCompatActivity{
 
         image.setImageBitmap(bmp);
         final Bitmap finalBmp = bmp;
+
+        //On button click, crop the image
         cropButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                imageCropped(finalBmp);
-                performCrop();
+                performCrop(finalBmp);
             }
         });
     }
 
-    public void performCrop(){
+    //Method to perform crop
+    /*public void performCrop(){
 
         try {
 
@@ -107,8 +100,35 @@ public class EditImage extends AppCompatActivity{
             Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT);
             toast.show();
         }
+    }*/
+
+    //Method to perform crop
+    public void performCrop(Bitmap croppedImage){
+        int mOutputX =300;
+        int mOutputY =300;
+        croppedImage = Bitmap.createBitmap(croppedImage,(croppedImage.getWidth()-mOutputX)/2, (croppedImage.getHeight()-mOutputY)/2,mOutputX,mOutputY);
+        //Canvas canvas = new Canvas(croppedImage);
+        //Bitmap mBitmap=null;
+
+        /*Rect srcRect = new Rect(0, 0, croppedImage.getWidth(), croppedImage.getHeight());
+        Rect dstRect = new Rect(0, 0, mOutputX, mOutputY);
+
+        int dx = (srcRect.width() - dstRect.width()) / 2;
+        int dy = (srcRect.height() - dstRect.height()) / 2;
+
+        // If the srcRect is too big, use the center part of it.
+        srcRect.inset(Math.max(0, dx), Math.max(0, dy));
+
+        // If the dstRect is too big, use the center part of it.
+        dstRect.inset(Math.max(0, -dx), Math.max(0, -dy));*/
+
+        // Draw the cropped bitmap in the center
+        //canvas.drawBitmap(croppedImage, srcRect, dstRect, null);
+        //Bitmap bmp = Bitmap.createBitmap(croppedImage,0,0,srcRect,dstRect);
+        imageCropped(croppedImage);
     }
 
+    //Save image in a byteArray and pass on to next activity in an intent
     private void imageCropped(Bitmap bmp){
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.PNG, 50, stream);
@@ -117,42 +137,5 @@ public class EditImage extends AppCompatActivity{
         intent2.putExtra("picture", byteArray2);
         startActivity(intent2);
     }
-
-    /*private Bitmap decodeFile(String f){
-        Bitmap b = null;
-
-        //Decode image size
-        BitmapFactory.Options o = new BitmapFactory.Options();
-        o.inJustDecodeBounds = true;
-
-        FileInputStream fis = null;
-        try {
-            fis = this.openFileInput(f);
-            BitmapFactory.decodeStream(fis, null, o);
-            fis.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        int scale = 1;
-        if (o.outHeight > IMAGE_MAX_SIZE || o.outWidth > IMAGE_MAX_SIZE) {
-            scale = (int)Math.pow(2, (int) Math.ceil(Math.log(IMAGE_MAX_SIZE /
-                    (double) Math.max(o.outHeight, o.outWidth)) / Math.log(0.5)));
-        }
-
-        //Decode with inSampleSize
-        BitmapFactory.Options o2 = new BitmapFactory.Options();
-        o2.inSampleSize = scale;
-        try {
-            fis = new FileInputStream(f);
-            b = BitmapFactory.decodeStream(fis, null, o2);
-            fis.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-        return b;
-    }*/
 
 }

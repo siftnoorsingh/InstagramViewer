@@ -18,6 +18,7 @@ public class GalleryAdapter extends ArrayAdapter {
     private ArrayList<String> data;
     private int resource;
 
+    //Constructor for Gellery Adapter
     public GalleryAdapter(Context context, int resource, ArrayList data) {
         super(context, resource, data);
         this.context = context;
@@ -25,6 +26,7 @@ public class GalleryAdapter extends ArrayAdapter {
         this.data = data;
     }
 
+    //Get the images from gallery
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;

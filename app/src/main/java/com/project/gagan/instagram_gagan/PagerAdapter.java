@@ -10,12 +10,12 @@ import android.support.v4.app.FragmentStatePagerAdapter;
  */
 public class PagerAdapter extends FragmentStatePagerAdapter {
     int mNumOfTabs;
-
+    //Constructor for Pager Adapter
     public PagerAdapter(FragmentManager fm,int mNumOfTabs) {
         super(fm);
         this.mNumOfTabs=mNumOfTabs;
     }
-
+    //Switch between tabs of Main Activity
     @Override
     public Fragment getItem(int position) {
 
@@ -39,7 +39,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 return null;
         }
     }
-
+    //Return tab count
     @Override
     public int getCount() {
         return mNumOfTabs;

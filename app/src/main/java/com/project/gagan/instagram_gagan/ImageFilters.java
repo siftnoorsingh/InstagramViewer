@@ -29,19 +29,20 @@ public class ImageFilters extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_filters);
-
+        //Intialise buttons
         b1 = (Button) findViewById(R.id.button);
         b2 = (Button) findViewById(R.id.button2);
         b3 = (Button) findViewById(R.id.button3);
         uploadButton = (Button) findViewById(R.id.uploadButton);
 
         imageView = (ImageView) findViewById(R.id.imageView);
+        //Retrive the image in a byte array
         Bundle extras = getIntent().getExtras();
         byte[] byteArray = extras.getByteArray("picture");
 
         bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
         imageView.setImageBitmap(bmp);
-
+        //On button click,pass image to upload activity
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,7 +50,7 @@ public class ImageFilters extends AppCompatActivity {
             }
         });
 
-
+        // On button click, go back to camera activity
         buttonBack = (ImageButton) findViewById(R.id.imageButton_filter_back );
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +62,7 @@ public class ImageFilters extends AppCompatActivity {
         });
 
     }
-
+    //Grayscale filter
     public void gray(View view) {
         operation = Bitmap.createBitmap(bmp.getWidth(),bmp.getHeight(), bmp.getConfig());
         double red = 0.33;
@@ -81,7 +82,7 @@ public class ImageFilters extends AppCompatActivity {
         }
         imageView.setImageBitmap(operation);
     }
-
+    //Brighten filter
     public void bright(View view){
         operation= Bitmap.createBitmap(bmp.getWidth(), bmp.getHeight(),bmp.getConfig());
 
@@ -102,7 +103,7 @@ public class ImageFilters extends AppCompatActivity {
         }
         imageView.setImageBitmap(operation);
     }
-
+    //Dark filter
     public void dark(View view){
         operation= Bitmap.createBitmap(bmp.getWidth(),bmp.getHeight(),bmp.getConfig());
 
@@ -123,7 +124,7 @@ public class ImageFilters extends AppCompatActivity {
         }
         imageView.setImageBitmap(operation);
     }
-
+    //Gamma filter
     public void gama(View view) {
         operation = Bitmap.createBitmap(bmp.getWidth(),bmp.getHeight(),bmp.getConfig());
 
@@ -144,7 +145,7 @@ public class ImageFilters extends AppCompatActivity {
         }
         imageView.setImageBitmap(operation);
     }
-
+    //Green filter
     public void green(View view){
         operation = Bitmap.createBitmap(bmp.getWidth(),bmp.getHeight(), bmp.getConfig());
 
@@ -165,7 +166,7 @@ public class ImageFilters extends AppCompatActivity {
         }
         imageView.setImageBitmap(operation);
     }
-
+    //Blue filter
     public void blue(View view){
         operation = Bitmap.createBitmap(bmp.getWidth(),bmp.getHeight(), bmp.getConfig());
 
@@ -187,6 +188,7 @@ public class ImageFilters extends AppCompatActivity {
         imageView.setImageBitmap(operation);
     }
 
+    //Save image in a byteArray and pass on to next activity in an intent
     private void imageUpload(Bitmap image){
         //Bitmap bmp = BitmapFactory.decode;
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
