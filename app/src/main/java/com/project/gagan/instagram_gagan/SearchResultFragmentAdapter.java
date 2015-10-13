@@ -37,7 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Flin on 10/10/2015.
+ * Created by Fenglin on 10/10/2015.
  * This Adapter takes care of the search result view
  */
 
@@ -51,7 +51,6 @@ public class SearchResultFragmentAdapter extends ParseQueryAdapter<ParseObject> 
 
                 // Get the query user's photos
                 ParseQuery photosFromCurrentUserQuery = new ParseQuery("_User");
-
                 photosFromCurrentUserQuery.whereContains("username", query);
                 photosFromCurrentUserQuery.whereExists("thumbnail");
 

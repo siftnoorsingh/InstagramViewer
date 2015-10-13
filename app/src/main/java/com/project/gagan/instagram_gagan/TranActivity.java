@@ -30,6 +30,7 @@ import java.util.List;
 public class TranActivity extends Activity {
     private String userObjectId;
     private String userName;
+    private boolean flag;
 
     private SearchUserAdapter searchUserAdapter;
     private ImageButton imageButton;
@@ -41,13 +42,14 @@ public class TranActivity extends Activity {
     private ParseQuery<ParseUser> users;
     private ParseObject toUser;
 
-    private boolean flag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_tran);
+
+        // get userObjectI and username through intent extras
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             userObjectId = extras.getString("userObjectId");
@@ -65,10 +67,9 @@ public class TranActivity extends Activity {
 
                         thumbnail = p.getParseFile("thumbnail");
                         toUser = p;
-
                         imageView.setParseFile(thumbnail);
                         imageView.loadInBackground();
-                        Log.d("111!!!!", thumbnail.getName());
+
                     }
                 } else {
 
@@ -77,12 +78,10 @@ public class TranActivity extends Activity {
 
         });
 
-
         view = findViewById(android.R.id.content);
         // Initialize the subclass of ParseQueryAdapter
         searchUserAdapter = new SearchUserAdapter(view.getContext(), userObjectId);
 
-        // Initialize ListView and set initial view to mainAdapter
         listView = (ListView) view.findViewById(R.id.listTran);
         listView.setAdapter(searchUserAdapter);
         searchUserAdapter.loadObjects();
@@ -90,7 +89,6 @@ public class TranActivity extends Activity {
         textView = (TextView) findViewById(R.id.user_name);
         textView.setText(userName);
         imageView = (ParseImageView) findViewById(R.id.user_thumbnail);
-
 
         followOnClick(view);
 
@@ -110,13 +108,10 @@ public class TranActivity extends Activity {
 
 
                 if (flag != true) {
+
                     final ParseObject newFollowQuery = new ParseObject("Activity");
-
                     newFollowQuery.put("fromUser", ParseUser.getCurrentUser());
-
-                    //  if(toUser!=null) {
                     newFollowQuery.put("toUser", toUser);
-                    // }
                     newFollowQuery.put("type", "follow");
                     newFollowQuery.saveInBackground();
                     flag = true;
