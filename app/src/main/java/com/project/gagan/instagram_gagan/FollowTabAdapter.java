@@ -43,6 +43,16 @@ public class FollowTabAdapter extends ParseQueryAdapter<ParseObject> {
                 photosFromFollowedUsersQuery.whereMatchesKeyInQuery("user", "toUser", followingActivitiesQuery);
                 photosFromFollowedUsersQuery.whereExists("image");
 
+
+                ParseQuery followingActivitiesQuery2 = new ParseQuery("Activity");
+                followingActivitiesQuery2.whereMatches("type", "comment");
+                followingActivitiesQuery2.whereEqualTo("fromUser", ParseUser.getCurrentUser());
+                // Get the photos from the Users returned in the previous query
+                ParseQuery<Photo> photosFromFollowedUsersQuery2 = new ParseQuery<Photo>("Photo");
+                photosFromFollowedUsersQuery2.whereMatchesKeyInQuery("user", "toUser", followingActivitiesQuery2);
+                photosFromFollowedUsersQuery2.whereExists("image");
+
+
                 ParseQuery query = ParseQuery.or(Arrays.asList(photosFromFollowedUsersQuery));
                 query.include("user");
 
@@ -67,7 +77,7 @@ public class FollowTabAdapter extends ParseQueryAdapter<ParseObject> {
 
     @Override
     public View getItemView(ParseObject photo, View v, ViewGroup parent) {
-        Log.d("tag2", "Here2");
+
         if (v == null) {
             v = View.inflate(getContext(), R.layout.userprofilephotos, null);
         }
@@ -118,7 +128,8 @@ public class FollowTabAdapter extends ParseQueryAdapter<ParseObject> {
 //            }
 //
 //        });
-
+//        String s = photo.
+//        username.setText(s);
 
         return v;
     }
