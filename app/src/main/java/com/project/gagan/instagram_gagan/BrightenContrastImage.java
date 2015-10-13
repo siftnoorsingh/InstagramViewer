@@ -24,7 +24,7 @@ import java.io.FileInputStream;
 public class BrightenContrastImage extends AppCompatActivity {
 
     Bitmap new_bm;
-    Bitmap bmp = null;
+    Bitmap bmp;
     ImageView imageView;
     Button button;
     boolean changed=false;
@@ -37,14 +37,19 @@ public class BrightenContrastImage extends AppCompatActivity {
         final SeekBar SeekBar_brightness = (SeekBar) findViewById(R.id.SeekBar_brightness);
         imageView = (ImageView) findViewById(R.id.imageView5);
 
-        String filename = getIntent().getStringExtra("image");
+        Bundle extras = getIntent().getExtras();
+        byte[] byteArray = extras.getByteArray("picture");
+
+        bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+
+        /*String filename = getIntent().getStringExtra("image");
         try {
             FileInputStream is = this.openFileInput(filename);
             bmp = BitmapFactory.decodeStream(is);
             is.close();
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
         imageView.setImageBitmap(bmp);
         SeekBar_contrast.setMax(10);
         SeekBar_brightness.setMax(510);
