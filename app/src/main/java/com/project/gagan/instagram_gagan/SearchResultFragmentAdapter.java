@@ -43,6 +43,7 @@ import java.util.List;
 
 public class SearchResultFragmentAdapter extends ParseQueryAdapter<ParseObject> {
     private ParseImageView SearchResult;
+
     public SearchResultFragmentAdapter(Context context, final String query) {
 
 
@@ -80,8 +81,11 @@ public class SearchResultFragmentAdapter extends ParseQueryAdapter<ParseObject> 
         SearchResult.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(),TranActivity.class);
-                intent.putExtra("userObjectId",photo.getObjectId());
+                Intent intent = new Intent(v.getContext(), TranActivity.class);
+                intent.putExtra("userObjectId", photo.getObjectId());
+
+                intent.putExtra("username", photo.getString("username"));
+
                 getContext().startActivity(intent);
 
             }

@@ -11,6 +11,7 @@ import android.widget.GridView;
 
 /**
  * Created by Fenglin
+ * This activity is not used
  */
 
 public class SearchResultActivity extends AppCompatActivity {

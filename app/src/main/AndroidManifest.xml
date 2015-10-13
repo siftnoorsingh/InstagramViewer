@@ -50,15 +50,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".SearchResultActivity"
-            android:label="@string/title_activity_search_result" >
-            <intent-filter>
-                <action android:name="com.project.gagan.instagram_gagan.SearchResultActivity" />
+        <!--<activity-->
+            <!--android:name=".SearchResultActivity"-->
+            <!--android:label="@string/title_activity_search_result" >-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.project.gagan.instagram_gagan.SearchResultActivity" />-->
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
         <activity
             android:name=".CameraActivity"
             android:label="@string/camera_activity" >

@@ -19,6 +19,8 @@ import java.util.List;
 
 /**
  * Created by Fenglin on 5/10/2015.
+ * This adapter was for local testing only
+ * Not used in the final app
  */
 public class ActivityFeedAdapter extends BaseAdapter {
 
@@ -61,7 +63,6 @@ public class ActivityFeedAdapter extends BaseAdapter {
             // if it's not recycled, initialize some attributes
             holder.imageView = new ImageView(mContext);
             holder.imageView.setLayoutParams(new GridView.LayoutParams(400, 400));
-            // holder.textView.setText("User ");
 
             holder.imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             //   holder.imageView.setPadding(8, 8, 8, 8);
@@ -76,7 +77,6 @@ public class ActivityFeedAdapter extends BaseAdapter {
 
         holder.imageView.setImageResource(mThumbIds[position]);
 
-        // TODO when the database is connected, each imageView entry and textView entry need to be matched
         holder.textView.setText("\n \n" + Name + " has uploaded a new photo");
         return activityFeedView;
     }

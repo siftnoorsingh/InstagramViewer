@@ -115,38 +115,6 @@ public class SearchResultImageAdapter extends BaseAdapter {
 
         });
 
-        // =========
-//
-//        final ParseFile thumbnailFile = parseUser.getParseFile("thumbnail");
-//        if (thumbnailFile != null) {
-//            thumbnailFile.getDataInBackground(new GetDataCallback() {
-//                @Override
-//                public void done(byte[] data, ParseException e) {
-//                    if (e == null) {
-//
-//                        int size = 250;
-//                        Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
-//                        if (bmp != null) {
-//
-//                            float scale = (bmp.getWidth() < bmp.getHeight()) ? (float)bmp.getWidth() / (float)size : (float)bmp.getHeight() / (float)size;
-//                            int width = (int)(bmp.getWidth() / scale);
-//                            int height = (int)(bmp.getHeight() / scale);
-//                            imageView.setImageBitmap(Bitmap.createScaledBitmap(bmp,
-//                                    width, height, true));
-//
-//
-//
-//
-//                        }
-//
-//
-//
-//                    }
-//                }
-//            });
-//        } else { // Clear ParseImageView if an object doesn't have a photo
-//           // imageView.setImageResource(android.R.color.transparent);
-//        }
 
 
         return imageView;
