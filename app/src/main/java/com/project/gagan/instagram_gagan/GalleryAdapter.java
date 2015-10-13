@@ -2,7 +2,7 @@ package com.project.gagan.instagram_gagan;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
+import android.provider.MediaStore;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class GalleryAdapter extends ArrayAdapter {
     private Context context;
-    private ArrayList<Bitmap> data;
+    private ArrayList<String> data;
     private int resource;
 
     public GalleryAdapter(Context context, int resource, ArrayList data) {
@@ -39,7 +39,12 @@ public class GalleryAdapter extends ArrayAdapter {
             holder = (ViewHolder) row.getTag();
         }
 
-        holder.image.setImageBitmap(data.get(position));
+        holder.image.setImageBitmap(MediaStore.Images.Thumbnails
+                .getThumbnail(context.getContentResolver(),
+                        Integer.parseInt(data.get(position)),
+                        MediaStore.Images.Thumbnails.MICRO_KIND,
+                        null));
+
         return row;
     }
 
