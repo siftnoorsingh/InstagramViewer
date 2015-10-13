@@ -1,7 +1,8 @@
 package com.project.gagan.instagram_gagan;
 
-import android.graphics.Bitmap;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,13 +20,14 @@ public class GalleryTab extends Fragment{
 
     protected GridView gridView;
     protected GalleryAdapter galleryAdapter;
+    View rootView;
 
     //private static final int RESULT_OK = 100;
     //private int PICK_IMAGE_REQUEST = 1;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.gallery_tab, container, false);
+        rootView = inflater.inflate(R.layout.gallery_tab, container, false);
 
-/*        gridView = (GridView) rootView.findViewById(R.id.gridView);
+        gridView = (GridView) rootView.findViewById(R.id.gridView);
         galleryAdapter = new GalleryAdapter(rootView.getContext(), R.layout.grid_cell_layout, getData());
         gridView.setAdapter(galleryAdapter);
 
@@ -34,14 +36,33 @@ public class GalleryTab extends Fragment{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(rootView.getContext(), "Image at " + position + " clicked", Toast.LENGTH_SHORT).show();
             }
-        });*/
+        });
 
         return rootView;
     }
 
-   /* private ArrayList<Bitmap> getData(){
-        return null;
-    };*/
+    private ArrayList<String> getData(){
+        ArrayList<String> data = new ArrayList<String>();
+        String[] projection = {MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA};
+
+        Cursor cursor = rootView.getContext().getContentResolver().query(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                projection,
+                null,
+                null,
+                null);
+
+        Toast.makeText(rootView.getContext(), "Images selected " + cursor.getCount(), Toast.LENGTH_SHORT).show();
+
+        if(cursor.moveToFirst()){
+            do{
+                String _data = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID));
+                data.add(_data);
+            }while(cursor.moveToNext());
+        }
+
+        return data;
+    };
 
     //@Override
     /*protected void onActivityResult(int requestCode, int resultCode, Intent data,View rootView) {
