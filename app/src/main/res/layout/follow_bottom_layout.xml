@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+
+    android:orientation="vertical"
+    android:paddingTop="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_horizontal_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    >
+
+    <TextView
+        android:id="@+id/imageDescription_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/icon_thumb_bottom"
+        android:layout_toRightOf="@id/icon_thumb_bottom"
+        android:textColor="#FF0000" />
+
+
+    <!--<com.parse.ParseImageView-->
+        <!--android:id="@+id/icon_thumb_bottom"-->
+        <!--android:layout_width="30dp"-->
+        <!--android:layout_height="100dp"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_marginLeft="15dip"-->
+        <!--android:layout_marginRight="15dip"-->
+        <!--/>-->
+
+    <TextView
+        android:id="@+id/timestamp_bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageDescription_bottom"
+        android:layout_above="@id/icon_thumb_bottom" />
+</LinearLayout>
