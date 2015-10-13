@@ -33,11 +33,9 @@ public class EditImage extends AppCompatActivity{
         setContentView(R.layout.image_edit);
         //Bundle extras = getIntent().getExtras();
         //byte[] byteArray = extras.getByteArray("image");
+        //bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+        String filename = getIntent().getStringExtra("picture");
 
-        String filename = getIntent().getStringExtra("image");
-
-
-        //String filename = getIntent().getStringExtra("image");
         Bitmap bmp = null;
         try {
             FileInputStream is = this.openFileInput(filename);
@@ -46,7 +44,7 @@ public class EditImage extends AppCompatActivity{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+
         ImageView image = (ImageView) findViewById(R.id.imageView4);
         cropButton= (Button) findViewById(R.id.cropButton);
         Intent intent=getIntent();
@@ -102,7 +100,7 @@ public class EditImage extends AppCompatActivity{
         bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] byteArray2 = stream.toByteArray();
         Intent intent2 = new Intent(this, BrightenContrastImage.class);
-        intent2.putExtra("byteArray", byteArray2);
+        intent2.putExtra("picture", byteArray2);
         startActivity(intent2);
     }
 

@@ -44,13 +44,13 @@ public class GalleryTab extends Fragment{
                     Bitmap image = MediaStore.Images.Media.getBitmap(rootView.getContext().getContentResolver(), uri);
                     String filename = "bitmap.png";
                     FileOutputStream stream = rootView.getContext().openFileOutput(filename, Context.MODE_PRIVATE);
-                    image.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    image.compress(Bitmap.CompressFormat.PNG, 50, stream);
 
                     stream.close();
                     image.recycle();
 
-                    Intent intent = new Intent(rootView.getContext(), EditImage.class);
-                    intent.putExtra("image", filename);
+                    Intent intent = new Intent(rootView.getContext(), BrightenContrastImage.class);
+                    intent.putExtra("picture", filename);
                     intent.putExtra("uri", uri);
                     startActivity(intent);
                 } catch (Exception e) {
