@@ -45,20 +45,16 @@ public class ImageAdapter extends ParseQueryAdapter<ParseObject> {
 
                 // Get the current user's photos
                 ParseQuery photosFromCurrentUserQuery = new ParseQuery("_User");
-                //photosFromCurrentUserQuery.whereEqualTo("user", ParseUser.getCurrentUser());
+
                 photosFromCurrentUserQuery.whereExists("thumbnail");
 
                 photosFromCurrentUserQuery.include("user");
-//                photosFromCurrentUserQuery.orderByDescending("createdAt");
 
                 return photosFromCurrentUserQuery;
             }
         });
 
-
     }
-
-
 
 
     @Override
@@ -69,14 +65,12 @@ public class ImageAdapter extends ParseQueryAdapter<ParseObject> {
 
         super.getItemView(photo, v, parent);
 
-         DiscoverPhotoView = (ParseImageView) v.findViewById(R.id.ParseSearchImgView);
+        DiscoverPhotoView = (ParseImageView) v.findViewById(R.id.ParseSearchImgView);
 
         final ParseFile image = photo.getParseFile("thumbnail");
         if (image != null) {
 
-          //  searchIDs.setId(photo.getObjectId());
             DiscoverPhotoView.setParseFile(image);
-            //  Toast.makeText(getContext(),photo.getObjectId() , Toast.LENGTH_SHORT).show();
 
             DiscoverPhotoView.loadInBackground();
         }
@@ -84,31 +78,20 @@ public class ImageAdapter extends ParseQueryAdapter<ParseObject> {
             @Override
             public void onClick(View v) {
 
-
-              //  Toast.makeText(getContext(),photo.getObjectId() , Toast.LENGTH_SHORT).show();
                 v = View.inflate(getContext(), R.layout.profile_tab, null);
-                    ListView gridView3 = (ListView) v.findViewById(R.id.list);
-         //           SearchUserAdapter searchUserAdapter = new SearchUserAdapter(v.getContext(), photo.getObjectId());
-          //          //
-          //          gridView3.setAdapter(searchUserAdapter);
-          //          searchUserAdapter.loadObjects();
 
-                Intent intent = new Intent(v.getContext(),TranActivity.class);
-                intent.putExtra("userObjectId",photo.getObjectId());
-                intent.putExtra("username",photo.getString("username"));
-
+                // start new activity to show searched user profile, passing user's ObjectId and username through intent
+                Intent intent = new Intent(v.getContext(), TranActivity.class);
+                intent.putExtra("userObjectId", photo.getObjectId());
+                intent.putExtra("username", photo.getString("username"));
+                // start new activity
                 getContext().startActivity(intent);
-
-                    //  Toast.makeText(getContext(),"   1" , Toast.LENGTH_SHORT).show();
-                }
+            }
 
 
         });
 
-
-
         return v;
+
     }
-
-
 }
