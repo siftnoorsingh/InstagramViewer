@@ -7,6 +7,8 @@
     <uses-feature android:name="android.hardware.camera" android:required="true"/>
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-feature android:name="android.hardware.camera.flash" android:required="false" />
 
     <application
         android:name=".InstagramApplication"
@@ -80,6 +82,33 @@
             android:label="@string/title_image_edit" >
             <intent-filter>
                 <action android:name="com.project.gagan.instagram_gagan.EditImage" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".BrightenContrastImage"
+            android:label="@string/title_image_effects" >
+            <intent-filter>
+                <action android:name="com.project.gagan.instagram_gagan.BrightenContrastImage" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ImageFilters"
+            android:label="@string/title_image_filters" >
+            <intent-filter>
+                <action android:name="com.project.gagan.instagram_gagan.ImageFilters" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ImageUpload"
+            android:label="@string/title_image_upload" >
+            <intent-filter>
+                <action android:name="com.project.gagan.instagram_gagan.ImageUpload" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

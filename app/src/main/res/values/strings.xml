@@ -58,4 +58,9 @@
     <string name="title_activity_tran">TranActivity</string>
     <string name="title_image_edit">Edit Image</string>
     <string name="upload_profile_pic">Upload Profile Pic</string>
+    <string name="title_image_effects">Change Brightness and Contrast</string>
+    <string name="title_image_filters">Apply Filters</string>
+    <string name="title_image_upload">Upload Image</string>
+    <string name="brightness_label">Brightness</string>
+    <string name="contrast_label">Contrast</string>
 </resources>

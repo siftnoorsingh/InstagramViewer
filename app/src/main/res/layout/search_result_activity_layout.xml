@@ -26,14 +26,4 @@
         android:layout_below="@+id/imageDescription"
         android:layout_toRightOf="@id/icon_thumb" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Like"
-        android:id="@+id/button_like"
-        android:layout_alignBottom="@+id/icon_thumb"
-        android:layout_toRightOf="@+id/imageDescription"
-        android:layout_toEndOf="@+id/imageDescription"
-        android:layout_marginLeft="55dp"
-        android:layout_marginStart="55dp" />
 </RelativeLayout>

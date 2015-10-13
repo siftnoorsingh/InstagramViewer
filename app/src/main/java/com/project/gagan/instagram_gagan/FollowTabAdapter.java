@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseImageView;
 import com.parse.ParseObject;
@@ -13,12 +15,16 @@ import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
 
+
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by Fenglin on 11/10/2015.
  */
 public class FollowTabAdapter extends ParseQueryAdapter<ParseObject> {
 
-
+    private ParseUser toUser;
     int i = 0;
     private String queryString;
     private ParseImageView thumbPhotoView;
@@ -28,69 +34,35 @@ public class FollowTabAdapter extends ParseQueryAdapter<ParseObject> {
 
         super(context, new ParseQueryAdapter.QueryFactory<ParseObject>() {
             public ParseQuery<ParseObject> create() {
-                Log.d("userObjectId: ", ParseUser.getCurrentUser().getObjectId());
 
-                ParseQuery currentUserQuery = new ParseQuery("_User");
-                currentUserQuery.whereEqualTo("objectId", ParseUser.getCurrentUser().getObjectId());
-
-                ParseQuery ActivityQuery = new ParseQuery("Activity");
-                ActivityQuery.whereMatchesQuery("fromUser", currentUserQuery);
-
-
-                ParseQuery toUserQuery = new ParseQuery("_User");
-                ActivityQuery.whereMatchesQuery("toUser",toUserQuery);
+                ParseQuery followingActivitiesQuery = new ParseQuery("Activity");
+                followingActivitiesQuery.whereMatches("type", "follow");
+                followingActivitiesQuery.whereEqualTo("fromUser", ParseUser.getCurrentUser());
+                // Get the photos from the Users returned in the previous query
+                ParseQuery<Photo> photosFromFollowedUsersQuery = new ParseQuery<Photo>("Photo");
+                photosFromFollowedUsersQuery.whereMatchesKeyInQuery("user", "toUser", followingActivitiesQuery);
+                photosFromFollowedUsersQuery.whereExists("image");
 
 
-                //  users3.whereMatchesQuery("objectId",)
+                ParseQuery followingActivitiesQuery2 = new ParseQuery("Activity");
+                followingActivitiesQuery2.whereMatches("type", "comment");
+                followingActivitiesQuery2.whereEqualTo("fromUser", ParseUser.getCurrentUser());
+                // Get the photos from the Users returned in the previous query
+                ParseQuery<Photo> photosFromFollowedUsersQuery2 = new ParseQuery<Photo>("Photo");
+                photosFromFollowedUsersQuery2.whereMatchesKeyInQuery("user", "toUser", followingActivitiesQuery2);
+                photosFromFollowedUsersQuery2.whereExists("image");
 
 
-                ActivityQuery.whereMatchesQuery("toUser", toUserQuery);
+                ParseQuery query = ParseQuery.or(Arrays.asList(photosFromFollowedUsersQuery));
+                query.include("user");
 
+                query.orderByDescending("createdAt");
 
-            //    final ParseQuery users2 = new ParseQuery("_User");
-            //    users2.whereMatchesQuery("ObjectId", ActivityQuery);
+                return query;
 
-                ParseQuery photoQuery = new ParseQuery("Photo");
-                photoQuery.whereMatchesQuery("user", toUserQuery);
-//
-
-//
-//                ParseQuery<ParseObject> query = ParseQuery.getQuery("Activity");
-//
-//                query.findInBackground(new FindCallback<ParseObject>() {
-//                    @Override
-//                    public void done(List<ParseObject> list, ParseException e) {
-//                        for (ParseObject parseObject : list) {
-//                           String s = parseObject.getString("to");
-//                            users2.whereEqualTo("objectId", s);
-//
-//                        }
-//                    }
-//
-//                });
-//                photoQuery.whereMatchesQuery("user", users2);
-
-//
-//
-//                ParseQuery toUser = new ParseQuery("Activity");
-//                toUser.whereMatchesQuery("toUser",users2);
-
-
-                photoQuery.whereExists("image");
-
-
-                photoQuery.include("user");
-                photoQuery.orderByDescending("createdAt");
-
-
-                Log.d("tag1", "Here1");
-
-
-                return photoQuery;
             }
         });
 
-        //  queryString = query;
     }
 
     /**
@@ -105,7 +77,7 @@ public class FollowTabAdapter extends ParseQueryAdapter<ParseObject> {
 
     @Override
     public View getItemView(ParseObject photo, View v, ViewGroup parent) {
-        Log.d("tag2", "Here2");
+
         if (v == null) {
             v = View.inflate(getContext(), R.layout.userprofilephotos, null);
         }
@@ -129,9 +101,35 @@ public class FollowTabAdapter extends ParseQueryAdapter<ParseObject> {
         descriptionImage.setText(photo.getString("description"));
 
         // Set up the number of pictures/posts of current users
-        TextView numPosts = (TextView) v.findViewById(R.id.imageDescription);
-        numPosts.setText("Posts" + i);
+        final TextView username = (TextView) v.findViewById(R.id.imageDescription);
 
+
+//        ParseQuery users = ParseUser.getQuery();
+//        ParseQuery userQuery = new ParseQuery("_User");
+//        users.whereEqualTo("objectId", photo.getObjectId());
+//
+//        ParseQuery photoQuery = new ParseQuery("Photo");
+//        userQuery.whereMatchesKeyInQuery("username","user",photoQuery);
+//
+//        userQuery.findInBackground(new FindCallback<ParseUser>() {
+//            @Override
+//            public void done(List<ParseUser> list, ParseException e) {
+//                if (e == null) {
+//                    for (ParseUser p : list) {
+//                        Log.d("3","33333");
+//
+//                        toUser = p;
+//                        username.setText(toUser.getUsername());
+//
+//                    }
+//                } else {
+//
+//                }
+//            }
+//
+//        });
+//        String s = photo.
+//        username.setText(s);
 
         return v;
     }

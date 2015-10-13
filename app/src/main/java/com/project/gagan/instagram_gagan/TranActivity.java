@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +23,7 @@ import com.parse.ParseImageView;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.List;
 
@@ -29,49 +32,49 @@ public class TranActivity extends Activity {
     private String userName;
 
     private SearchUserAdapter searchUserAdapter;
-
+    private ImageButton imageButton;
     private ListView listView;
     private View view;
     private TextView textView;
     private ParseImageView imageView;
     private ParseFile thumbnail;
+    private ParseQuery<ParseUser> users;
+    private ParseObject toUser;
+
+    private boolean flag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //   setContentView(R.layout.profile_tab);
+
         setContentView(R.layout.activity_tran);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             userObjectId = extras.getString("userObjectId");
             userName = extras.getString("username");
-
-            //Toast.makeText(getBaseContext(), value, Toast.LENGTH_SHORT).show();
         }
 
-        ParseQuery<ParseUser> users = ParseUser.getQuery();
+        users = ParseUser.getQuery();
         users.whereEqualTo("objectId", userObjectId);
 
         users.findInBackground(new FindCallback<ParseUser>() {
             @Override
             public void done(List<ParseUser> list, ParseException e) {
-                if(e== null){
-                for(ParseObject p:list) {
+                if (e == null) {
+                    for (ParseUser p : list) {
 
-                    thumbnail = p.getParseFile("thumbnail");
-                    imageView.setParseFile(thumbnail);
-                    imageView.loadInBackground();
-                    Log.d("111!!!!", thumbnail.getName());
-                }
-                }else {
-                    Log.d("2222!!!!", "here");
+                        thumbnail = p.getParseFile("thumbnail");
+                        toUser = p;
+
+                        imageView.setParseFile(thumbnail);
+                        imageView.loadInBackground();
+                        Log.d("111!!!!", thumbnail.getName());
+                    }
+                } else {
+
                 }
             }
 
-//            @Override
-//            public void done(Object o, Throwable throwable) {
-//
-//            }
         });
 
 
@@ -84,56 +87,43 @@ public class TranActivity extends Activity {
         listView.setAdapter(searchUserAdapter);
         searchUserAdapter.loadObjects();
 
-        textView = (TextView)findViewById(R.id.user_name);
+        textView = (TextView) findViewById(R.id.user_name);
         textView.setText(userName);
-        imageView = (ParseImageView)findViewById(R.id.user_thumbnail);
-//        imageView.setParseFile(thumbnail);
-//        imageView.loadInBackground();
-
-//        ImageAdapter img = new ImageAdapter(view.getContext(),new SearchIDs());
-//        // Initialize ListView and set initial view to mainAdapter
-//        listView = (ListView) view.findViewById(R.id.listTran);
-//        listView.setAdapter(img);
-//        img.loadObjects();
+        imageView = (ParseImageView) findViewById(R.id.user_thumbnail);
 
 
-        //   SearchUserFragment searchUserFragment = new SearchUserFragment();
+        followOnClick(view);
 
 
-//
-//
-//        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout2);
-//        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_action_dashboard));
-//        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_action_search));
-//        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_camera));
-//        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_action_follow));
-//        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_action_profile));
-//        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-//
-//        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-//        final PagerAdapter adapter = new PagerAdapter
-//                (getSupportFragmentManager(), tabLayout.getTabCount());
-//        viewPager.setAdapter(adapter);
-//        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-//        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-//            @Override
-//            public void onTabSelected(TabLayout.Tab tab) {
-//                viewPager.setCurrentItem(tab.getPosition());
-//            }
-//
-//            @Override
-//            public void onTabUnselected(TabLayout.Tab tab) {
-//
-//            }
-//
-//            @Override
-//            public void onTabReselected(TabLayout.Tab tab) {
-//
-//            }
-//        });
-//
+    }
+
+    public void followOnClick(View view) {
+
+        // this flag is to control the follow button so that it does not create multiple entries when click more than once
+        flag = false;
+        imageButton = (ImageButton) findViewById(R.id.imageButtonFollow);
+        imageButton.setImageResource(R.drawable.ic_action_name2);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageButton.setImageResource(R.drawable.ic_action_name);
 
 
+                if (flag != true) {
+                    final ParseObject newFollowQuery = new ParseObject("Activity");
+
+                    newFollowQuery.put("fromUser", ParseUser.getCurrentUser());
+
+                    //  if(toUser!=null) {
+                    newFollowQuery.put("toUser", toUser);
+                    // }
+                    newFollowQuery.put("type", "follow");
+                    newFollowQuery.saveInBackground();
+                    flag = true;
+
+                }
+            }
+        });
     }
 
 

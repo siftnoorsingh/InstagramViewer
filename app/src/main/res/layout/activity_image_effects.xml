@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="400dp"
+        android:id="@+id/imageView5"
+        android:minHeight="400dp"
+        android:minWidth="400dp"
+        android:nestedScrollingEnabled="false"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <SeekBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/SeekBar_brightness"
+        android:minWidth="300dp"
+        android:focusableInTouchMode="false"
+        android:layout_below="@+id/imageView5"
+        android:layout_alignLeft="@+id/SeekBar_contrast"
+        android:layout_alignStart="@+id/SeekBar_contrast" />
+
+    <SeekBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/SeekBar_contrast"
+        android:minWidth="300dp"
+        android:layout_below="@+id/SeekBar_brightness"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="46dp" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Apply Filters"
+        android:id="@+id/button"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/SeekBar_brightness"
+        android:layout_centerHorizontal="true"
+        android:text="Brightness" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Contrast"
+        android:id="@+id/textView3"
+        android:layout_below="@+id/SeekBar_contrast"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

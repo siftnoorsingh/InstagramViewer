@@ -1,5 +1,6 @@
 package com.project.gagan.instagram_gagan;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,7 +15,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 
 
 /**
@@ -27,6 +28,9 @@ public class CapturedImageTab extends Fragment{
     FrameLayout cameraFrame;
     ImageButton captureBtn;
     View rootView;
+    //static final int REQUEST_IMAGE_CAPTURE = 1;
+    //ImageView imageView;
+    //Button imageButton;
 
     Camera.ShutterCallback shutterCallback = new Camera.ShutterCallback() {
         @Override
@@ -55,9 +59,6 @@ public class CapturedImageTab extends Fragment{
             imageCaptured(correctBmp);
         }
     };
-    //static final int REQUEST_IMAGE_CAPTURE = 1;
-    //ImageView imageView;
-    //Button imageButton;
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,10 +66,10 @@ public class CapturedImageTab extends Fragment{
         try{
             mCamera = Camera.open();
             //Code for flash option
-            //Camera.Parameters params = new Camera.getParameters();
-            //params.setFlashMode(Camera.Parameters.FLASH_MODE_ON);
+            Camera.Parameters params = mCamera.getParameters();
+            params.setFlashMode(Camera.Parameters.FLASH_MODE_ON);
             // ... set other parameters
-            //mCamera.setParameters(params);
+            mCamera.setParameters(params);
             setupCamera(mCamera);
         }catch (Exception e){
             Toast.makeText(rootView.getContext(), "Unable to connect to camera", Toast.LENGTH_SHORT).show();
@@ -78,6 +79,7 @@ public class CapturedImageTab extends Fragment{
         //add these two things in the xml file
         imageView = (ImageView) rootView.findViewById(R.id.imageView);
         imageButton= (Button) rootView.findViewById(R.id.imageButton);
+        launchCamera();
         */
         return rootView;
     }
@@ -98,6 +100,16 @@ public class CapturedImageTab extends Fragment{
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        // Use mCurrentCamera to select the camera desired to safely restore
+        // the fragment after the camera has been changed
+//        mCamera = Camera.open();
+        //cameraPreview.setCamera(mCamera);
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
 
@@ -111,14 +123,23 @@ public class CapturedImageTab extends Fragment{
     }
 
     private void imageCaptured(Bitmap image){
-        //Bitmap bmp = BitmapFactory.decode;
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-        Intent intent = new Intent(rootView.getContext(), EditImage.class);
-        intent.putExtra("picture", byteArray);
-        startActivity(intent);
-        Toast.makeText(rootView.getContext(), "Image Captured", Toast.LENGTH_SHORT).show();
+
+        try {
+            String filename = "bitmap.png";
+            FileOutputStream stream = rootView.getContext().openFileOutput(filename, Context.MODE_PRIVATE);
+            image.compress(Bitmap.CompressFormat.PNG, 100, stream);
+
+            stream.close();
+            image.recycle();
+
+            //Intent intent = new Intent(rootView.getContext(), BrightenContrastImage.class);
+            Intent intent = new Intent(rootView.getContext(), EditImage.class);
+            intent.putExtra("image", filename);
+            startActivity(intent);
+
+        } catch (Exception e) {
+            Toast.makeText(rootView.getContext(), "Unable to open the image", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /*//Add this method to the onCLick function in the xml file for imageButton
@@ -135,7 +156,7 @@ public class CapturedImageTab extends Fragment{
             // This is another way where you can get the data about the image as well to make other changes to it.
               Bundle extras = data.getExtras();
               Bitmap photo = (Bitmap) extras.get("data");
-              imageView.setImageBitmap();
+              imageView.setImageBitmap(photo);
         } else if (resultCode == RESULT_CANCELED) {
             // User cancelled the image capture
         }
