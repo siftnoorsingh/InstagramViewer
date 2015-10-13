@@ -1,13 +1,14 @@
 package com.project.gagan.instagram_gagan;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 /**
  * Created by Sift on 13/10/2015.
@@ -20,21 +21,23 @@ public class ImageUpload extends AppCompatActivity{
         Bundle extras = getIntent().getExtras();
         byte[] byteArray = extras.getByteArray("picture");
         // Create the ParseFile
-        ParseFile file = new ParseFile("TinyPic.png", byteArray);
+        ParseFile file = new ParseFile(Environment.getExternalStorageState() + System.currentTimeMillis() + ".png", byteArray);
         // Upload the image into Parse Cloud
-        file.saveInBackground();
+        //file.saveInBackground();
 
         // Create a New Class called "Photo" in Parse
         ParseObject imgupload = new ParseObject("Photo");
 
-        // Create a column named "ImageName" and set the string
+
+
+        // Create a column named "image" and set the string
         imgupload.put("description", "Display Pic");
 
         // Create a column named "ImageFile" and insert the image
         imgupload.put("image", file);
 
         // Create a column named "user" and insert the user pointer
-        //imgupload.put("user", asdasdc );
+        imgupload.put("user", ParseUser.getCurrentUser());
 
         // Create the class and the columns
         imgupload.saveInBackground();
