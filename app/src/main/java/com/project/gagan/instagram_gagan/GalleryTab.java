@@ -51,6 +51,7 @@ public class GalleryTab extends Fragment{
 
                     Intent intent = new Intent(rootView.getContext(), EditImage.class);
                     intent.putExtra("image", filename);
+                    intent.putExtra("uri", uri);
                     startActivity(intent);
                 } catch (Exception e) {
                     Toast.makeText(rootView.getContext(), "Unable to open the image", Toast.LENGTH_SHORT).show();
