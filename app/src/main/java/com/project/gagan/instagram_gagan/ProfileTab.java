@@ -38,6 +38,7 @@ public class ProfileTab extends Fragment {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private ImageView photoView;
     private TextView userPosts;
+    private ParseUser userCurrent;
 
 
     @Override
@@ -47,17 +48,17 @@ public class ProfileTab extends Fragment {
 
 
         // Set up the username
-        ParseUser user = ParseUser.getCurrentUser();
+         userCurrent = ParseUser.getCurrentUser();
 
         TextView usernameView = (TextView) view.findViewById(R.id.user_name);
-        usernameView.setText((String) user.get("username"));
+        usernameView.setText((String) userCurrent.get("username"));
 
         // Set up the current user's bio
         TextView userBio = (TextView) view.findViewById(R.id.bio);
-        userBio.setText((String) user.get("biography"));
+        userBio.setText((String) userCurrent.get("biography"));
 
         // Set up the current user's posts count
-        int count = user.getInt("postCount");
+        int count = userCurrent.getInt("postCount");
         userPosts = (TextView) view.findViewById(R.id.num_posts);
         userPosts.setText(count + " Posts");
 
@@ -127,7 +128,7 @@ public class ProfileTab extends Fragment {
         });
 
 
-        final ParseFile thumbnailFile = user.getParseFile("thumbnail");
+        final ParseFile thumbnailFile = userCurrent.getParseFile("thumbnail");
         if (thumbnailFile != null) {
             thumbnailFile.getDataInBackground(new GetDataCallback() {
                 @Override
@@ -244,16 +245,15 @@ public class ProfileTab extends Fragment {
                 ParseFile file = new ParseFile(Environment.getExternalStorageState() + System.currentTimeMillis() + ".png", image);
 
 
-                // Call User class in Parse
-                ParseUser imgupload = ParseUser.getCurrentUser();
-                int count = imgupload.getInt("postCount");
+
+                int count = userCurrent.getInt("postCount");
 
                 count= count+1;
                 // Create a column named "thumbnail" and insert the image
-                imgupload.put("thumbnail", file);
-                imgupload.put("postCount", count);
+                userCurrent.put("thumbnail", file);
+                userCurrent.put("postCount", count);
 
-                imgupload.saveInBackground();
+                userCurrent.saveInBackground();
 
 
 

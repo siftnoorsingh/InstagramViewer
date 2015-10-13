@@ -132,8 +132,8 @@ public class CapturedImageTab extends Fragment{
             stream.close();
             image.recycle();
 
-            //Intent intent = new Intent(rootView.getContext(), BrightenContrastImage.class);
-            Intent intent = new Intent(rootView.getContext(), EditImage.class);
+            Intent intent = new Intent(rootView.getContext(), BrightenContrastImage.class);
+            //Intent intent = new Intent(rootView.getContext(), EditImage.class);
             intent.putExtra("image", filename);
             startActivity(intent);
 

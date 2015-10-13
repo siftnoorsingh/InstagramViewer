@@ -40,7 +40,7 @@ public class SignUpOrLogin extends AppCompatActivity {
     private EditText passwordView;
 
     /*
-    The following two variables for Sign up Fragment
+    The following variables for Sign up Fragment
      */
     private EditText usernameField;
     private EditText passwordField;
@@ -49,8 +49,8 @@ public class SignUpOrLogin extends AppCompatActivity {
     private EditText nameField;
     private int minPasswordLength;
     private static final String USER_OBJECT_NAME_FIELD = "name";
-
     private static final int MIN_PASSWORD_LENGTH = 6;
+    private EditText userBio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -224,6 +224,7 @@ public class SignUpOrLogin extends AppCompatActivity {
         confirmPasswordField = (EditText) findViewById(R.id.signup_confirm_password_input);
         emailField = (EditText) findViewById(R.id.signup_email_input);
         nameField = (EditText) findViewById(R.id.signup_name_input);
+        userBio = (EditText)findViewById(R.id.signup_bio);
 
         findViewById(R.id.create_account).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -241,6 +242,11 @@ public class SignUpOrLogin extends AppCompatActivity {
                 String name = null;
                 if (nameField != null) {
                     name = nameField.getText().toString();
+                }
+
+                String bio = null;
+                if(userBio!= null){
+                    bio= userBio.getText().toString();
                 }
 
                 if (username.length() == 0) {
@@ -290,6 +296,9 @@ public class SignUpOrLogin extends AppCompatActivity {
                 // Set additional custom fields only if the user filled it out
                 if (name.length() != 0) {
                     user.put(USER_OBJECT_NAME_FIELD, name);
+                }
+                if(bio.length()!=0){
+                    user.put("biography",bio);
                 }
 
                 // First query to check whether a ParseUser with
