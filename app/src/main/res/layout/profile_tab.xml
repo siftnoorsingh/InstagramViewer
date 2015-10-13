@@ -72,12 +72,7 @@
         android:layout_below="@+id/user_name"/>-->
 
 
-    <ListView
-        android:id="@+id/list"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@id/user_name"
-        android:paddingTop="5dp"/>
+
     <TextView
         android:id="@+id/bio"
         android:layout_width="fill_parent"

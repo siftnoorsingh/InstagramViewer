@@ -1,16 +1,24 @@
 package com.project.gagan.instagram_gagan;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
@@ -18,6 +26,8 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * Created by Sift on 1/10/2015.
@@ -28,6 +38,10 @@ public class ProfileTab extends Fragment {
     private UserProfileAdapter mUserViewAdapter;
     private ParseQueryAdapter<ParseObject> mainAdapter;
     private ListView listView;
+    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+    private Uri fileUri;
+    private ImageView photoView;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,8 +60,9 @@ public class ProfileTab extends Fragment {
         userBio.setText((String) user.get("biography"));
 
         // Set up the current user's posts count
+        int count = user.getInt("postCount");
         TextView userPosts = (TextView) view.findViewById(R.id.num_posts);
-        userPosts.setText((String) user.get("postCount") + " Posts");
+        userPosts.setText(count + " Posts");
 
 
 
@@ -57,7 +72,6 @@ public class ProfileTab extends Fragment {
         mainAdapter.setTextKey("description");*/
 
 
-
         // Initialize the subclass of ParseQueryAdapter
         mUserViewAdapter = new UserProfileAdapter(getActivity());
 
@@ -65,6 +79,7 @@ public class ProfileTab extends Fragment {
         listView = (ListView) view.findViewById(R.id.list);
         listView.setAdapter(mUserViewAdapter);
         mUserViewAdapter.loadObjects();
+
 
         /*// Initialize toggle button
         Button toggleButton = (Button) view.findViewById(R.id.toggleButton);
@@ -85,8 +100,36 @@ public class ProfileTab extends Fragment {
 
 
         // Set up the user's profile picture
-        final ImageView photoView = (ImageView) view.findViewById(R.id.user_thumbnail);
+        photoView = (ImageView) view.findViewById(R.id.user_thumbnail);
         photoView.setBackgroundResource(R.drawable.frame);
+
+        photoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Add Photo!");
+                builder.setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int item) {
+                        if (items[item].equals("Take Photo")) {
+
+                            // create Intent to take a picture and return control to the calling application
+                            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                            // start the image capture Intent
+                            startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+
+                        } else if (items[item].equals("Cancel")) {
+                            dialog.dismiss();
+                        }
+                    }
+                });
+                builder.show();
+            }
+        });
+
+
         final ParseFile thumbnailFile = user.getParseFile("thumbnail");
         if (thumbnailFile != null) {
             thumbnailFile.getDataInBackground(new GetDataCallback() {
@@ -98,17 +141,14 @@ public class ProfileTab extends Fragment {
                         Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
                         if (bmp != null) {
 
-                            float scale = (bmp.getWidth() < bmp.getHeight()) ? (float)bmp.getWidth() / (float)size : (float)bmp.getHeight() / (float)size;
-                            int width = (int)(bmp.getWidth() / scale);
-                            int height = (int)(bmp.getHeight() / scale);
+                            float scale = (bmp.getWidth() < bmp.getHeight()) ? (float) bmp.getWidth() / (float) size : (float) bmp.getHeight() / (float) size;
+                            int width = (int) (bmp.getWidth() / scale);
+                            int height = (int) (bmp.getHeight() / scale);
                             photoView.setImageBitmap(Bitmap.createScaledBitmap(bmp,
                                     width, height, true));
 
 
-
-
                         }
-
 
 
                     }
@@ -116,6 +156,7 @@ public class ProfileTab extends Fragment {
             });
         } else { // Clear ParseImageView if an object doesn't have a photo
             photoView.setImageResource(R.drawable.placeholder_user);
+
         }
 
 
@@ -133,10 +174,18 @@ public class ProfileTab extends Fragment {
         }*/
 
 
+        //int countPosts = listView.getAdapter().getCount();
+        //
+
+        /*String CountListRowNo= String.valueOf(+listView.getAdapter().getCount());
+        userPosts.setText( CountListRowNo+ " Posts");
+
+        Toast.makeText(getActivity(), "Total number of Items are:" + listView.getAdapter().getCount(), Toast.LENGTH_LONG).show();*/
 
 
         return view;
     }
+
 
     public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
                                                          int reqWidth, int reqHeight) {
@@ -177,4 +226,47 @@ public class ProfileTab extends Fragment {
         return inSampleSize;
     }
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //Log.d("hello", " cheese ");
+        //Log.d("RC : ", (String.valueOf(requestCode)));
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == getActivity().RESULT_OK) {
+                Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+                
+                // Convert it to byte
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                // Compress image to lower quality scale 1 - 100
+                thumbnail.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] image = stream.toByteArray();
+
+
+                // Create the ParseFile
+                ParseFile file = new ParseFile(Environment.getExternalStorageState() + System.currentTimeMillis() + ".png", image);
+
+
+                // Call User class in Parse
+                ParseUser imgupload = ParseUser.getCurrentUser();
+
+                // Create a column named "thumbnail" and insert the image
+                imgupload.put("thumbnail", file);
+
+                imgupload.saveInBackground();
+
+                // Show a simple toast message
+                Toast.makeText(getActivity(), "Thumbnail Uploaded",
+                        Toast.LENGTH_SHORT).show();
+
+                photoView.setImageBitmap(thumbnail);
+            }
+        }else {
+            Log.d("ERROR","   ERROR : Thumbnail didn't upload");
+            // Show a simple toast message
+            Toast.makeText(getActivity(), "Thumbnail din't upload",
+                    Toast.LENGTH_SHORT).show();
+        }
+
+    }
 }
