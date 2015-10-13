@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -23,8 +22,6 @@ import android.widget.Toast;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseObject;
-import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
@@ -36,11 +33,11 @@ public class ProfileTab extends Fragment {
 
     private View view;
     private UserProfileAdapter mUserViewAdapter;
-    private ParseQueryAdapter<ParseObject> mainAdapter;
+    private int counter=0;
     private ListView listView;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
-    private Uri fileUri;
     private ImageView photoView;
+    private TextView userPosts;
 
 
     @Override
@@ -61,7 +58,7 @@ public class ProfileTab extends Fragment {
 
         // Set up the current user's posts count
         int count = user.getInt("postCount");
-        TextView userPosts = (TextView) view.findViewById(R.id.num_posts);
+        userPosts = (TextView) view.findViewById(R.id.num_posts);
         userPosts.setText(count + " Posts");
 
 
@@ -235,7 +232,7 @@ public class ProfileTab extends Fragment {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == getActivity().RESULT_OK) {
                 Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-                
+
                 // Convert it to byte
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 // Compress image to lower quality scale 1 - 100
@@ -249,17 +246,31 @@ public class ProfileTab extends Fragment {
 
                 // Call User class in Parse
                 ParseUser imgupload = ParseUser.getCurrentUser();
+                int count = imgupload.getInt("postCount");
 
+                count= count+1;
                 // Create a column named "thumbnail" and insert the image
                 imgupload.put("thumbnail", file);
+                imgupload.put("postCount", count);
 
                 imgupload.saveInBackground();
+
+
 
                 // Show a simple toast message
                 Toast.makeText(getActivity(), "Thumbnail Uploaded",
                         Toast.LENGTH_SHORT).show();
 
-                photoView.setImageBitmap(thumbnail);
+                userPosts.setText(count + " Posts");
+
+                int size = 250;
+                float scale = (thumbnail.getWidth() < thumbnail.getHeight()) ? (float) thumbnail.getWidth() / (float) size : (float) thumbnail.getHeight() / (float) size;
+                int width = (int) (thumbnail.getWidth() / scale);
+                int height = (int) (thumbnail.getHeight() / scale);
+                photoView.setImageBitmap(Bitmap.createScaledBitmap(thumbnail,
+                        width, height, true));
+
+                //photoView.setImageBitmap(thumbnail);
             }
         }else {
             Log.d("ERROR","   ERROR : Thumbnail didn't upload");
