@@ -88,6 +88,11 @@ public class FollowTabAdapter extends ParseQueryAdapter<ParseObject> {
         }
         super.getItemView(photo, v, parent);
 
+        ParseObject parseObject = ParseObject.create("Photo");
+        parseObject = photo.getParseObject("user");
+        String u = parseObject.getString("username");
+
+
 
         // Set up the current user's all uploaded photos
         thumbPhotoView = (ParseImageView) v.findViewById(R.id.icon_thumb);
@@ -103,38 +108,11 @@ public class FollowTabAdapter extends ParseQueryAdapter<ParseObject> {
 
         // Set up the description
         TextView descriptionImage = (TextView) v.findViewById(R.id.imageDescription);
-        descriptionImage.setText(photo.getString("description")+"  Id: "+photo.getObjectId());
+        descriptionImage.setText(u);
 
-        // Set up the number of pictures/posts of current users
-//        final TextView username = (TextView) v.findViewById(R.id.imageDescription);
-//        username.setText(photo.getObjectId());
 
-//        ParseQuery users = ParseUser.getQuery();
-//        ParseQuery userQuery = new ParseQuery("_User");
-//        users.whereEqualTo("objectId", photo.getObjectId());
-//
-//        ParseQuery photoQuery = new ParseQuery("Photo");
-//        userQuery.whereMatchesKeyInQuery("username","user",photoQuery);
-//
-//        userQuery.findInBackground(new FindCallback<ParseUser>() {
-//            @Override
-//            public void done(List<ParseUser> list, ParseException e) {
-//                if (e == null) {
-//                    for (ParseUser p : list) {
-//                        Log.d("3","33333");
-//
-//                        toUser = p;
-//                        username.setText(toUser.getUsername());
-//
-//                    }
-//                } else {
-//
-//                }
-//            }
-//
-//        });
-//        String s = photo.
-//        username.setText(s);
+//        ParseQuery query2 = new ParseQuery("_User");
+//        query2.
 
         return v;
     }

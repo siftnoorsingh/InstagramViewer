@@ -30,18 +30,18 @@ public class FollowTab extends Fragment {
         gridView.setAdapter(new FollowTabAdapter(view.getContext()));
         gridView2.setAdapter(new FollowActivityAdapter(view.getContext()));
 
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-
-                ParseUser currentUser = ParseUser.getCurrentUser();
-                String CurrentUserName = currentUser.getUsername();
-
-
-                Toast.makeText(getActivity(), "Activity Feed " + position + " uploaded by "+CurrentUserName ,
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+//        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            public void onItemClick(AdapterView<?> parent, View v,
+//                                    int position, long id) {
+//
+//                ParseUser currentUser = ParseUser.getCurrentUser();
+//                String CurrentUserName = currentUser.getUsername();
+//
+//
+//                Toast.makeText(getActivity(), "Activity Feed " + position + " uploaded by "+CurrentUserName ,
+//                        Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         return view;
 
