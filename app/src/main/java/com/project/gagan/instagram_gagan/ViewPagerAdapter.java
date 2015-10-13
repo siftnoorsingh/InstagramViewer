@@ -26,17 +26,6 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        /*if(position == 0) // if the position is 0 we are returning the First tab
-        {
-            SignUpTab tab1 = new SignUpTab();
-            return tab1;
-        }
-
-        else             // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
-        {
-            LoginTab tab2 = new LoginTab();
-            return tab2;
-        }*/
         if(position==0){
             SignUpTab tab0 = new SignUpTab();
             return tab0;

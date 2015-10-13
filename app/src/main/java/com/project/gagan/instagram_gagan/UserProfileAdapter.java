@@ -13,7 +13,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
 
-/*
+/*created by Gaganjot
  * The UserViewAdapter is an extension of ParseQueryAdapter
  * that has a custom layout for photos for the current user
  */
@@ -76,13 +76,30 @@ public class UserProfileAdapter extends ParseQueryAdapter<ParseObject> {
 
         // Set up the timestamp
         TextView uploadedAt = (TextView) v.findViewById(R.id.timestamp);
-        uploadedAt.setText(photo.getCreatedAt().toString());
+        String date = photo.getCreatedAt().toString();
+        String delim = " ";
+        String[] tokens = date.split(delim);
+        int tcount = tokens.length;
+        String k = "";
+        for(int i =0;i<tcount;i++)
+        {
+            if(i==1)
+            {
+
+                k = k+tokens[i];
+            }
+            else if(i==2||i==(tcount-1))
+            {
+                k = k+","+tokens[i];
+            }
+
+        }
+        uploadedAt.setText(k);
+
 
         // Set up the description
         TextView descriptionImage = (TextView) v.findViewById(R.id.imageDescription);
         descriptionImage.setText(photo.getString("description"));
-
-
 
         return v;
     }

@@ -1,7 +1,9 @@
 package com.project.gagan.instagram_gagan;
 
 import android.app.Application;
+
 import com.parse.Parse;
+import com.parse.ParseObject;
 
 /**
  * Created by Gagan on 29-Sep-15.
@@ -15,6 +17,9 @@ public class InstagramApplication extends Application {
         Parse.enableLocalDatastore(this);
         // Connection with Parse through application ID and client Key
         Parse.initialize(this, getString(R.string.parse_app_id), getString(R.string.parse_client_id));
+
+        ParseObject.registerSubclass(Photo.class);
+        ParseObject.registerSubclass(Activity.class);
 
     }
 }

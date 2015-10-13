@@ -64,6 +64,9 @@
     <string name="brightness_label">Brightness</string>
     <string name="contrast_label">Contrast</string>
     <string name="about_yourself">About you</string>
+	<string name="comment_activity">comment_activity</string>
+    <string name="like_activity">like_activity</string>
+=======
     <string name="cropButton">Crop Image</string>
     <string name="contButton">Continue </string>
     <string name="textView2">Brightness</string>
