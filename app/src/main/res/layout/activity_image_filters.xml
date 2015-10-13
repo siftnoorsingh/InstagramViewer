@@ -26,7 +26,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="dark"
+        android:text="@string/button2"
         android:onClick="dark"
         android:id="@+id/button2"
         android:layout_alignBottom="@+id/button"
@@ -36,7 +36,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bright"
+        android:text="@string/button3"
         android:onClick="bright"
         android:id="@+id/button3"
         android:layout_alignTop="@+id/button2"
@@ -45,7 +45,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Red"
+        android:text="@string/button4"
         android:onClick="gama"
         android:id="@+id/button4"
         android:layout_below="@+id/button3"
@@ -55,7 +55,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Green"
+        android:text="@string/button5"
         android:onClick="green"
         android:id="@+id/button5"
         android:layout_alignTop="@+id/button4"
@@ -65,7 +65,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="blue"
+        android:text="@string/button6"
         android:onClick="blue"
         android:id="@+id/button6"
         android:layout_alignTop="@+id/button5"
@@ -76,7 +76,7 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Upload"
+        android:text="@string/uploadButton"
         android:id="@+id/uploadButton"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />

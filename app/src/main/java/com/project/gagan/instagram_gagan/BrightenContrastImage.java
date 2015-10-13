@@ -107,7 +107,6 @@ public class BrightenContrastImage extends AppCompatActivity {
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            Toast.makeText(v.getContext(),"clicked",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(BrightenContrastImage.this, CameraActivity.class);
                 startActivity(intent);
 

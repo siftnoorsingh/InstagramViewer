@@ -50,7 +50,7 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Apply Filters"
+        android:text="@string/button"
         android:id="@+id/button"
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@+id/textView2"
@@ -63,13 +63,13 @@
         android:id="@+id/textView2"
         android:layout_below="@+id/SeekBar_brightness"
         android:layout_centerHorizontal="true"
-        android:text="Brightness" />
+        android:text="@string/textView2" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Contrast"
+        android:text="@string/textView3"
         android:id="@+id/textView3"
         android:layout_below="@+id/SeekBar_contrast"
         android:layout_centerHorizontal="true" />

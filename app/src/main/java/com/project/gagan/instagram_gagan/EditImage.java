@@ -20,9 +20,8 @@ import java.io.FileInputStream;
 public class EditImage extends AppCompatActivity{
 
     private static final double IMAGE_MAX_SIZE = 400;
-    //Keep track of cropping intent
-    final int PIC_CROP = 2;
     Button cropButton;
+    Button contButton;
     Bitmap bmp = null;
     private ImageButton buttonBack;
     private Uri picUri;
@@ -45,7 +44,6 @@ public class EditImage extends AppCompatActivity{
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(),"clicked",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(EditImage.this, CameraActivity.class);
                 startActivity(intent);
 
@@ -54,6 +52,7 @@ public class EditImage extends AppCompatActivity{
 
         ImageView image = (ImageView) findViewById(R.id.imageView4);
         cropButton= (Button) findViewById(R.id.cropButton);
+        contButton= (Button) findViewById(R.id.contButton);
         picUri = getIntent().getData();
 
         image.setImageBitmap(bmp);
@@ -67,64 +66,22 @@ public class EditImage extends AppCompatActivity{
                 performCrop(finalBmp);
             }
         });
+
+        //On button click, continue without cropping
+        contButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                imageCropped(finalBmp);
+            }
+        });
     }
-
-    //Method to perform crop
-    /*public void performCrop(){
-
-        try {
-
-            //call the standard crop action intent (the user device may not support it)
-            Intent cropIntent = new Intent("com.android.camera.action.CROP");
-            //indicate image type
-            cropIntent.setDataAndType(picUri, "image/*");
-            //cropIntent.setType("image/*");
-            //cropIntent.putExtra("Bitmap",bmp);
-            //set crop properties
-            cropIntent.putExtra("crop", "true");
-            //indicate aspect of desired crop
-            cropIntent.putExtra("aspectX", 1);
-            cropIntent.putExtra("aspectY", 1);
-            //indicate output X and Y
-            cropIntent.putExtra("outputX", 200);
-            cropIntent.putExtra("outputY", 200);
-            //retrieve data on return
-            cropIntent.putExtra("return-data", true);
-            //start the activity - we handle returning in onActivityResult
-            startActivityForResult(cropIntent, PIC_CROP);
-            Toast.makeText(this, "Button Clicked", Toast.LENGTH_SHORT).show();
-        }
-        catch(ActivityNotFoundException anfe){
-            //display an error message
-            String errorMessage = "Whoops - your device doesn't support the crop action!";
-            Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT);
-            toast.show();
-        }
-    }*/
 
     //Method to perform crop
     public void performCrop(Bitmap croppedImage){
         int mOutputX =300;
         int mOutputY =300;
         croppedImage = Bitmap.createBitmap(croppedImage,(croppedImage.getWidth()-mOutputX)/2, (croppedImage.getHeight()-mOutputY)/2,mOutputX,mOutputY);
-        //Canvas canvas = new Canvas(croppedImage);
-        //Bitmap mBitmap=null;
-
-        /*Rect srcRect = new Rect(0, 0, croppedImage.getWidth(), croppedImage.getHeight());
-        Rect dstRect = new Rect(0, 0, mOutputX, mOutputY);
-
-        int dx = (srcRect.width() - dstRect.width()) / 2;
-        int dy = (srcRect.height() - dstRect.height()) / 2;
-
-        // If the srcRect is too big, use the center part of it.
-        srcRect.inset(Math.max(0, dx), Math.max(0, dy));
-
-        // If the dstRect is too big, use the center part of it.
-        dstRect.inset(Math.max(0, -dx), Math.max(0, -dy));*/
-
-        // Draw the cropped bitmap in the center
-        //canvas.drawBitmap(croppedImage, srcRect, dstRect, null);
-        //Bitmap bmp = Bitmap.createBitmap(croppedImage,0,0,srcRect,dstRect);
         imageCropped(croppedImage);
     }
 
