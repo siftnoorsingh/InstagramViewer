@@ -40,8 +40,7 @@ public class ImageUpload extends AppCompatActivity{
         imgupload.saveInBackground();
 
         // Show a simple toast message
-        Toast.makeText(this, "Image Uploaded",
-                Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Image Uploaded", Toast.LENGTH_SHORT).show();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

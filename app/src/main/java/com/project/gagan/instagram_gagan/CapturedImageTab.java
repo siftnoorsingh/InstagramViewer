@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -50,11 +51,11 @@ public class CapturedImageTab extends Fragment{
         public void onPictureTaken(byte[] data, Camera camera) {
             Bitmap bitmapPicture = BitmapFactory.decodeByteArray(data, 0, data.length);
             Bitmap correctBmp = Bitmap.createBitmap(bitmapPicture, 0, 0, bitmapPicture.getWidth(), bitmapPicture.getHeight(), null, true);
-//            if (correctBmp.getWidth() > correctBmp.getHeight()) {
-//                Matrix matrix = new Matrix();
-//                matrix.postRotate(90);
-//                correctBmp = Bitmap.createBitmap(correctBmp , 0, 0, correctBmp.getWidth(), correctBmp.getHeight(), matrix, true);
-//            }
+            if (correctBmp.getWidth() > correctBmp.getHeight()) {
+                Matrix matrix = new Matrix();
+                matrix.postRotate(90);
+                correctBmp = Bitmap.createBitmap(correctBmp , 0, 0, correctBmp.getWidth(), correctBmp.getHeight(), matrix, true);
+            }
             imageCaptured(correctBmp);
         }
     };

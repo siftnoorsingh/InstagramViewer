@@ -32,22 +32,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="46dp" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText"
-        android:layout_below="@+id/SeekBar_brightness"
-        android:layout_centerHorizontal="true"
-        android:text="Set Brightness" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText2"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="Set Contrast" />
-
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
@@ -57,5 +41,23 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/SeekBar_brightness"
+        android:layout_centerHorizontal="true"
+        android:text="@string/brightness_label" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/contrast_label"
+        android:id="@+id/textView3"
+        android:layout_below="@+id/SeekBar_contrast"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
