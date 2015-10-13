@@ -32,36 +32,13 @@ public class FollowActivityAdapter extends ParseQueryAdapter<ParseObject> {
 
     public FollowActivityAdapter(final Context context) {
 
-
         super(context, new ParseQueryAdapter.QueryFactory<ParseObject>() {
             public ParseQuery<ParseObject> create() {
-//
-//                ParseQuery followingActivitiesQuery = new ParseQuery("Activity");
-//                followingActivitiesQuery.whereMatches("type", "follow");
-//                followingActivitiesQuery.whereEqualTo("fromUser", ParseUser.getCurrentUser());
-//                // Get the photos from the Users returned in the previous query
-//                ParseQuery<Photo> photosFromFollowedUsersQuery = new ParseQuery<Photo>("Photo");
-//                photosFromFollowedUsersQuery.whereMatchesKeyInQuery("user", "toUser", followingActivitiesQuery);
-//                photosFromFollowedUsersQuery.whereExists("image");
-
 
                 ParseQuery followingActivitiesQuery2 = new ParseQuery("Activity");
-                //     followingActivitiesQuery2.whereMatches("type", "comment");
+
                 followingActivitiesQuery2.whereEqualTo("toUser", ParseUser.getCurrentUser());
-                // Get the photos from the Users returned in the previous query
-                //ParseQuery<Photo> photosFromFollowedUsersQuery2 = new ParseQuery<Photo>("Photo");
-                //  photosFromFollowedUsersQuery2.whereMatchesKeyInQuery("user", "toUser", followingActivitiesQuery2);
-                //  photosFromFollowedUsersQuery2.whereExists("image");
-//
-//
-//
-//
-//
-//
-//                ParseQuery query = ParseQuery.or(Arrays.asList(photosFromFollowedUsersQuery));
-//                query.include("user");
-//
-//                query.orderByDescending("createdAt");
+
 
                 return followingActivitiesQuery2;
 
@@ -73,21 +50,37 @@ public class FollowActivityAdapter extends ParseQueryAdapter<ParseObject> {
     @Override
     public View getItemView(ParseObject activity, View v, ViewGroup parent) {
         if (v == null) {
-            v = View.inflate(getContext(), R.layout.userprofilephotos, null);
+            v = View.inflate(getContext(), R.layout.follow_bottom_layout, null);
         }
         super.getItemView(activity, v, parent);
 
-
-        // Set up the current user's all uploaded photos
-        thumbPhotoView = (ParseImageView) v.findViewById(R.id.icon_thumb);
         final String type = activity.getString("type");
-        Log.d(type, type);
 
-        TextView uploadedAt = (TextView) v.findViewById(R.id.timestamp);
-        uploadedAt.setText(activity.getCreatedAt().toString());
+        TextView uploadedAt = (TextView) v.findViewById(R.id.timestamp_bottom);
+
+        String date = activity.getCreatedAt().toString();
+        String dateString = " ";
+        String[] tokens = date.split(dateString);
+        int timecount = tokens.length;
+        String k = "";
+        for(int i =0;i<timecount;i++)
+        {
+            if(i==1)
+            {
+
+                k = k+tokens[i];
+            }
+            else if(i==2||i==(timecount-1))
+            {
+                k = k+","+tokens[i];
+            }
+
+        }
+
+        uploadedAt.setText(k);
 
         // Set up the description
-        TextView descriptionImage = (TextView) v.findViewById(R.id.imageDescription);
+        TextView descriptionImage = (TextView) v.findViewById(R.id.imageDescription_bottom);
 
         // get username from the pointer in Activity table
         ParseObject parseObject = ParseObject.create("Activity");
@@ -96,13 +89,13 @@ public class FollowActivityAdapter extends ParseQueryAdapter<ParseObject> {
 
 
         if (type.equals("follow")) {
-            descriptionImage.setText(u+ " has started to follow you");
+            descriptionImage.setText(u + " has started to follow you");
 
         } else if (type.equals("comment")) {
-            descriptionImage.setText(u+ " has commented your photo");
+            descriptionImage.setText(u + " has commented your photo");
 
         } else if (type.equals("like")) {
-            descriptionImage.setText(u+ " has liked your photo");
+            descriptionImage.setText(u + " has liked your photo");
         }
 
 

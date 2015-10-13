@@ -27,6 +27,11 @@ import com.parse.SaveCallback;
 
 import java.util.List;
 
+/**
+ * Created by Fenglin on 12/10/15.
+ * This Activity is handling the searched User profile from search tab
+ */
+
 public class TranActivity extends Activity {
     private String userObjectId;
     private String userName;
@@ -72,7 +77,7 @@ public class TranActivity extends Activity {
 
                     }
                 } else {
-
+                    Toast.makeText(view.getContext(), "Error: ParseException", Toast.LENGTH_SHORT).show();
                 }
             }
 

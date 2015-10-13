@@ -72,27 +72,6 @@ public class CameraActivity extends AppCompatActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-
-        /*switch (item.getItemId()) {
-
-            case R.id.action_settings:// Setting option to set for push notifications
-                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-                return true;
-
-            case R.id.logout:
-                // Call the Parse log out method
-                ParseUser.logOut();
-                // Start and intent for the dispatch activity
-                Intent intent = new Intent(MainActivity.this, SessionActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }*/
         return true;
     }
 }
