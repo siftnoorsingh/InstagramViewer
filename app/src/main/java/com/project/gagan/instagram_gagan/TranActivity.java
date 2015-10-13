@@ -22,7 +22,8 @@ import java.util.List;
 
 /**
  * Created by Fenglin on 12/10/15.
- * This Activity is handling the searched User profile from search tab
+ * This activity shows as a pop out window when the search result is clicked.
+ * This Activity is handling the searched User profile from search tab.
  */
 
 public class TranActivity extends Activity {
@@ -93,8 +94,8 @@ public class TranActivity extends Activity {
 
     }
 
+    // monitor the on click event
     public void followOnClick(View view) {
-
         // this flag is to control the follow button so that it does not create multiple entries when click more than once
         flag = false;
         imageButton = (ImageButton) findViewById(R.id.imageButtonFollow);
@@ -129,12 +130,9 @@ public class TranActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }

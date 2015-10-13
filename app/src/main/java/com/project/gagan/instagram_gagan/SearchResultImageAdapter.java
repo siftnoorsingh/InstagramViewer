@@ -22,6 +22,7 @@ import java.util.List;
 
 /**
  * Created by Fenglin on 7/10/2015.
+ * This adapter is not used in the final version.
  */
 public class SearchResultImageAdapter extends BaseAdapter {
 
@@ -29,9 +30,6 @@ public class SearchResultImageAdapter extends BaseAdapter {
     private Context mContext;
     private String queryString;
     private int numberOfUsers = 3;
-
-//    private ParseUser user = ParseUser.getCurrentUser();
-//    private ParseFile parseFile = user.getParseFile("thumbnail");
 
     public SearchResultImageAdapter(Context c, String query) {
         mContext = c;
@@ -56,24 +54,12 @@ public class SearchResultImageAdapter extends BaseAdapter {
         final ImageView imageView;
         imageView = new ImageView(mContext);
 
-
-//        final ArrayList<Photo> photos = new ArrayList<>();
-//
-////
-//        final ParseUser parseUser = new ParseUser();
-
-//-----------
         ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
 
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
-                // ParseObject user1 = (ParseObject)list.
 
-                //           if (!list.isEmpty()) {
-                //    numberOfUsers = list.size();
-
-                // counter to check if the query user is exist or not
                 int counter = 0;
                 for (int i = 0; i < numberOfUsers; i++) {
                     ParseObject po = list.get(i);
@@ -114,7 +100,6 @@ public class SearchResultImageAdapter extends BaseAdapter {
             }
 
         });
-
 
 
         return imageView;

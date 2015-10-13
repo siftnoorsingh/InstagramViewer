@@ -33,7 +33,7 @@ import java.util.List;
  * This class provides pictures for the gridView in SearchTab
  */
 public class ImageAdapter extends ParseQueryAdapter<ParseObject> {
-    SearchIDs searchIDs;
+
     ParseImageView DiscoverPhotoView;
 
     public ImageAdapter(Context context) {
@@ -51,11 +51,10 @@ public class ImageAdapter extends ParseQueryAdapter<ParseObject> {
                 photosFromCurrentUserQuery.include("user");
 
                 return photosFromCurrentUserQuery;
+
             }
         });
-
     }
-
 
     @Override
     public View getItemView(final ParseObject photo, View v, final ViewGroup parent) {
@@ -84,6 +83,7 @@ public class ImageAdapter extends ParseQueryAdapter<ParseObject> {
                 Intent intent = new Intent(v.getContext(), TranActivity.class);
                 intent.putExtra("userObjectId", photo.getObjectId());
                 intent.putExtra("username", photo.getString("username"));
+
                 // start new activity
                 getContext().startActivity(intent);
             }
