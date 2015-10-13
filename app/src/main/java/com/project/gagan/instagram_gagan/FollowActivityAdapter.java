@@ -88,50 +88,23 @@ public class FollowActivityAdapter extends ParseQueryAdapter<ParseObject> {
 
         // Set up the description
         TextView descriptionImage = (TextView) v.findViewById(R.id.imageDescription);
+
+        // get username from the pointer in Activity table
+        ParseObject parseObject = ParseObject.create("Activity");
+        parseObject = activity.getParseObject("fromUser");
+        String u = parseObject.getString("username");
+
+
         if (type.equals("follow")) {
-            descriptionImage.setText(type);
+            descriptionImage.setText(u+ " has started to follow you");
 
         } else if (type.equals("comment")) {
-            descriptionImage.setText(type);
+            descriptionImage.setText(u+ " has commented your photo");
 
-        } else if (type.equals("comment")) {
-            descriptionImage.setText(type);
+        } else if (type.equals("like")) {
+            descriptionImage.setText(u+ " has liked your photo");
         }
 
-//
-//        ParseQuery userQuery = new ParseQuery("Activity");
-//        ParseQuery users = ParseUser.getQuery();
-//        users.whereEqualTo("objectId", userQuery);
-//
-//        users.findInBackground(new FindCallback<ParseUser>() {
-//            @Override
-//            public void done(List<ParseUser> list, ParseException e) {
-//                if (e == null) {
-//                    for (ParseUser p : list) {
-//
-//                        thumbnail = p.getParseFile("thumbnail");
-//                        toUser = p;
-//
-//                        imageView.setParseFile(thumbnail);
-//                        imageView.loadInBackground();
-//                        Log.d("111!!!!", thumbnail.getName());
-//                    }
-//                } else {
-//
-//                }
-//            }
-//
-//        });
-
-        ParseQuery queryActivity = new ParseQuery("Activity");
-
-//        queryActivity.whereEqualTo("objectId",activity.getObjectId());
-//        queryActivity.whereMatchesQuery(queryName);
-
-            //    photosFromFollowedUsersQuery.whereMatchesKeyInQuery("user", "toUser", followingActivitiesQuery);
-
-        // Set up the number of pictures/posts of current users
-        final TextView username = (TextView) v.findViewById(R.id.imageDescription);
 
         return v;
     }
