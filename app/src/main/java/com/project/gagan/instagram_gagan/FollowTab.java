@@ -26,7 +26,9 @@ public class FollowTab extends Fragment {
 
         view = inflater.inflate(R.layout.follow_tab, container, false);
         GridView gridView = (GridView) view.findViewById(R.id.gridView_ActivityFeed);
+        GridView gridView2 = (GridView) view.findViewById(R.id.gridView_ActivityFeed2);
         gridView.setAdapter(new FollowTabAdapter(view.getContext()));
+        gridView2.setAdapter(new FollowActivityAdapter(view.getContext()));
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,

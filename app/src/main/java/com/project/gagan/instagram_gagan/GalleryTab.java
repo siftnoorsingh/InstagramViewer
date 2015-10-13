@@ -1,6 +1,10 @@
 package com.project.gagan.instagram_gagan;
 
+import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -11,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 /**
@@ -34,7 +39,23 @@ public class GalleryTab extends Fragment{
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(rootView.getContext(), "Image at " + position + " clicked", Toast.LENGTH_SHORT).show();
+                try {
+                    Uri uri = Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, galleryAdapter.getData().get(position));
+                    Bitmap image = MediaStore.Images.Media.getBitmap(rootView.getContext().getContentResolver(), uri);
+                    String filename = "bitmap.png";
+                    FileOutputStream stream = rootView.getContext().openFileOutput(filename, Context.MODE_PRIVATE);
+                    image.compress(Bitmap.CompressFormat.PNG, 100, stream);
+
+                    stream.close();
+                    image.recycle();
+
+                    Intent intent = new Intent(rootView.getContext(), EditImage.class);
+                    intent.putExtra("image", filename);
+                    intent.putExtra("uri", uri);
+                    startActivity(intent);
+                } catch (Exception e) {
+                    Toast.makeText(rootView.getContext(), "Unable to open the image", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
