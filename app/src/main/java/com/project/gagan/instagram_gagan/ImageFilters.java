@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ public class ImageFilters extends AppCompatActivity {
 
     private Bitmap bmp;
     private Bitmap operation;
+    private ImageButton buttonBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,17 @@ public class ImageFilters extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 imageUpload(bmp);
+            }
+        });
+
+
+        buttonBack = (ImageButton) findViewById(R.id.imageButton_filter_back );
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ImageFilters.this, CameraActivity.class);
+                startActivity(intent);
+
             }
         });
 
