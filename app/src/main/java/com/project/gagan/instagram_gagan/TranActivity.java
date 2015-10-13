@@ -71,7 +71,7 @@ public class TranActivity extends Activity {
                         Log.d("111!!!!", thumbnail.getName());
                     }
                 } else {
-                    Log.d("2222!!!!", "here");
+
                 }
             }
 
