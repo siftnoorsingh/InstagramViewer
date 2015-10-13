@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -27,6 +30,8 @@ public class GalleryTab extends Fragment{
     protected GridView gridView;
     protected GalleryAdapter galleryAdapter;
     View rootView;
+    static final int PHOTO_WIDTH = 400;
+    static final int PHOTO_HEIGHT = 400;
 
     //private static final int RESULT_OK = 100;
     //private int PICK_IMAGE_REQUEST = 1;
@@ -43,10 +48,26 @@ public class GalleryTab extends Fragment{
                 try {
                     Uri uri = Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, galleryAdapter.getData().get(position));
                     Bitmap image = MediaStore.Images.Media.getBitmap(rootView.getContext().getContentResolver(), uri);
-                    String filename = "bitmap.png";
-                    FileOutputStream stream = rootView.getContext().openFileOutput(filename, Context.MODE_PRIVATE);
-                    //ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     image.compress(Bitmap.CompressFormat.PNG, 50, stream);
+                    byte[] byteArray2 = stream.toByteArray();
+                    Bitmap bitmapPicture = BitmapFactory.decodeByteArray(byteArray2, 0, byteArray2.length);
+                    //Bitmap correctBmp = Bitmap.createBitmap(bitmapPicture, 0, 0, bitmapPicture.getWidth(), bitmapPicture.getHeight(), null, true);
+                    int wid = bitmapPicture.getWidth();
+                    int hgt = bitmapPicture.getHeight();
+
+                    Bitmap correctBmp = Bitmap.createBitmap(wid, hgt, Bitmap.Config.ARGB_8888);
+                    Canvas canvas = new Canvas(correctBmp);
+
+                    canvas.drawBitmap(bitmapPicture, 0f, 0f, null);
+                    Matrix matrix = new Matrix();
+                    matrix.postRotate(90);
+                    Bitmap scaledBmp = Bitmap.createScaledBitmap(correctBmp, PHOTO_WIDTH, PHOTO_HEIGHT, true);
+                    correctBmp = Bitmap.createBitmap(scaledBmp , 0, 0, scaledBmp.getWidth(), scaledBmp.getHeight(), matrix, true);
+                    String filename = "bitmap.png";
+                    FileOutputStream stream2 = rootView.getContext().openFileOutput(filename, Context.MODE_PRIVATE);
+                    //ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    correctBmp.compress(Bitmap.CompressFormat.PNG, 50, stream2);
                     //byte[] byteArray2 = stream.toByteArray();
 
                     stream.close();

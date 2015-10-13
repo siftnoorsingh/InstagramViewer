@@ -36,7 +36,7 @@ public class ImageAdapter extends ParseQueryAdapter<ParseObject> {
     SearchIDs searchIDs;
     ParseImageView DiscoverPhotoView;
 
-    public ImageAdapter(Context context, SearchIDs searchID) {
+    public ImageAdapter(Context context) {
 
 
         super(context, new ParseQueryAdapter.QueryFactory<ParseObject>() {
