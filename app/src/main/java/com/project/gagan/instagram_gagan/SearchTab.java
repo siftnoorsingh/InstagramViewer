@@ -48,7 +48,7 @@ public class SearchTab extends Fragment {
         view = inflater.inflate(R.layout.search_tab, container, false);
          gridView = (GridView) view.findViewById(R.id.gridViewSearch);
         searchIDs = new SearchIDs();
-        gridView.setAdapter(new ImageAdapter(view.getContext(), searchIDs));
+        gridView.setAdapter(new ImageAdapter(view.getContext()));
 
         onQuery(view);
 
