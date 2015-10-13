@@ -2,9 +2,6 @@ package com.project.gagan.instagram_gagan;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,10 +9,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
 
-import com.parse.GetDataCallback;
-import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseUser;
+/**
+ * Created by Fenglin
+ */
 
 public class SearchResultActivity extends AppCompatActivity {
 
@@ -33,56 +29,18 @@ public class SearchResultActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         setContentView(R.layout.activity_search_result);
-
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             query = extras.getString("Query");
         }
 
-          //  query = getIntent().getStringExtra("Query");
-        //   view = this.findViewById(android.R.id.content);
-        //      view = inflater.inflate(R.layout.search_tab, container, false);
+        // create gridView and set Adapter to the gridView
         GridView gridView = (GridView) findViewById(R.id.gridView_searchresult);
-        ParseUser parseUser = new ParseUser();
-//        if(query!=null) {
-//            parseUser.setUsername(query);
-//        }
-        gridView.setAdapter(new SearchResultImageAdapter(getApplicationContext(),query));
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout_search_result);
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_action_dashboard));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_action_search));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_camera));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_action_follow));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_action_profile));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-        //       ParseUser user = ParseUser.getCurrentUser();
-        ParseFile parseFile = parseUser.getParseFile("thumbnail");
-
-//        if (parseFile != null) {
-//            parseFile.getDataInBackground(new GetDataCallback() {
-//                @Override
-//                public void done(byte[] bytes, ParseException e) {
-//                    if (e == null) {
-//                        int size = 250;
-//                        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-//
-//                        if (bmp != null) {
-//                            imageView.setImageBitmap(Bitmap.createScaledBitmap(bmp, size, size, true));
-//
-//                        }
-//                    }
-//                }
-//            });
-//
-//        }
+        gridView.setAdapter(new SearchResultImageAdapter(getApplicationContext(), query));
 
 
-        //setContentView(R.layout.activity_search_result);
     }
 
     @Override

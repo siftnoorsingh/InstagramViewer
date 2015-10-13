@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 /**
  * THIS Activity is NOT used in this project, please do not edit this one.
- * The real Discover function is the SearchTab.
+ * The new Discover function is the SearchTab.
  * - Fenglin
  */
 public class DiscoverActivity extends Activity {

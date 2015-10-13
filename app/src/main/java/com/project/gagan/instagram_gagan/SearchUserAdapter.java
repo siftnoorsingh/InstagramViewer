@@ -19,12 +19,10 @@ import android.util.Log;
  */
 public class SearchUserAdapter extends ParseQueryAdapter<ParseObject> {
 
-    int i = 0;
     private String queryString;
     private ParseImageView thumbPhotoView;
 
     public SearchUserAdapter(final Context context, final String userObjectId) {
-
 
         super(context, new ParseQueryAdapter.QueryFactory<ParseObject>() {
             public ParseQuery<ParseObject> create() {
@@ -35,18 +33,9 @@ public class SearchUserAdapter extends ParseQueryAdapter<ParseObject> {
                 users.whereEqualTo("objectId", userObjectId);
                 ParseQuery searchResultUserQuery = new ParseQuery("Photo");
                 searchResultUserQuery.whereMatchesQuery("user", users);
-
-                //    photosFromCurrentUserQuery.whereEqualTo("userObjId", userObjectId);
-//                photosFromCurrentUserQuery.whereContains("username", query);
                 searchResultUserQuery.whereExists("image");
-
-
                 searchResultUserQuery.include("user");
                 searchResultUserQuery.orderByDescending("createdAt");
-
-
-                Log.d("tag1", "Here1");
-
 
                 return searchResultUserQuery;
             }
@@ -67,7 +56,7 @@ public class SearchUserAdapter extends ParseQueryAdapter<ParseObject> {
 
     @Override
     public View getItemView(ParseObject user, View v, ViewGroup parent) {
-        Log.d("tag2", "Here2");
+
         if (v == null) {
             v = View.inflate(getContext(), R.layout.search_result_activity_layout, null);
         }
@@ -89,11 +78,6 @@ public class SearchUserAdapter extends ParseQueryAdapter<ParseObject> {
         // Set up the description
         TextView descriptionImage = (TextView) v.findViewById(R.id.imageDescription);
         descriptionImage.setText(user.getString("description"));
-
-        // Set up the number of pictures/posts of current users
-        TextView numPosts = (TextView) v.findViewById(R.id.imageDescription);
-        numPosts.setText("Posts" + i);
-
 
         return v;
     }
